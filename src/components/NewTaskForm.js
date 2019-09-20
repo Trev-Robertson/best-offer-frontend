@@ -12,10 +12,10 @@ export default class NeWTask extends React.Component {
 
 
     render(){
-      console.log(this.props)
+      
         return(
             <div>
-            <form onSubmit={this.props.addTask} >
+            <form onSubmit={(event) => this.props.addTask(event)} >
            <label name="name">Name</label>
               <input name="name" />
               
