@@ -11,8 +11,7 @@ import {
   Redirect
 } from "react-router-dom";
 const specialties = ['gardening','plumbing', 'technology', 
-'electrician', 'carpentry', 'gardening', 
-'plumbing', 'carpentry', 'electrician', 'plumbing'
+'electrician', 'carpentry'
 ]
 const URL = "http://localhost:3000/users/";
 
@@ -51,7 +50,7 @@ export default class App extends React.Component {
   };
 
   render() {
-    console.log(this.state.currentUser)
+   
     return (
       <div className="App">
         <h1>BEST OFFER OR ELSE</h1>
