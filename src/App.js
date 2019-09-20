@@ -3,6 +3,7 @@ import "./App.css";
 import "./App.sass";
 import Login from "./components/Login";
 import ProfileContainer from "./containers/ProfileContainer";
+import { isEmpty } from "lodash";
 // import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
@@ -10,18 +11,19 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-const specialties = ['gardening','plumbing', 'technology', 
-'electrician', 'carpentry'
-]
+const specialties = [
+  "gardening",
+  "plumbing",
+  "technology",
+  "electrician",
+  "carpentry"
+];
 const URL = "http://localhost:3000/users/";
 
 export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      currentUser: null
-    };
-  }
+  state = {
+    currentUser: {}
+  };
 
   // componentDidMount(){
   //   fetch(URL)
@@ -31,15 +33,15 @@ export default class App extends React.Component {
   //   }))
   // }
 
-  logout = () =>{
-    console.log('click')
-    this.setState = {
-      currentUser: null
-    }
-  }
+  logout = () => {
+    console.log("click");
+    this.setState({
+      currentUser: {}
+    })
+  };
 
   currentUser = event => {
-    event.preventDefault()
+    event.preventDefault();
     fetch(URL + event.target.name.value, {})
       .then(res => res.json())
       .then(currentUser => {
@@ -50,27 +52,41 @@ export default class App extends React.Component {
   };
 
   render() {
-   
     return (
       <div className="App">
         <h1>BEST OFFER OR ELSE</h1>
-        <p><button onClick={this.logout}>Logout</button></p>
+        <p>
+          <button onClick={this.logout}>Logout</button>
+        </p>
         <Switch>
-       
-            <Route exact path='/login' render={ () => this.state.currentUser
-            ? 
-            <Redirect to="/profile" />
-            :
-            <Login login={this.currentUser} />
+          <Route
+            exact
+            path="/login"
+            render={() =>
+              !isEmpty(this.state.currentUser) ? (
+                <Redirect to="/profile" />
+              ) : (
+                <Login login={this.currentUser} />
+              )
             }
-            />
+          />
 
-            <Route exact path='/profile' render={ () => this.state.currentUser
-            ? <ProfileContainer user={this.state.currentUser} specialties={specialties}/> :
-            <Redirect to="/login" /> }/>
+          <Route
+            exact
+            path="/profile"
+            render={() =>
+              !isEmpty(this.state.currentUser) ? (
+                <ProfileContainer
+                  user={this.state.currentUser}
+                  specialties={specialties}
+                />
+              ) : (
+                <Redirect to="/login" />
+              )
+            }
+          />
 
-            <Route path='/'  render={ () =><Redirect to="/login" /> }/>
-        
+          <Route path="/" render={() => <Redirect to="/login" />} />
         </Switch>
       </div>
     );

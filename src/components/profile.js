@@ -49,7 +49,9 @@ export default class extends React.Component {
 
   sortBids = task => {
     let sorted = task.bids.sort((a, b) => (a.price > b.price ? 1 : -1));
-    return sorted[0].price;
+   
+  
+    return sorted[0] ? sorted[0].price : '  No Bids Yet'
   };
 
   render() {
