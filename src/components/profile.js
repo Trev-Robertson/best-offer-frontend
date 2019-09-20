@@ -3,7 +3,8 @@ import NewTaskForm from './NewTaskForm'
 // import store from '../redux/store'
 // import {Link} from 'react-router-dom'
 
-const URL = "http://localhost:3000/tasks/";
+const SPECIALTIES = "http://localhost:3000/specialties/";
+const TASKS =  'http://localhost:3000/tasks/'
 
 export default class Profile extends React.Component {
 
@@ -14,7 +15,7 @@ export default class Profile extends React.Component {
   }
 
   componentDidMount(){
-    fetch(URL)
+    fetch(SPECIALTIES)
     .then(res => res.json())
     .then(specialties => this.setState({
       specialties
@@ -22,14 +23,16 @@ export default class Profile extends React.Component {
   }
 
     addTask = (event) =>{
+   
         event.preventDefault()
         let data = {
           name: event.target.name.value,
           description: event.target.description.value,
-          specialty: event.target.specialty.value
+          specialty_id: event.target.specialty.value,
+          user_id: this.props.user.id
         }
         console.log(event)
-    fetch(URL, {
+    fetch(TASKS, {
       method: 'POST', 
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
