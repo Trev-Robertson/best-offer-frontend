@@ -1,19 +1,20 @@
 import React from 'react';
-import store from '../redux/store'
+import NewTaskForm from '../components/NewTaskForm'
+// import store from '../redux/store'
+// import {Link} from 'react-router-dom'
 
 
 export default class Profile extends React.Component {
     render(){
-
-        
+      console.log('task', this.props)
         return(
             <div className='columns'>
-            {this.props.users[3] ? console.log(this.props.users[3].tasks) : null}
             <div className='column'>
-              Hi, {this.props.users[3] ? this.props.users[3].name : null}
+              Hi, {this.props.user ? this.props.user.name : null}
             </div>
+            <NewTaskForm specialties={this.props.specialties}/>
             <div className='column'>
-              Current Bids {this.props.users[3] ? this.props.users[3].tasks.map(task => <p key={task.id}> Job: {task.name} <br/><br/> Description: {task.description} <br/><br/> Active Bids: {task.bids.map(bid => <p>${bid.price} by {bid.contractor.name}</p>)} </p>) : null}
+              Current Bids {this.props.user ? this.props.user.tasks.map(task => <p key={task.id}> Job: {task.name} <br/><br/> Description: {task.description} <br/><br/> Active Bids: {task.bids.map(bid => <p>${bid.price} by {bid.contractor.name}</p>)} </p>) : null}
             </div>
         </div>
     )

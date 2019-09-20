@@ -1,6 +1,7 @@
 import React from 'react';
-import store from '../redux/store'
-import Profile from '../components/profile'
+// import store from '../redux/store'
+import Profile from '../components/Profile'
+import NewTaskForm from '../components/NewTaskForm'
 
 
 export default class ProfileContainer extends React.Component {
@@ -9,7 +10,8 @@ export default class ProfileContainer extends React.Component {
     return(
         <div className='columns'>
             <div className='column' style={{justifyContent: 'flex-end'}}>
-              <Profile users={this.props.users}/>
+              <Profile user={this.props.user} specialties={this.props.specialties}/>
+             
             </div>
         </div>
     )
