@@ -47,6 +47,11 @@ export default class Profile extends React.Component {
       );
   };
 
+  sortBids = task => {
+    let sorted = task.bids.sort((a, b) => (a.price > b.price ? 1 : -1));
+    return sorted[0].price;
+  };
+
   render() {
     return (
       <div className="columns">
@@ -58,19 +63,19 @@ export default class Profile extends React.Component {
           addTask={this.addTask}
         />
         <div className="column">
-          Current Bids{" "}
+          Current Tasks{" "}
           {!isEmpty(this.state.currentUser)
             ? this.state.currentUser.tasks.map(task => (
                 <p key={task.id}>
                   {" "}
                   Job: {task.name} <br />
                   <br /> Description: {task.description} <br />
-                  <br /> Active Bids:{" "}
-                  {task.bids.map(bid => (
+                  <br /> Current Lowest Bid:{this.sortBids(task)}
+                  {/* {task.bids.map(bid => (
                     <p>
                       ${bid.price} by {bid.contractor.name}
                     </p>
-                  ))}{" "}
+                  ))}{" "} */}
                 </p>
               ))
             : null}

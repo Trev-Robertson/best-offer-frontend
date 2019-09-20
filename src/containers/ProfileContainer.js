@@ -1,7 +1,7 @@
 import React from "react";
 // import store from '../redux/store'
-import Profile from "../components/Profile.js";
-import NewTaskForm from "../components/NewTaskForm";
+import Profile from "../components/Profile";
+// import NewTaskForm from "../components/NewTaskForm";
 
 export default class ProfileContainer extends React.Component {
   render() {
