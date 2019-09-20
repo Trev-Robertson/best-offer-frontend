@@ -7,7 +7,7 @@ import { isEmpty } from "lodash";
 const SPECIALTIES = "http://localhost:3000/specialties/";
 const TASKS = "http://localhost:3000/tasks/";
 
-export default class Profile extends React.Component {
+export default class extends React.Component {
   state = {
     specialties: [],
     currentUser: {}
