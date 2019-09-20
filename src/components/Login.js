@@ -9,10 +9,10 @@ export default class Login extends React.Component {
         Login
             <form>
                 <label name='name'>Name</label>
-                <input name='name'></input>
+                <input name='name'/>
                 <br/>
                 <label name='name'>Password</label>
-                <input name='password' type='password'></input>
+                <input name='password' type='password'/>
                 <br/>
                 <button>Submit</button>
             </form>
