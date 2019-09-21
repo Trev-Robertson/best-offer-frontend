@@ -68,12 +68,15 @@ export default class extends React.Component {
           Current Tasks{" "}
           <br /><br />
           {!isEmpty(this.state.currentUser)
-            ? this.state.currentUser.tasks.map(task =>  <div key={task.id} >
+            ? this.state.currentUser.tasks.map(task =>  
+              <div key={Math.floor((Math.random() * 100000000000) + 1)}>
+            <div  >
                   {" "}
                   Job: {task.name}
                   <br /> Description: {task.description} <br />
                    Current Lowest Bid:{this.sortBids(task)}
                    <br /><br /><br />
+                </div>
                 </div>
               )
             : null}

@@ -2,7 +2,7 @@ import React from 'react';
 // import store from '../redux/store'
 // import {Link} from 'react-router-dom'
 
-const URL = "http://localhost:3000/specialties/";
+
 
 export default class NeWTask extends React.Component {
 

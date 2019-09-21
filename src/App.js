@@ -19,10 +19,12 @@ const specialties = [
   "carpentry"
 ];
 const URL = "http://localhost:3000/api/v1/login/";
+const PROFILE_URL = 'http://localhost:3000/api/v1/profile/'
 
 export default class App extends React.Component {
   state = {
-    currentUser: {}
+    currentUser: {}, 
+    loading: true
   };
 
   // componentDidMount(){
@@ -33,12 +35,38 @@ export default class App extends React.Component {
   //   }))
   // }
 
+  updateUser = (user) => {
+    this.setState({
+      currentUser: user, 
+      loading: false
+    })
+  }
+
+
   logout = () => {
-    
+    localStorage.clear()
     this.setState({
       currentUser: {}
     })
   };
+
+  componentDidMount = () => {
+    if(localStorage.getItem("token")){
+      console.log('found token')
+      fetch(PROFILE_URL, {
+        headers: { "Authentication": 
+        `Bearer ${localStorage.getItem("token")}` 
+        }
+      }
+      )
+      .then(res => res.json())
+      .then(res => {this.updateUser(res)})
+    }
+    else{
+      this.setState({loading: false})
+    }
+  }
+
 
   currentUser = event => {
     event.preventDefault();
@@ -56,8 +84,9 @@ export default class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-
+   
       if(data.authenticated){
+        localStorage.setItem("token", data.token)
         this.setState({
           currentUser: JSON.parse(data.user)
         })}
@@ -71,7 +100,7 @@ export default class App extends React.Component {
         <p>
           <button onClick={this.logout}>Logout</button>
         </p>
-        <Switch>
+        {!this.state.loading ? <Switch>
           <Route
             exact
             path="/login"
@@ -100,7 +129,7 @@ export default class App extends React.Component {
           />
 
           <Route path="/" render={() => <Redirect to="/login" />} />
-        </Switch>
+        </Switch> : null}
       </div>
     );
   }
