@@ -18,7 +18,7 @@ const specialties = [
   "electrician",
   "carpentry"
 ];
-const URL = "http://localhost:3000/users/";
+const URL = "http://localhost:3000/api/v1/login/";
 
 export default class App extends React.Component {
   state = {
@@ -42,12 +42,25 @@ export default class App extends React.Component {
 
   currentUser = event => {
     event.preventDefault();
-    fetch(URL + event.target.name.value, {})
+   
+    let data = {
+      name: event.target.name.value, 
+      password: event.target.password.value
+    }
+    fetch(URL, {
+      method: 'POST', 
+      headers: { 
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify(data)
+    })
       .then(res => res.json())
-      .then(currentUser => {
+      .then(data => {
+       console.log(data.user)
+      if(data.authenticated){
         this.setState({
-          currentUser: currentUser
-        });
+          currentUser: JSON.parse(data.user)
+        })}
       });
   };
 

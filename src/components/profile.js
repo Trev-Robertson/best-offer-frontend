@@ -66,20 +66,16 @@ export default class extends React.Component {
         />
         <div className="column">
           Current Tasks{" "}
+          <br /><br />
           {!isEmpty(this.state.currentUser)
-            ? this.state.currentUser.tasks.map(task => (
-                <p key={task.id}>
+            ? this.state.currentUser.tasks.map(task =>  <div key={task.id} >
                   {" "}
-                  Job: {task.name} <br />
+                  Job: {task.name}
                   <br /> Description: {task.description} <br />
-                  <br /> Current Lowest Bid:{this.sortBids(task)}
-                  {/* {task.bids.map(bid => (
-                    <p>
-                      ${bid.price} by {bid.contractor.name}
-                    </p>
-                  ))}{" "} */}
-                </p>
-              ))
+                   Current Lowest Bid:{this.sortBids(task)}
+                   <br /><br /><br />
+                </div>
+              )
             : null}
         </div>
       </div>

@@ -26,7 +26,7 @@ export default class NeWTask extends React.Component {
               <br />
               <br />
               <select name='specialty'>
-                  {this.props.specialties.map( specialty =>  <option value={specialty.id}>{specialty.name}</option>)
+                  {this.props.specialties.map( specialty =>  <option key={specialty.id} value={specialty.id}>{specialty.name}</option>)
             
                   }
             </select>
