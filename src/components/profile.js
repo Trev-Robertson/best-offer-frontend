@@ -9,19 +9,24 @@ const TASKS = "http://localhost:3000/tasks/";
 
 export default class extends React.Component {
   state = {
-    specialties: [],
+    specialties: [{id: 1, name: "gardening"},
+     {id: 2, name: "capentry"},
+     {id: 3, name: "plumbing"},
+     {id: 4, name: "technology"},
+     {id: 5, name: "electrician"} ],
     currentUser: {}
   };
 
   componentDidMount() {
     fetch(SPECIALTIES)
       .then(res => res.json())
-      .then(specialties =>
+      .then(specialties =>{
+        console.log(specialties)
         this.setState({
-          specialties: specialties,
           currentUser: this.props.user
         })
-      );
+        
+      });
   }
 
   addTask = event => {
@@ -50,8 +55,8 @@ export default class extends React.Component {
   sortBids = task => {
     let sorted = task.bids.sort((a, b) => (a.price > b.price ? 1 : -1));
    
-  
-    return sorted[0] ? sorted[0].price : '  No Bids Yet'
+      console.log()
+    return sorted[0] ? `${sorted[0].price} by ${sorted[0].contractor.name}` : '  No Bids Yet'
   };
 
   render() {
@@ -74,7 +79,7 @@ export default class extends React.Component {
                   {" "}
                   Job: {task.name}
                   <br /> Description: {task.description} <br />
-                   Current Lowest Bid:{this.sortBids(task)}
+                   Current Lowest Bid: ${this.sortBids(task)}
                    <br /><br /><br />
                 </div>
                 </div>
