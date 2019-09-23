@@ -27,7 +27,7 @@ export default class App extends React.Component {
   state = {
     currentUser: {}, 
     loading: true,
-    currentTask: null
+    // currentTask: null
   };
 
   // componentDidMount(){
@@ -69,16 +69,19 @@ export default class App extends React.Component {
       }
       )
       .then(res => res.json())
-      .then(res => {this.updateUser(res)})
+      .then(res => {
+         console.log(res)
+        this.updateUser(res)})
     }
     else{
+      console.log('not found')
       this.setState({loading: false})
     }
   }
 
 
   currentUser = event => {
-   
+    console.log("login")
     let data = {
       name: event.target.name.value, 
       password: event.target.password.value
@@ -92,12 +95,17 @@ export default class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-   
-      if(data.authenticated){
+          console.log(data)
+          if(data.authenticated){
+            debugger
+
         localStorage.setItem("token", data.token)
         this.setState({
           currentUser: JSON.parse(data.user)
         })}
+        else {
+          console.log("didnt work")
+        }
       });
   };
 
@@ -138,7 +146,7 @@ export default class App extends React.Component {
 
           <Route
             exact
-            path="/profile/"
+            path="/profile"
             render={() =>
               !isEmpty(this.state.currentUser) ? (
                 <ProfileContainer

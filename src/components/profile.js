@@ -61,7 +61,6 @@ export default class extends React.Component {
   };
 
   render() {
-    debugger
     return (
       <div className="columns">
         <div className="column">
