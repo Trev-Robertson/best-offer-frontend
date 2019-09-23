@@ -75,7 +75,7 @@ export default class extends React.Component {
           <br /><br />
           {!isEmpty(this.state.currentUser)
             ? this.state.currentUser.tasks.map(task =>  
-              <Link to={`/profile/${task.name}`}>
+              <Link  key={Math.floor((Math.random() * 100000000000) + 1)} to={`/profile/${task.name}`}>
               <div key={Math.floor((Math.random() * 100000000000) + 1)}>
             <div  onClick={() => this.props.currentTask(task)} >
                   {" "}
@@ -93,3 +93,6 @@ export default class extends React.Component {
     );
   }
 }
+
+
+// localStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo1fQ.Zpuw5z3XsV5yi5LQkVQxkjqK9ODqf8UAn8MI9RDH3JOM4PcbKckFlJFMiDUvyUiFpR6hWrb_Abkq037kPamzFA")
