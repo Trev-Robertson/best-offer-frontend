@@ -11,13 +11,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-const specialties = [
-  "gardening",
-  "plumbing",
-  "technology",
-  "electrician",
-  "carpentry"
-];
+
 const URL = "http://localhost:3000/api/v1/login/";
 const PROFILE_URL = 'http://localhost:3000/api/v1/profile/'
 
@@ -120,7 +114,7 @@ export default class App extends React.Component {
               !isEmpty(this.state.currentUser) ? (
                 <ProfileContainer
                   user={this.state.currentUser}
-                  specialties={specialties}
+                  
                 />
               ) : (
                 <Redirect to="/login" />
