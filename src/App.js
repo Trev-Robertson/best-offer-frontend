@@ -1,8 +1,10 @@
 import React from "react";
 import "./App.css";
+
 import "./App.sass";
 import Login from "./components/Login";
 import ProfileContainer from "./containers/ProfileContainer";
+import TaskShowPage from "./components/TaskShowPage";
 import { isEmpty } from "lodash";
 // import ReactDOM from "react-dom";
 import {
@@ -25,7 +27,7 @@ export default class App extends React.Component {
   state = {
     currentUser: {}, 
     loading: true,
-    showTask: false
+    currentTask: null
   };
 
   // componentDidMount(){
@@ -43,12 +45,12 @@ export default class App extends React.Component {
     })
   }
 
-  // showTask = () =>{
-  //   debugger
-  //   this.setState({
-  //     showTask: !this.state.showTask
-  //   }, console.log(this.state.showTask))
-  // }
+  currentTask = (task) =>{
+    // debugger
+    this.setState({
+      currentTask: task
+    })
+  }
 
   logout = () => {
     localStorage.clear()
@@ -76,7 +78,6 @@ export default class App extends React.Component {
 
 
   currentUser = event => {
-    event.preventDefault();
    
     let data = {
       name: event.target.name.value, 
@@ -120,34 +121,39 @@ export default class App extends React.Component {
             }
           />
 
+            
+              <Route exact 
+                path="/profile/:task"
+                render={(props) => 
+                  this.state.currentTask ?
+               <TaskShowPage
+                    // user={this.props.user}
+                    task={this.state.currentTask}
+                    // togglePage={this.showTaskPage}
+                />
+                :
+                <Redirect to="/profile" />
+                  } 
+                    />
+
           <Route
             exact
-            path="/profile"
+            path="/profile/"
             render={() =>
               !isEmpty(this.state.currentUser) ? (
                 <ProfileContainer
                   user={this.state.currentUser}
                   specialties={specialties}
-                  // showTask={this.showTask}
+                  currentTask={this.currentTask}
                 />
-              ) : (
+              ) : 
                 <Redirect to="/login" />
-              )}/>
+              }/>
             
-              <Route exact 
+            
+            
               
-              path="/profile/task"
-              render={() => 
-                this.state.showTask ? 
-                <ProfileContainer
-                  // showTask={this.showTask}
-                  user={this.state.currentUser}
-                  specialties={specialties}
-                /> 
-              : <Redirect to="/profile" />
-                }
             
-          />
 
           <Route path="/" render={() => <Redirect to="/login" />} />
         </Switch> : null}

@@ -9,7 +9,7 @@ export default class ProfileContainer extends React.Component {
   };
 
   render() {
-    // debugger
+    
     return (
       <div onClick={() => this.props.togglePage(this.props.task)}>
         <h1 >Task:</h1> <h3>{this.props.task.name}</h3>

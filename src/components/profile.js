@@ -1,6 +1,7 @@
 import React from "react";
 import NewTaskForm from "./NewTaskForm";
 import { isEmpty } from "lodash";
+import {Link} from 'react-router-dom'
 // import store from '../redux/store'
 // import {Link} from 'react-router-dom'
 
@@ -60,6 +61,7 @@ export default class extends React.Component {
   };
 
   render() {
+    debugger
     return (
       <div className="columns">
         <div className="column">
@@ -74,8 +76,9 @@ export default class extends React.Component {
           <br /><br />
           {!isEmpty(this.state.currentUser)
             ? this.state.currentUser.tasks.map(task =>  
+              <Link to={`/profile/${task.name}`}>
               <div key={Math.floor((Math.random() * 100000000000) + 1)}>
-            <div  onClick={() => this.props.showTaskPage(task)} >
+            <div  onClick={() => this.props.currentTask(task)} >
                   {" "}
                   Job: {task.name}
                   <br /> Description: {task.description} <br />
@@ -83,6 +86,7 @@ export default class extends React.Component {
                    <br /><br /><br />
                 </div>
                 </div>
+                </Link>
               )
             : null}
         </div>

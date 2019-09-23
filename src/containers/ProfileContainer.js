@@ -2,7 +2,7 @@ import React from "react";
 // import store from '../redux/store'
 import Profile from "../components/profile";
 import TaskShowPage from "../components/TaskShowPage";
-import {Link} from 'react-router-dom'
+
 import {
   // eslint-disable-next-line
   BrowserRouter as Router,
@@ -33,27 +33,30 @@ export default class ProfileContainer extends React.Component {
         <div className="column" style={{ justifyContent: "flex-end" }}>
           <Switch>
             
-          {this.state.showProfile
-          ? 
+         
         <Profile
             user={this.props.user}
             showTaskPage={this.showTaskPage}
-            />
-            :
-            <TaskShowPage
-            // showTask={this.props.showTask}
-              user={this.props.user}
-              task={this.state.task}
-              togglePage={this.showTaskPage}
+            currentTask={this.props.currentTask}
             />
             
-          }
+
+            
           </Switch>
         </div>
       </div>
     );
   }
 }
+
+
+
+{/* <TaskShowPage
+// showTask={this.props.showTask}
+  user={this.props.user}
+  task={this.state.task}
+  togglePage={this.showTaskPage}
+/> */}
 
 //   <Route exact
 //   path="/profile/task"
