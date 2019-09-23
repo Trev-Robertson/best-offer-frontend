@@ -14,16 +14,15 @@ import {
 export default class ProfileContainer extends React.Component {
 
     state = {
-      profile: true,
+      showProfile: true,
       task: null
     }
 
 
-    togglePage = (task) =>{
-        let changeStatus = !this.state.profile
+    showTaskPage = (task) =>{
       this.setState({
        task: task,
-        profile: changeStatus
+        showProfile: !this.state.showProfile
       })
       
     }
@@ -34,17 +33,18 @@ export default class ProfileContainer extends React.Component {
         <div className="column" style={{ justifyContent: "flex-end" }}>
           <Switch>
             
-          {this.state.profile 
+          {this.state.showProfile
           ? 
         <Profile
             user={this.props.user}
-            showTaskPage={this.togglePage}
+            showTaskPage={this.showTaskPage}
             />
             :
             <TaskShowPage
+            // showTask={this.props.showTask}
               user={this.props.user}
               task={this.state.task}
-              togglePage={this.togglePage}
+              togglePage={this.showTaskPage}
             />
             
           }

@@ -6,20 +6,26 @@ import ProfileContainer from "./containers/ProfileContainer";
 import { isEmpty } from "lodash";
 // import ReactDOM from "react-dom";
 import {
-  // eslint-disable-next-line
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect
 } from "react-router-dom";
-
+const specialties = [
+  "gardening",
+  "plumbing",
+  "technology",
+  "electrician",
+  "carpentry"
+];
 const URL = "http://localhost:3000/api/v1/login/";
 const PROFILE_URL = 'http://localhost:3000/api/v1/profile/'
 
 export default class App extends React.Component {
   state = {
     currentUser: {}, 
-    loading: true
+    loading: true,
+    showTask: false
   };
 
   // componentDidMount(){
@@ -37,6 +43,12 @@ export default class App extends React.Component {
     })
   }
 
+  // showTask = () =>{
+  //   debugger
+  //   this.setState({
+  //     showTask: !this.state.showTask
+  //   }, console.log(this.state.showTask))
+  // }
 
   logout = () => {
     localStorage.clear()
@@ -47,7 +59,7 @@ export default class App extends React.Component {
 
   componentDidMount = () => {
     if(localStorage.getItem("token")){
-      
+      console.log('found token')
       fetch(PROFILE_URL, {
         headers: { "Authentication": 
         `Bearer ${localStorage.getItem("token")}` 
@@ -109,17 +121,32 @@ export default class App extends React.Component {
           />
 
           <Route
-           exact path="/profile"
+            exact
+            path="/profile"
             render={() =>
               !isEmpty(this.state.currentUser) ? (
                 <ProfileContainer
                   user={this.state.currentUser}
-                  
+                  specialties={specialties}
+                  // showTask={this.showTask}
                 />
               ) : (
                 <Redirect to="/login" />
-              )
-            }
+              )}/>
+            
+              <Route exact 
+              
+              path="/profile/task"
+              render={() => 
+                this.state.showTask ? 
+                <ProfileContainer
+                  // showTask={this.showTask}
+                  user={this.state.currentUser}
+                  specialties={specialties}
+                /> 
+              : <Redirect to="/profile" />
+                }
+            
           />
 
           <Route path="/" render={() => <Redirect to="/login" />} />
