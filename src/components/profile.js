@@ -21,7 +21,7 @@ export default class extends React.Component {
     fetch(SPECIALTIES)
       .then(res => res.json())
       .then(specialties =>{
-        console.log(specialties)
+      
         this.setState({
           currentUser: this.props.user
         })
@@ -75,7 +75,7 @@ export default class extends React.Component {
           {!isEmpty(this.state.currentUser)
             ? this.state.currentUser.tasks.map(task =>  
               <div key={Math.floor((Math.random() * 100000000000) + 1)}>
-            <div  >
+            <div  onClick={() => this.props.showTaskPage(task)} >
                   {" "}
                   Job: {task.name}
                   <br /> Description: {task.description} <br />

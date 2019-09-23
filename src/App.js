@@ -6,6 +6,7 @@ import ProfileContainer from "./containers/ProfileContainer";
 import { isEmpty } from "lodash";
 // import ReactDOM from "react-dom";
 import {
+  // eslint-disable-next-line
   BrowserRouter as Router,
   Route,
   Switch,
@@ -46,7 +47,7 @@ export default class App extends React.Component {
 
   componentDidMount = () => {
     if(localStorage.getItem("token")){
-      console.log('found token')
+      
       fetch(PROFILE_URL, {
         headers: { "Authentication": 
         `Bearer ${localStorage.getItem("token")}` 
@@ -108,8 +109,7 @@ export default class App extends React.Component {
           />
 
           <Route
-            exact
-            path="/profile"
+           exact path="/profile"
             render={() =>
               !isEmpty(this.state.currentUser) ? (
                 <ProfileContainer
