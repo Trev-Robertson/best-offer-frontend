@@ -1,7 +1,7 @@
 import React from "react";
 // import store from '../redux/store'
 import Profile from "../components/profile";
-
+import ContractorShowPage from "../components/ContractorShowPage"
 
 
 export default class ProfileContainer extends React.Component {
@@ -21,6 +21,7 @@ export default class ProfileContainer extends React.Component {
     }
 
   render() {
+
     return (
       <div >
         <div >
@@ -33,8 +34,8 @@ export default class ProfileContainer extends React.Component {
             currentTask={this.props.currentTask}
             />
             
-
-            
+        {/* <Route
+            <ContractorShowPage /> */}
          
         </div>
       </div>

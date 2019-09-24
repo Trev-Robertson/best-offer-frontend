@@ -5,6 +5,7 @@ import "./App.sass";
 import Login from "./components/Login";
 import ProfileContainer from "./containers/ProfileContainer";
 import TaskShowPage from "./components/TaskShowPage";
+import ContractorShowPage from "./components/ContractorShowPage"
 import { isEmpty } from "lodash";
 
 import {
@@ -42,7 +43,7 @@ export default class App extends React.Component {
   }
 
   currentTask = (task) =>{
-    localStorage.setItem("task", JSON.stringify(task))
+    // localStorage.setItem("task", JSON.stringify(task))
     this.setState({
       currentTask: task
     })
@@ -107,6 +108,43 @@ export default class App extends React.Component {
       });
   };
 
+  acceptBid = (bid) => {
+    
+    if(!bid.status){
+    let data = {
+      id: bid.id, 
+      status: true,
+      user_id: this.state.currentUser.id
+    }
+    fetch(`http://localhost:3000/bids/${bid.id}`, {
+      method: 'PATCH', 
+      headers: { 
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(currentUser => this.setState({currentUser}))
+  }
+  
+  }
+
+  deleteBid = (bid) =>{
+    let data = {
+      id: bid.id,
+      user_id: this.state.currentUser.id
+    }
+    fetch(`http://localhost:3000/bids/${bid.id}`, {
+      method: 'DELETE', 
+      headers: { 
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(currentUser => this.setState({currentUser}))
+  }
+
   render() {
     return (
       <div className="App">
@@ -136,14 +174,22 @@ export default class App extends React.Component {
                   <TaskShowPage
                       task={taskObj}
                       toggleTask={this.toggleTask}
+                      acceptBid={this.acceptBid}
+                      deleteBid={this.deleteBid}
                   />
                   :
                   <Redirect to="/login" />
                     
                 }}/>
               :
+              
               <Redirect to="/login" />
+              
+              
               }
+
+
+
 
           <Route
             exact
