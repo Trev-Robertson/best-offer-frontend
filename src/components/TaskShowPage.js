@@ -58,6 +58,9 @@ export default class TaskShowPage extends React.Component {
     })
   }
 
+
+
+
 CardExampleGroups = (bid, index) => {  
 
  return( 
@@ -67,7 +70,7 @@ CardExampleGroups = (bid, index) => {
           <Image
             floated='right'
             size='mini'
-            src='/images/avatar/large/steve.jpg'
+            src='https://thispersondoesnotexist.com/image'
             />
               <h1>{index === 0 && !this.state.anyBidsSelected ? 'Best Value!': null}</h1>
         {bid.status ? <h1>Congrats!!!!! You selected this bid!</h1> :
@@ -93,9 +96,7 @@ CardExampleGroups = (bid, index) => {
       </Card>
     </Card.Group>)
    
-    {/* // <p key={Math.floor((Math.random() * 100000000000) + 1)}>
-    //   ${bid.price} by <strong>{bid.contractor.name}</strong>
-    // </p>  */}
+ 
 }
 
 
@@ -103,7 +104,7 @@ CardExampleGroups = (bid, index) => {
     
     return (
       <div onClick={this.props.toggleTask} >
-        <Link to='/profile'> <button>To Profile Page</button></Link>
+                <Link to='/profile'> <button onClick={() => this.props.deleteTask(this.props.task)}>Delete This Task</button></Link>
         <h1>Title:</h1> <h2><strong>{this.props.task.name}</strong></h2>
         <h1>Description:</h1> <h3>{this.props.task.description}</h3>
         <h1>Bids:</h1>

@@ -31,7 +31,7 @@ export default class ProfileContainer extends React.Component {
         <Profile
             user={this.props.user}
             showTaskPage={this.showTaskPage}
-            currentTask={this.props.currentTask}
+            tasks={this.props.tasks}
             />
             
         

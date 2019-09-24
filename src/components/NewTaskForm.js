@@ -28,12 +28,13 @@ export default class NeWTask extends React.Component {
  
         </Form.Group>
         <Form.Group inline>
-          <label>Size</label>
+          <label>Select Specialty</label>
           
  {this.props.specialties.map( specialty => { 
           return <Form.Radio
+          key={specialty.id}
            name='specialty'
-           label={specialty.name}
+           label={specialty.name[0].toUpperCase() + specialty.name.slice(1)}
            value={specialty.id}
            checked={value === specialty.id}
            onChange={this.handleChange}

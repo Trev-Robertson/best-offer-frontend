@@ -20,15 +20,11 @@ export default class extends React.Component {
   };
 
   componentDidMount() {
-    fetch(SPECIALTIES)
-      .then(res => res.json())
-      .then(specialties =>{
-      
-        this.setState({
-          currentUser: this.props.user
-        })
-        
-      });
+
+    this.setState({
+      currentUser: this.props.user
+    })
+
   }
 
   addTask = (event, formState) => {
@@ -62,21 +58,22 @@ export default class extends React.Component {
   };
 
   CardExampleLinkCard = (task) => (
+    
     <Card
       
       href={`/task/${task.id}`}
       header={task.name}
-      meta='Friend'
+      meta={task.specialty.name}
       description={task.description}
     />
   )
 
   render() {
-   
+    console.log(this.props.tasks)
     return (
       <div >
         <div>
-          Hi, {this.state.currentUser ? this.state.currentUser.name : null}
+          Hi, <h1>{this.props.user ? this.props.user.name : null}</h1>
         </div>
         <NewTaskForm
           specialties={this.state.specialties}
@@ -88,7 +85,7 @@ export default class extends React.Component {
           {!isEmpty(this.state.currentUser)
             ? 
               this.state.currentUser.tasks.map(task => { 
-              return  <div  key={Math.floor((Math.random() * 100000000000) + 1)} onClick={() => this.props.currentTask(task)}>
+              return  <div  key={Math.floor((Math.random() * 100000000000) + 1)} >
          { this.CardExampleLinkCard(task)}
               </div>})
               

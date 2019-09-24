@@ -8,6 +8,7 @@ import ProfileContainer from "./containers/ProfileContainer";
 import TaskShowPage from "./components/TaskShowPage";
 import ContractorShowPage from "./components/ContractorShowPage"
 import { isEmpty } from "lodash";
+import {Link} from 'react-router-dom'
 
 import {
   // eslint-disable-next-line
@@ -30,25 +31,28 @@ export default class App extends React.Component {
   state = {
     currentUser: {}, 
     loading: true,
-    currentTask: null
+    removeTask: true,
+    tasks: {}
+   
   };
 
  
 
   updateUser = (user) => {
+    console.log(user.tasks)
     this.setState({
       currentUser: user, 
       loading: false,
-      currentTask: localStorage.getItem("task") ? JSON.parse(localStorage.getItem("task")) : null
+      tasks: user.tasks
     })
   }
 
-  currentTask = (task) =>{
-    // localStorage.setItem("task", JSON.stringify(task))
-    this.setState({
-      currentTask: task
-    })
-  }
+  // currentTask = (task) =>{
+  //   // localStorage.setItem("task", JSON.stringify(task))
+  //   this.setState({
+  //     currentTask: task
+  //   })
+  // }
 
   // toggleTask = () =>{
   //   this.setState({
@@ -143,7 +147,34 @@ export default class App extends React.Component {
       body: JSON.stringify(data)
     })
     .then(res => res.json())
-    .then(currentUser => this.setState({currentUser}))
+    .then(currentUser => {
+      
+    this.updateUser(currentUser)
+    })
+  }
+
+  deleteTask = (task) =>{
+    let currentUserTasks = this.state.currentUser.tasks.filter(t => t.id !== task.id)
+    
+    this.state.currentUser.tasks = currentUserTasks
+   
+    this.setState({
+      currentUser: this.state.currentUser
+    })
+    let data = {
+      id: task.id,
+      user_id: this.state.currentUser.id
+    }
+    fetch(`http://localhost:3000/tasks/${task.id}`, {
+      method: 'DELETE', 
+      headers: { 
+        'Content-Type': 'application/json'
+      }, 
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(currentUser => {
+      this.updateUser(currentUser)})
   }
 
   render() {
@@ -152,6 +183,7 @@ export default class App extends React.Component {
         <h1>BEST OFFER OR ELSE</h1>
         <p>
           <button onClick={this.logout}>Logout</button>
+          <Link to='/profile'> <button>To Profile Page</button></Link>
         </p>
         {!this.state.loading ? <Switch>
           <Route
@@ -171,15 +203,16 @@ export default class App extends React.Component {
                 path="/task/:id"
                 render={(props) =>{  
                  let taskObj =  this.state.currentUser.tasks.find(task => task.id == props.match.params.id) 
-                  return   !isEmpty(this.state.currentUser) ?
+                  return   !isEmpty(taskObj) ?
                   <TaskShowPage
                       task={taskObj}
                       toggleTask={this.toggleTask}
                       acceptBid={this.acceptBid}
                       deleteBid={this.deleteBid}
+                      deleteTask={this.deleteTask}
                   />
                   :
-                  <Redirect to="/login" />
+                  <Redirect to="/profile" />
                     
                 }}/>
               :
@@ -200,7 +233,7 @@ export default class App extends React.Component {
                 <ProfileContainer
                   user={this.state.currentUser}
                   specialties={specialties}
-                  currentTask={this.currentTask}
+                  tasks={this.state.tasks}
                 />
               ) : 
                 <Redirect to="/login" />
