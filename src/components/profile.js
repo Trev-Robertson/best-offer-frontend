@@ -88,7 +88,7 @@ export default class extends React.Component {
           {!isEmpty(this.state.currentUser)
             ? 
               this.state.currentUser.tasks.map(task => { 
-              return  <div key={Math.floor((Math.random() * 100000000000) + 1)} onClick={() => this.props.currentTask(task)}>
+              return  <div  key={Math.floor((Math.random() * 100000000000) + 1)} onClick={() => this.props.currentTask(task)}>
          { this.CardExampleLinkCard(task)}
               </div>})
               
