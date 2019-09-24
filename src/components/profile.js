@@ -2,6 +2,7 @@ import React from "react";
 import NewTaskForm from "./NewTaskForm";
 import { isEmpty } from "lodash";
 import {Link} from 'react-router-dom'
+import { Card, Feed } from 'semantic-ui-react'
 // import store from '../redux/store'
 // import {Link} from 'react-router-dom'
 
@@ -60,34 +61,37 @@ export default class extends React.Component {
     return sorted[0] ? `${sorted[0].price} by ${sorted[0].contractor.name}` : '  No Bids Yet'
   };
 
+  CardExampleLinkCard = (task) => (
+    <Card
+      
+      href={`/task/${task.id}`}
+      header={task.name}
+      meta='Friend'
+      description={task.description}
+    />
+  )
+
   render() {
    
     return (
-      <div className="columns">
-        <div className="column">
+      <div >
+        <div>
           Hi, {this.state.currentUser ? this.state.currentUser.name : null}
         </div>
         <NewTaskForm
           specialties={this.state.specialties}
           addTask={this.addTask}
         />
-        <div className="column">
+        <div >
           Current Tasks{" "}
           <br /><br />
           {!isEmpty(this.state.currentUser)
-            ? this.state.currentUser.tasks.map(task =>  
-              <Link  key={Math.floor((Math.random() * 100000000000) + 1)} to={`/task/${task.id}`}>
-              <div key={Math.floor((Math.random() * 100000000000) + 1)}>
-            <div  onClick={() => this.props.currentTask(task)} >
-                  {" "}
-                  Job: {task.name}
-                  <br /> Description: {task.description} <br />
-                   Current Lowest Bid: ${this.sortBids(task)}
-                   <br /><br /><br />
-                </div>
-                </div>
-                </Link>
-              )
+            ? 
+              this.state.currentUser.tasks.map(task => { 
+              return  <div onClick={() => this.props.currentTask(task)}>
+         { this.CardExampleLinkCard(task)}
+              </div>})
+              
             : null}
         </div>
       </div>
@@ -95,5 +99,20 @@ export default class extends React.Component {
   }
 }
 
+
+
+
+{/* <Link  key={Math.floor((Math.random() * 100000000000) + 1)} to={`/task/${task.id}`}>
+{this.CardExampleLinkCard(task)}
+</Link> */}
+// <div key={Math.floor((Math.random() * 100000000000) + 1)}>
+//             <div  onClick={() => this.props.currentTask(task)} >
+//                   {" "}
+//                   Job: {task.name}
+//                   <br /> Description: {task.description} <br />
+//                    Current Lowest Bid: ${this.sortBids(task)}
+//                    <br /><br /><br />
+//                 </div>
+//                 </div>
 
 // localStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo1fQ.Zpuw5z3XsV5yi5LQkVQxkjqK9ODqf8UAn8MI9RDH3JOM4PcbKckFlJFMiDUvyUiFpR6hWrb_Abkq037kPamzFA")

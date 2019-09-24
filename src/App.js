@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-
+import 'semantic-ui-css/semantic.min.css'
 import "./App.sass";
 import Login from "./components/Login";
 import ProfileContainer from "./containers/ProfileContainer";
