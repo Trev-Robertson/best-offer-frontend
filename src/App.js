@@ -127,18 +127,23 @@ export default class App extends React.Component {
             }
           />
 
-            
+            {!isEmpty(this.state.currentUser) ?
               <Route exact 
                 path="/task/:id"
-                render={(props) => {
-                let taskObj =  this.state.currentUser.tasks.find(task => task.id == props.match.params.id)
-                 
-                 return <TaskShowPage
-                    task={this.state.currentTask}
-                    toggleTask={this.toggleTask}
-                />
-                  } 
-                }/>
+                render={(props) =>{  
+                 let taskObj =  this.state.currentUser.tasks.find(task => task.id == props.match.params.id) 
+                  return   !isEmpty(this.state.currentUser) ?
+                  <TaskShowPage
+                      task={taskObj}
+                      toggleTask={this.toggleTask}
+                  />
+                  :
+                  <Redirect to="/login" />
+                    
+                }}/>
+              :
+              <Redirect to="/login" />
+              }
 
           <Route
             exact
