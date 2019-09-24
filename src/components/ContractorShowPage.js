@@ -18,7 +18,7 @@ export default class ContractorShowPage extends React.Component {
 
   render() {
     return (
-      <div className="columns">
+      <div >
 
       </div>
     )

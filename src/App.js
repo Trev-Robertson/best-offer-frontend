@@ -6,8 +6,9 @@ import Login from "./components/Login";
 import ProfileContainer from "./containers/ProfileContainer";
 import TaskShowPage from "./components/TaskShowPage";
 import { isEmpty } from "lodash";
-// import ReactDOM from "react-dom";
+
 import {
+  // eslint-disable-next-line
   BrowserRouter as Router,
   Route,
   Switch,
@@ -47,11 +48,11 @@ export default class App extends React.Component {
     })
   }
 
-  toggleTask = () =>{
-    this.setState({
-      currentTask: null
-    })
-  }
+  // toggleTask = () =>{
+  //   this.setState({
+  //     currentTask: null
+  //   })
+  // }
 
   logout = () => {
     localStorage.clear()
@@ -71,7 +72,7 @@ export default class App extends React.Component {
       )
       .then(res => res.json())
       .then(res => {
-         console.log(res)
+       
         this.updateUser(res)})
     }
     else{
@@ -130,15 +131,12 @@ export default class App extends React.Component {
               <Route exact 
                 path="/task/:id"
                 render={(props) => {
-                  console.log(props.match.params.id)
-                 return !isEmpty(this.state.currentTask) && props.match.params.id == this.state.currentTask.id ?
-               <TaskShowPage
-                    // user={this.props.user}
+                let taskObj =  this.state.currentUser.tasks.find(task => task.id == props.match.params.id)
+                 
+                 return <TaskShowPage
                     task={this.state.currentTask}
                     toggleTask={this.toggleTask}
                 />
-                :
-                <Redirect to="/profile" />
                   } 
                 }/>
 

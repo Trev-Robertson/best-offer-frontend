@@ -1,15 +1,8 @@
 import React from "react";
 // import store from '../redux/store'
 import Profile from "../components/profile";
-import TaskShowPage from "../components/TaskShowPage";
 
-import {
-  // eslint-disable-next-line
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+
 
 export default class ProfileContainer extends React.Component {
 
@@ -29,9 +22,9 @@ export default class ProfileContainer extends React.Component {
 
   render() {
     return (
-      <div className="columns">
-        <div className="column" style={{ justifyContent: "flex-end" }}>
-          <Switch>
+      <div >
+        <div >
+        
             
          
         <Profile
@@ -42,7 +35,7 @@ export default class ProfileContainer extends React.Component {
             
 
             
-          </Switch>
+         
         </div>
       </div>
     );
