@@ -34,8 +34,7 @@ export default class ProfileContainer extends React.Component {
             currentTask={this.props.currentTask}
             />
             
-        {/* <Route
-            <ContractorShowPage /> */}
+        
          
         </div>
       </div>

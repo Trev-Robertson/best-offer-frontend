@@ -31,10 +31,10 @@ export default class extends React.Component {
       });
   }
 
-  addTask = event => {
+  addTask = (event, formState) => {
     event.preventDefault();
     let data = {
-      name: event.target.name.value,
+      name: event.target.headline.value,
       description: event.target.description.value,
       specialty_id: event.target.specialty.value,
       user_id: this.props.user.id
@@ -102,17 +102,3 @@ export default class extends React.Component {
 
 
 
-{/* <Link  key={Math.floor((Math.random() * 100000000000) + 1)} to={`/task/${task.id}`}>
-{this.CardExampleLinkCard(task)}
-</Link> */}
-// <div key={Math.floor((Math.random() * 100000000000) + 1)}>
-//             <div  onClick={() => this.props.currentTask(task)} >
-//                   {" "}
-//                   Job: {task.name}
-//                   <br /> Description: {task.description} <br />
-//                    Current Lowest Bid: ${this.sortBids(task)}
-//                    <br /><br /><br />
-//                 </div>
-//                 </div>
-
-// localStorage.setItem("token", "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjo1fQ.Zpuw5z3XsV5yi5LQkVQxkjqK9ODqf8UAn8MI9RDH3JOM4PcbKckFlJFMiDUvyUiFpR6hWrb_Abkq037kPamzFA")

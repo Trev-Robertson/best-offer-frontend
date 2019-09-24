@@ -4,6 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import "./App.sass";
 import Login from "./components/Login";
 import ProfileContainer from "./containers/ProfileContainer";
+// import ContractorsContainer from "./containers/ContractorsContainer";
 import TaskShowPage from "./components/TaskShowPage";
 import ContractorShowPage from "./components/ContractorShowPage"
 import { isEmpty } from "lodash";
@@ -206,7 +207,13 @@ export default class App extends React.Component {
               }/>
             
             
-            
+            {/* <Route exact path='/contractors' render={() =>
+              
+                <ContractorsContainer
+                  user={this.state.currentUser}
+                  specialties={specialties}
+                  currentTask={this.currentTask}
+                />}/> */}
               
             
 

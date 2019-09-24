@@ -80,15 +80,15 @@ CardExampleGroups = (bid, index) => {
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
+            {!bid.status ?
           <div  className='ui two buttons'>
             <Button disabled={this.state.anyBidsSelected} onClick={() => this.bidAccepted(bid)} basic color='blue'>
               Accept bid of ${bid.price}
-            </Button>
-            {
-            <Button disabled={this.state.anyBidsSelected} onClick={() => this.bidDeclined(bid)} basic color='red'>
-              Decline Bid
-            </Button >}
-          </div>
+            </Button> 
+            <Button disabled={bid.status ? true : null} onClick={() => this.bidDeclined(bid)} basic color='red'>
+             { this.state.anyBidsSelected ? 'Delete Bid' : 'Decline Bid'}
+            </Button > 
+          </div> : null}
         </Card.Content>
       </Card>
     </Card.Group>)
@@ -116,6 +116,6 @@ CardExampleGroups = (bid, index) => {
 }
 
 
-// this.CardExampleGroups(bid)
+
 
 
