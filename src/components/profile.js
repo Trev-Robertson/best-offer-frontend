@@ -61,6 +61,7 @@ export default class extends React.Component {
   };
 
   render() {
+   
     return (
       <div className="columns">
         <div className="column">
@@ -75,7 +76,7 @@ export default class extends React.Component {
           <br /><br />
           {!isEmpty(this.state.currentUser)
             ? this.state.currentUser.tasks.map(task =>  
-              <Link  key={Math.floor((Math.random() * 100000000000) + 1)} to={`/profile/${task.name}`}>
+              <Link  key={Math.floor((Math.random() * 100000000000) + 1)} to={`/task/${task.id}`}>
               <div key={Math.floor((Math.random() * 100000000000) + 1)}>
             <div  onClick={() => this.props.currentTask(task)} >
                   {" "}

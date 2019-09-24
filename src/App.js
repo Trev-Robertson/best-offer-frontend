@@ -27,28 +27,29 @@ export default class App extends React.Component {
   state = {
     currentUser: {}, 
     loading: true,
-    // currentTask: null
+    currentTask: null
   };
 
-  // componentDidMount(){
-  //   fetch(URL)
-  //   .then(res => res.json())
-  //   .then(allUsers => this.setState({
-  //     allUsers
-  //   }))
-  // }
+ 
 
   updateUser = (user) => {
     this.setState({
       currentUser: user, 
-      loading: false
+      loading: false,
+      currentTask: localStorage.getItem("task") ? JSON.parse(localStorage.getItem("task")) : null
     })
   }
 
   currentTask = (task) =>{
-    // debugger
+    localStorage.setItem("task", JSON.stringify(task))
     this.setState({
       currentTask: task
+    })
+  }
+
+  toggleTask = () =>{
+    this.setState({
+      currentTask: null
     })
   }
 
@@ -61,7 +62,7 @@ export default class App extends React.Component {
 
   componentDidMount = () => {
     if(localStorage.getItem("token")){
-      console.log('found token')
+      
       fetch(PROFILE_URL, {
         headers: { "Authentication": 
         `Bearer ${localStorage.getItem("token")}` 
@@ -127,18 +128,19 @@ export default class App extends React.Component {
 
             
               <Route exact 
-                path="/profile/:task"
-                render={(props) => 
-                  this.state.currentTask ?
+                path="/task/:id"
+                render={(props) => {
+                  console.log(props.match.params.id)
+                 return !isEmpty(this.state.currentTask) && props.match.params.id == this.state.currentTask.id ?
                <TaskShowPage
                     // user={this.props.user}
                     task={this.state.currentTask}
-                    // togglePage={this.showTaskPage}
+                    toggleTask={this.toggleTask}
                 />
                 :
                 <Redirect to="/profile" />
                   } 
-                    />
+                }/>
 
           <Route
             exact

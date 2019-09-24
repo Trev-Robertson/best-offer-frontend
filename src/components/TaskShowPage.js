@@ -11,7 +11,7 @@ export default class ProfileContainer extends React.Component {
   render() {
     
     return (
-      <div onClick={() => this.props.togglePage(this.props.task)}>
+      <div onClick={this.props.toggleTask}>
         <h1 >Task:</h1> <h3>{this.props.task.name}</h3>
         <h1>Description:</h1> <h3>{this.props.task.description}</h3>
         <h1>Bids:</h1>
