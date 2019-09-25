@@ -58,13 +58,13 @@ export default class ContractorsContainer extends React.Component {
         body: JSON.stringify(data)
       })
         .then(res => res.json())
-        .then( res => {
-          console.log(res)
-          // let updateContractor = this.state.allContractors.map( contractor => contractor.id === res.id ? res.id : contractor) 
-                                          
-      this.setState({
-        allContractors: res
-      })})
+        .then( newContractor => {
+          
+          let updateContractor = this.state.allContractors.map( contractor => contractor.id === newContractor.id ? newContractor : contractor) 
+         
+          this.setState({
+            allContractors: updateContractor
+          })})
     }
 
     CardExampleLinkCard = contractor => (
