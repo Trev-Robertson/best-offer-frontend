@@ -77,7 +77,7 @@ CardExampleGroups = (bid, index) => {
           null
           }
           <Card.Header>{bid.contractor.name}</Card.Header>
-          <Card.Meta>Top Contractor! </Card.Meta>
+          <Card.Meta>{bid.status ? `Winning Bid: $${bid.price}`: 'Top Contractor!' }</Card.Meta>
           <Card.Description>
           {bid.contractor.name} Pick Me!
           </Card.Description>

@@ -4,11 +4,7 @@ import { Form } from 'semantic-ui-react'
 // import {Link} from 'react-router-dom'
 
 
-const options = [
-    { key: 'm', text: 'Male', value: 'male' },
-    { key: 'f', text: 'Female', value: 'female' },
-    { key: 'o', text: 'Other', value: 'other' },
-  ]
+
 
 
 export default class NeWTask extends React.Component {
@@ -53,38 +49,8 @@ export default class NeWTask extends React.Component {
         return(
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 {this.renderForm()}
-            {/* <form onSubmit={(event) => this.props.addTask(event)} >
-           <label name="name">Name</label>
-              <input name="name" />
-              
-              <br />
-              <p>
-              <label name="description">Description</label>
-              <textarea name="description" type='text'/>
-              <br />
-              <br />
-              <select name='specialty'>
-                  {this.props.specialties.map( specialty =>  <option key={specialty.id} value={specialty.id}>{specialty.name}</option>)
-            
-                  }
-            </select>
-            <br />
-            <br />
-               <button>Create Task!</button>
-            </p>
-            </form>  */}
+
           </div>
     )
     }
 }    
-    // t.string "name"
-    // t.text "description"
-    // t.bigint "user_id"
-    // t.bigint "specialty_id"
-{/* // this.props.specialties.map( specialty => {  */}
-//            <Form.Radio
-//            label={specialty.name}
-//            value={specialty.id}
-//            checked={value === specialty.id}
-//            onChange={this.handleChange}
-//          />})}

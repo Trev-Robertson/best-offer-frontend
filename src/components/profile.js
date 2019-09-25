@@ -1,12 +1,12 @@
 import React from "react";
 import NewTaskForm from "./NewTaskForm";
 import { isEmpty } from "lodash";
-import {Link} from 'react-router-dom'
-import { Card, Feed } from 'semantic-ui-react'
+// import {Link} from 'react-router-dom'
+import { Card} from 'semantic-ui-react'
 // import store from '../redux/store'
 // import {Link} from 'react-router-dom'
 
-const SPECIALTIES = "http://localhost:3000/specialties/";
+
 const TASKS = "http://localhost:3000/tasks/";
 
 export default class extends React.Component {
@@ -51,42 +51,47 @@ export default class extends React.Component {
   };
 
   sortBids = task => {
+  
     let sorted = task.bids.sort((a, b) => (a.price > b.price ? 1 : -1));
    
       console.log()
-    return sorted[0] ? `${sorted[0].price} by ${sorted[0].contractor.name}` : '  No Bids Yet'
+    return sorted[0] ? `Lowest Bid: $${sorted[0].price}, by ${sorted[0].contractor.name}` : '  No Bids Yet'
   };
 
   CardExampleLinkCard = (task) => (
     
     <Card
-      
+      color='blue'
       href={`/task/${task.id}`}
       header={task.name}
       meta={task.specialty.name}
-      description={task.description}
-    />
+      description={`Description: ${task.description} ${this.sortBids(task)}`}
+    /> 
   )
 
   render() {
-    console.log(this.props.tasks)
+    
     return (
       <div >
         <div>
-          Hi, <h1>{this.props.user ? this.props.user.name : null}</h1>
+        <h1> Hi, {this.props.user ? this.props.user.name : null}</h1>
+          <br /><br /> 
         </div>
         <NewTaskForm
           specialties={this.state.specialties}
           addTask={this.addTask}
         />
-        <div >
-          Current Tasks{" "}
+         <br />
+          <h1>Current Tasks:</h1>
+        <div className='current-task' >
+          
           <br /><br />
           {!isEmpty(this.state.currentUser)
             ? 
               this.state.currentUser.tasks.map(task => { 
               return  <div  key={Math.floor((Math.random() * 100000000000) + 1)} >
          { this.CardExampleLinkCard(task)}
+         
               </div>})
               
             : null}

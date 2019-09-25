@@ -13,7 +13,9 @@ export default class ContractorsContainer extends React.Component {
 
 
     componentDidMount(){
-        fetch
+      fetch(URL)
+      .then(res => res.json())
+      .then(console.log)
     }
 
 
@@ -22,6 +24,7 @@ export default class ContractorsContainer extends React.Component {
         return (
           <div >
               ContractorsContainer
+              
 
           </div>
         );

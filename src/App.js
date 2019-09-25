@@ -4,9 +4,9 @@ import 'semantic-ui-css/semantic.min.css'
 import "./App.sass";
 import Login from "./components/Login";
 import ProfileContainer from "./containers/ProfileContainer";
-// import ContractorsContainer from "./containers/ContractorsContainer";
+import ContractorsContainer from "./containers/ContractorsContainer";
 import TaskShowPage from "./components/TaskShowPage";
-import ContractorShowPage from "./components/ContractorShowPage"
+// import ContractorShowPage from "./components/ContractorShowPage"
 import { isEmpty } from "lodash";
 import {Link} from 'react-router-dom'
 
@@ -39,7 +39,6 @@ export default class App extends React.Component {
  
 
   updateUser = (user) => {
-    console.log(user.tasks)
     this.setState({
       currentUser: user, 
       loading: false,
@@ -47,18 +46,7 @@ export default class App extends React.Component {
     })
   }
 
-  // currentTask = (task) =>{
-  //   // localStorage.setItem("task", JSON.stringify(task))
-  //   this.setState({
-  //     currentTask: task
-  //   })
-  // }
 
-  // toggleTask = () =>{
-  //   this.setState({
-  //     currentTask: null
-  //   })
-  // }
 
   logout = () => {
     localStorage.clear()
@@ -82,18 +70,18 @@ export default class App extends React.Component {
         this.updateUser(res)})
     }
     else{
-      console.log('not found')
       this.setState({loading: false})
     }
   }
 
 
-  currentUser = event => {
+  handleUser = (event, newUser) => {
     event.preventDefault();
-   
+  
     let data = {
       name: event.target.name.value, 
-      password: event.target.password.value
+      password: event.target.password.value,
+      new_user: newUser
     }
     fetch(URL, {
       method: 'POST', 
@@ -154,13 +142,7 @@ export default class App extends React.Component {
   }
 
   deleteTask = (task) =>{
-    let currentUserTasks = this.state.currentUser.tasks.filter(t => t.id !== task.id)
-    
-    this.state.currentUser.tasks = currentUserTasks
-   
-    this.setState({
-      currentUser: this.state.currentUser
-    })
+
     let data = {
       id: task.id,
       user_id: this.state.currentUser.id
@@ -173,17 +155,24 @@ export default class App extends React.Component {
       body: JSON.stringify(data)
     })
     .then(res => res.json())
-    .then(currentUser => {
-      this.updateUser(currentUser)})
+    .then(updatedUser => {
+      let updateUser = this.state.currentUser
+      let currentUserTasks = updateUser.tasks.filter(t => t.id !== task.id)
+      updateUser.tasks = currentUserTasks
+      this.setState({
+        currentUser: updateUser
+      })})
   }
 
   render() {
     return (
-      <div className="App">
+      <div className="App" style={{height: '50vh'}}>
         <h1>BEST OFFER OR ELSE</h1>
         <p>
-          <button onClick={this.logout}>Logout</button>
-          <Link to='/profile'> <button>To Profile Page</button></Link>
+          {!isEmpty(this.state.currentUser) ? <div> <button onClick={this.logout}>Logout</button>
+          <Link to='/profile'> <button>To Profile Page</button></Link> </div>
+        : null
+        }
         </p>
         {!this.state.loading ? <Switch>
           <Route
@@ -193,7 +182,19 @@ export default class App extends React.Component {
               !isEmpty(this.state.currentUser) ? (
                 <Redirect to="/profile" />
               ) : (
-                <Login login={this.currentUser} />
+                <Login handleUser={this.handleUser} newUser={false}/>
+              )
+            }
+          />
+          
+          <Route
+            exact
+            path="/signup"
+            render={() =>
+              !isEmpty(this.state.currentUser) ? (
+                <Redirect to="/profile" />
+              ) : (
+                <Login handleUser={this.handleUser} newUser={true}/>
               )
             }
           />
@@ -240,13 +241,13 @@ export default class App extends React.Component {
               }/>
             
             
-            {/* <Route exact path='/contractors' render={() =>
+            <Route exact path='/contractors' render={() =>
               
                 <ContractorsContainer
                   user={this.state.currentUser}
                   specialties={specialties}
                   currentTask={this.currentTask}
-                />}/> */}
+                />}/>
               
             
 
@@ -262,139 +263,3 @@ export default class App extends React.Component {
 
 
 
-// import React from "react";
-// import "./App.css";
-// import "./App.sass";
-// import Login from "./components/Login";
-// import ProfileContainer from "./containers/ProfileContainer";
-// import { isEmpty } from "lodash";
-// // import ReactDOM from "react-dom";
-// import {
-//   BrowserRouter as Router,
-//   Route,
-//   Switch,
-//   Redirect
-// } from "react-router-dom";
-// const specialties = [
-//   "gardening",
-//   "plumbing",
-//   "technology",
-//   "electrician",
-//   "carpentry"
-// ];
-// const URL = "http://localhost:3000/api/v1/login/";
-// const PROFILE_URL = 'http://localhost:3000/api/v1/profile/'
-
-// export default class App extends React.Component {
-//   state = {
-//     currentUser: {}, 
-//     loading: true
-//   };
-
-//   // componentDidMount(){
-//   //   fetch(URL)
-//   //   .then(res => res.json())
-//   //   .then(allUsers => this.setState({
-//   //     allUsers
-//   //   }))
-//   // }
-
-//   updateUser = (user) => {
-//     this.setState({
-//       currentUser: user, 
-//       loading: false
-//     })
-//   }
-
-
-//   logout = () => {
-//     localStorage.clear()
-//     this.setState({
-//       currentUser: {}
-//     })
-//   };
-
-//   componentDidMount = () => {
-//     if(localStorage.getItem("token")){
-//       console.log('found token')
-//       fetch(PROFILE_URL, {
-//         headers: { "Authentication": 
-//         `Bearer ${localStorage.getItem("token")}` 
-//         }
-//       }
-//       )
-//       .then(res => res.json())
-//       .then(res => {this.updateUser(res)})
-//     }
-//     else{
-//       this.setState({loading: false})
-//     }
-//   }
-
-
-//   currentUser = event => {
-//     event.preventDefault();
-   
-//     let data = {
-//       name: event.target.name.value, 
-//       password: event.target.password.value
-//     }
-//     fetch(URL, {
-//       method: 'POST', 
-//       headers: { 
-//         'Content-Type': 'application/json'
-//       }, 
-//       body: JSON.stringify(data)
-//     })
-//       .then(res => res.json())
-//       .then(data => {
-   
-//       if(data.authenticated){
-//         localStorage.setItem("token", data.token)
-//         this.setState({
-//           currentUser: JSON.parse(data.user)
-//         })}
-//       });
-//   };
-
-//   render() {
-//     return (
-//       <div className="App">
-//         <h1>BEST OFFER OR ELSE</h1>
-//         <p>
-//           <button onClick={this.logout}>Logout</button>
-//         </p>
-//         {!this.state.loading ? <Switch>
-//           <Route
-//             exact
-//             path="/login"
-//             render={() =>
-//               !isEmpty(this.state.currentUser) ? (
-//                 <Redirect to="/profile" />
-//               ) : (
-//                 <Login login={this.currentUser} />
-//               )
-//             }
-//           />
-
-//           <Route
-//             exact
-//             path="/profile"
-//             render={() =>
-//               !isEmpty(this.state.currentUser) ? (
-//                 <ProfileContainer
-//                   user={this.state.currentUser}
-//                   specialties={specialties}
-//                 />
-//               ) : (
-//                 <Redirect to="/login" />
-//               )
-//             }
-//           />
-
-//           <Route path="/" render={() => <Redirect to="/login" />} />
-//         </Switch> : null}
-//       </div>
-//     );
-//   }
-// }

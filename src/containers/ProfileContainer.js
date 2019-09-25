@@ -1,7 +1,7 @@
 import React from "react";
 // import store from '../redux/store'
 import Profile from "../components/profile";
-import ContractorShowPage from "../components/ContractorShowPage"
+
 
 
 export default class ProfileContainer extends React.Component {
@@ -44,26 +44,5 @@ export default class ProfileContainer extends React.Component {
 
 
 
-{/* <TaskShowPage
-// showTask={this.props.showTask}
-  user={this.props.user}
-  task={this.state.task}
-  togglePage={this.showTaskPage}
-/> */}
 
-//   <Route exact
-//   path="/profile/task"
-//   render={ () => <TaskShowPage
-//   user={this.props.user}
-//   task={this.state.task}
-// />} />
-
-{/* <Route
-            exact
-            path="/profile"
-            render={() =>
-              !isEmpty(this.state.currentUser) ? (
-                <ProfileContainer
-                  user={this.state.currentUser}
-                  
-                /> */}
+            

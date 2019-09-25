@@ -38,3 +38,11 @@
   justify-content: space-around;
   align-items: center;
 }
+
+.current-task {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  
+ 
+}
