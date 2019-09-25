@@ -43,6 +43,12 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  
- 
+
+}
+.contractor-display {
+  display: flex;
+  justify-content: space-around;;
+  align-items: flex-start;
+  flex-wrap: wrap;
+
 }

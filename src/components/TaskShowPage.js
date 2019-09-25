@@ -105,8 +105,8 @@ CardExampleGroups = (bid, index) => {
     return (
       <div onClick={this.props.toggleTask} >
                 <Link to='/profile'> <button onClick={() => this.props.deleteTask(this.props.task)}>Delete This Task</button></Link>
-        <h1>Title:</h1> <h2><strong>{this.props.task.name}</strong></h2>
-        <h1>Description:</h1> <h3>{this.props.task.description}</h3>
+        <h1>Title: <h3><strong>{this.props.task.name}</strong></h3> </h1>
+        <h1>Description: <h3>{this.props.task.description}</h3> </h1>
         <h1>Bids:</h1>
         <div className='bids'>
         {this.sortBids().map((bid, index) =>   <div  key={Math.floor((Math.random() * 100000000000) + 1)}> {this.CardExampleGroups(bid, index)}</div>)}

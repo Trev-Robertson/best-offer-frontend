@@ -17,6 +17,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+import ContractorShowPage from "./components/ContractorShowPage";
 const specialties = [
   "gardening",
   "plumbing",
@@ -169,8 +170,10 @@ export default class App extends React.Component {
       <div className="App" style={{height: '50vh'}}>
         <h1>BEST OFFER OR ELSE</h1>
         <p>
-          {!isEmpty(this.state.currentUser) ? <div> <button onClick={this.logout}>Logout</button>
-          <Link to='/profile'> <button>To Profile Page</button></Link> </div>
+          {!isEmpty(this.state.currentUser) ? <React.Fragment> 
+            <Link to='/profile'> <button>To Profile Page</button></Link> 
+            <button onClick={this.logout}>Logout</button>
+          </React.Fragment>
         : null
         }
         </p>
@@ -241,15 +244,18 @@ export default class App extends React.Component {
               }/>
             
             
-            <Route exact path='/contractors' render={() =>
-              
-                <ContractorsContainer
+     
+
+            <Route 
+                   path='/contractors' render={(routerProps) =>{  
+                  
+              return  <ContractorsContainer
                   user={this.state.currentUser}
                   specialties={specialties}
                   currentTask={this.currentTask}
-                />}/>
-              
-            
+                 {...routerProps}
+            />}}/>
+
 
           <Route path="/" render={() => <Redirect to="/login" />} />
         </Switch> : null}
