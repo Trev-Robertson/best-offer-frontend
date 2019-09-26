@@ -37,8 +37,9 @@ export default class extends React.Component {
       : "  No Bids Yet";
   };
 
-  CardExampleLinkCard = task => (
-    <Card
+  CardExampleLinkCard = task => {
+    debugger
+   return <Card
       key={Math.floor(Math.random() * 100000000000 + 1)}
       
       color="blue"
@@ -47,9 +48,29 @@ export default class extends React.Component {
       meta={task.specialty.name[0].toUpperCase() + task.specialty.name.slice(1)}
       description={`Description: ${task.description} ${this.sortBids(task)}`}
     />
-  );
+  }
+
+
+  doneTaskNames = () =>{
+      
+    let acceptBid = []
+   
+    this.state.currentUser.tasks.map(task => task.bids.map(bid => bid.status === true ? acceptBid.push(task) : bid))
+
+  return acceptBid
+  }
+
+    doneTaskNames = () =>{
+      
+    let acceptBid = []
+   
+    this.state.currentUser.tasks.map(task => task.bids.map(bid => bid.status === true ? acceptBid.push(task) : bid))
+
+  return acceptBid
+  }
 
   render() {
+    debugger
     return (
       <div >
 <div >
@@ -76,6 +97,19 @@ export default class extends React.Component {
             ? 
             <Card.Group >
             {this.state.currentUser.tasks.map(task => {
+                
+                 return this.CardExampleLinkCard(task)}
+                
+                
+              )}</Card.Group>
+            : null}
+        </div>
+        <h1>Completed Tasks:</h1>
+        <div className='current-task'>
+        {!isEmpty(this.state.currentUser)
+            ? 
+            <Card.Group >
+            {this.doneTaskNames().map(task => {
                 
                  return this.CardExampleLinkCard(task)}
                 
