@@ -26,6 +26,7 @@ export default class ContractorsContainer extends React.Component {
       .then(allContractors => {
         this.setState({ allContractors });
       });
+      console.log('mount')
   }
 
   extra = contractor => {
@@ -63,12 +64,11 @@ export default class ContractorsContainer extends React.Component {
       });
   };
 
-  CardExampleLinkCard = contractor => (
-    <Card
+  CardExampleLinkCard = contractor => {
+
+   return  <Card
       key={contractor.id}
-      image={`https://randomuser.me/api/portraits/${
-        ["women", "men"][Math.floor(Math.random() * 2)]
-      }/${Math.floor(Math.random() * 99)}.jpg`}
+      image={contractor.img_url}
       color="blue"
       href={`/contractors/${contractor.id}`}
       header={contractor.name}
@@ -76,7 +76,7 @@ export default class ContractorsContainer extends React.Component {
       description={`Pick me if you want the job done right!`}
       extra={this.extra(contractor)}
     />
-  );
+  };
 
   render() {
     return (

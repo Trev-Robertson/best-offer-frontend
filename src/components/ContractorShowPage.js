@@ -21,9 +21,7 @@ export default class ContractorShowPage extends React.Component {
     return (
       <Comment key={review.id}>
         <Comment.Avatar
-          src={`https://randomuser.me/api/portraits/${
-            ["women", "men"][Math.floor(Math.random() * 2)]
-          }/${Math.floor(Math.random() * 99)}.jpg`}
+          src={review.user.img_url}
         />
         <Comment.Content>
           <Comment.Author as="a">{review.user.name}</Comment.Author>
@@ -100,7 +98,7 @@ export default class ContractorShowPage extends React.Component {
 
   render() {
     
-   
+
     return (
       <div>
        
@@ -109,9 +107,7 @@ export default class ContractorShowPage extends React.Component {
         
         <div className="bids">
           <Card
-            image={`https://randomuser.me/api/portraits/${
-              ["women", "men"][Math.floor(Math.random() * 2)]
-            }/${Math.floor(Math.random() * 99)}.jpg`}
+            image={this.props.contractor.img_url}
             header={this.props.contractor.name}
             meta={`My Specialties Are ${this.props.contractor.specialties[0].name[0].toUpperCase() +
               this.props.contractor.specialties[0].name.slice(1)} 

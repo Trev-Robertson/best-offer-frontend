@@ -12,7 +12,7 @@ export default class extends React.Component {
   state = {
     specialties: [
       { id: 1, name: "gardening" },
-      { id: 2, name: "capentry" },
+      { id: 2, name: "carpentry" },
       { id: 3, name: "plumbing" },
       { id: 4, name: "technology" },
       { id: 5, name: "electrician" }
@@ -52,18 +52,23 @@ export default class extends React.Component {
   render() {
     return (
       <div >
-        <React.Fragment className='profile-flow'>
+<div >
+
+
+        <br />
+<div >  
         <div>
           <h1> Hi, {this.props.user ? this.props.user.name : null}</h1>
           <br />
           <br />
-        </div>
+         </div>
         <NewTaskForm
           specialties={this.state.specialties}
           addTask={this.props.addTask}
         />
-        <br />
-        <h1>Current Tasks:</h1>
+</div>
+<div >
+        <h1>Active Tasks:</h1>
         <div className='current-task'>
           <br />
           <br />
@@ -78,11 +83,13 @@ export default class extends React.Component {
               )}</Card.Group>
             : null}
         </div>
-        <div>
-        on thie side?
-        </div>
-        </React.Fragment>
+</div>
+<div  >
+    
+        
+</div>
       </div>
+</div>
     );
   }
 }

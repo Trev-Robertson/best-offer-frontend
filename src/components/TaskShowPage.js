@@ -60,9 +60,7 @@ export default class TaskShowPage extends React.Component {
             <Image
               floated="right"
               size="mini"
-              src={`https://randomuser.me/api/portraits/med/${
-                ["women", "men"][Math.floor(Math.random() * 2)]
-              }/${Math.floor(Math.random() * 99)}.jpg`}
+              src={bid.contractor.img_url}
             />
             <h1>
               {index === 0 && !this.state.anyBidsSelected
