@@ -80,9 +80,9 @@ export default class ReviewForm extends React.Component {
                 onRate={this.handleRate}
                 size="massive"
               />
-              <Form.TextArea name="content" disabled={true}  />
+              <Form.TextArea name="content" disabled={this.props.disableForm}  />
               <Button
-                hidden={true}
+                disabled={this.props.disableForm}
                 content="Leave Review"
                 labelPosition="left"
                 icon="edit"

@@ -68,15 +68,18 @@ export default class ContractorShowPage extends React.Component {
     doneTaskNames = () =>{
       let acceptedTask = []
       this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true ? acceptedTask.push(task) : bid))
-      
       return acceptedTask
+    }
 
+    disableForm = () => {
+     let reviews =  this.props.contractor.reviews.filter(review => review.user_id === this.props.user.id)
+        return reviews.length >= this.doneTaskNames().length ? true : false 
     }
 
     CardExampleLinkCard = task => {
       // debugger
       return <Card
-        key={Math.floor(Math.random() * 100000000000 + 1)}
+       
         
         color="green"
         href={`/task/${task.id}`}
@@ -117,7 +120,7 @@ export default class ContractorShowPage extends React.Component {
 
                  return ( 
                   
-                 <div> 
+                 <div  key={Math.floor(Math.random() * 100000000000 + 1)} > 
                  {this.CardExampleLinkCard(task)}
                  </div>
 
@@ -134,7 +137,7 @@ export default class ContractorShowPage extends React.Component {
                       <ReviewForm
                         addNewReview={this.props.addNewReview}
                         contractor={this.props.contractor}
-                        disabled={this.acceptedBid()}
+                        disableForm={this.disableForm()}
                         />
                       {this.props.contractor.reviews.slice(0)
                         .reverse()
