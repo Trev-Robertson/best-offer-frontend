@@ -58,17 +58,28 @@ export default class ContractorShowPage extends React.Component {
 
 
     acceptedBid = () =>{
-        let acceptedBid = []
-      this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true ? acceptedBid.push(bid) : bid))
-       
-      return this.props.contractor.id === acceptedBid[0].contractor_id ? true : false
+      let acceptBid = []
+      let r = false
+      this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true && this.props.contractor.id == bid.contractor_id ? acceptBid.push(bid) : bid))
+      
+       if(acceptBid.length > 0){
+      this.props.contractor.id === acceptBid[0].contractor_id ? r = true : r = false
+    }
+    
+
+       return r
     }
 
 
     doneTaskNames = () =>{
-      let acceptedTask = []
-      this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true ? acceptedTask.push(task) : bid))
-      return acceptedTask
+      
+      let acceptBid = []
+     
+      this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true && this.props.contractor.id == bid.contractor_id ? acceptBid.push(task) : bid))
+      
+   
+
+    return acceptBid
     }
 
     disableForm = () => {
@@ -90,7 +101,7 @@ export default class ContractorShowPage extends React.Component {
     };
 
   render() {
-    console.log(this.props.user);
+    
    
     return (
       <div>
