@@ -26,28 +26,7 @@ export default class extends React.Component {
     });
   }
 
-  addTask = (event, formState) => {
-    event.preventDefault();
-    let data = {
-      name: event.target.headline.value,
-      description: event.target.description.value,
-      specialty_id: event.target.specialty.value,
-      user_id: this.props.user.id
-    };
-    event.target.reset();
-    console.log(event);
-    fetch(TASKS, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    })
-      .then(res => res.json())
-      .then(currentUser =>
-        this.setState({
-          currentUser
-        })
-      );
-  };
+
 
   sortBids = task => {
     let sorted = task.bids.sort((a, b) => (a.price > b.price ? 1 : -1));
@@ -60,6 +39,8 @@ export default class extends React.Component {
 
   CardExampleLinkCard = task => (
     <Card
+      key={Math.floor(Math.random() * 100000000000 + 1)}
+      
       color="blue"
       href={`/task/${task.id}`}
       header={task.name}
@@ -78,21 +59,22 @@ export default class extends React.Component {
         </div>
         <NewTaskForm
           specialties={this.state.specialties}
-          addTask={this.addTask}
+          addTask={this.props.addTask}
         />
         <br />
         <h1>Current Tasks:</h1>
-        <div className="current-task">
+        <div className='bids'>
           <br />
           <br />
           {!isEmpty(this.state.currentUser)
-            ? this.state.currentUser.tasks.map(task => {
-                return (
-                  <div key={Math.floor(Math.random() * 100000000000 + 1)}>
-                    {this.CardExampleLinkCard(task)}
-                  </div>
-                );
-              })
+            ? 
+            <Card.Group >
+            {this.state.currentUser.tasks.map(task => {
+                
+                 return this.CardExampleLinkCard(task)}
+                
+                
+              )}</Card.Group>
             : null}
         </div>
       </div>

@@ -17,7 +17,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import ContractorShowPage from "./components/ContractorShowPage";
+// import ContractorShowPage from "./components/ContractorShowPage";
 const specialties = [
   "gardening",
   "plumbing",
@@ -27,6 +27,7 @@ const specialties = [
 ];
 const URL = "http://localhost:3000/api/v1/login/";
 const PROFILE_URL = 'http://localhost:3000/api/v1/profile/'
+const TASKS = "http://localhost:3000/tasks/";
 
 export default class App extends React.Component {
   state = {
@@ -123,6 +124,35 @@ export default class App extends React.Component {
   
   }
 
+  addTask = (event) => {
+    
+    event.preventDefault();
+    let data = {
+      name: event.target.headline.value,
+      description: event.target.description.value,
+      specialty_id: event.target.specialty.value,
+      user_id: this.state.currentUser.id
+    };
+    event.target.reset();
+    
+    fetch(TASKS, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(currentUser =>{
+        console.log('end', currentUser)
+        let updateUser = this.state.currentUser
+        updateUser.tasks = currentUser.tasks
+        this.setState({
+          currentUser : updateUser
+        })}
+      );
+  };
+
+
+
   deleteBid = (bid) =>{
     let data = {
       id: bid.id,
@@ -171,7 +201,8 @@ export default class App extends React.Component {
         <h1>BEST OFFER OR ELSE</h1>
         <p>
           {!isEmpty(this.state.currentUser) ? <React.Fragment> 
-            <Link to='/profile'> <button>To Profile Page</button></Link> 
+            <Link to='/profile'> <button>To Profile Page</button></Link>
+            <Link to='/contractors'> <button>View Contractors</button></Link>  
             <button onClick={this.logout}>Logout</button>
           </React.Fragment>
         : null
@@ -238,6 +269,7 @@ export default class App extends React.Component {
                   user={this.state.currentUser}
                   specialties={specialties}
                   tasks={this.state.tasks}
+                  addTask={this.addTask}
                 />
               ) : 
                 <Redirect to="/login" />

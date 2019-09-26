@@ -32,6 +32,7 @@ export default class ProfileContainer extends React.Component {
             user={this.props.user}
             showTaskPage={this.showTaskPage}
             tasks={this.props.tasks}
+            addTask={this.props.addTask}
             />
             
         
