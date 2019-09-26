@@ -56,13 +56,45 @@ export default class ContractorShowPage extends React.Component {
     return avg.toFixed(2);
   };
 
+
+    acceptedBid = () =>{
+        let acceptedBid = []
+      this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true ? acceptedBid.push(bid) : bid))
+       
+      return this.props.contractor.id === acceptedBid[0].contractor_id ? true : false
+    }
+
+
+    doneTaskNames = () =>{
+      let acceptedTask = []
+      this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true ? acceptedTask.push(task) : bid))
+      
+      return acceptedTask
+
+    }
+
+    CardExampleLinkCard = task => {
+      // debugger
+      return <Card
+        key={Math.floor(Math.random() * 100000000000 + 1)}
+        
+        color="green"
+        href={`/task/${task.id}`}
+        header={task.name}
+        meta={task.specialty.name[0].toUpperCase() + task.specialty.name.slice(1)}
+        description={`Description: ${task.description} `}
+      />
+    };
+
   render() {
-    console.log(this.props.contractor);
+    console.log(this.props.user);
+   
     return (
       <div>
+       
         <br />
         <br />
-        <br />
+        
         <div className="bids">
           <Card
             image={`https://randomuser.me/api/portraits/${
@@ -77,19 +109,49 @@ export default class ContractorShowPage extends React.Component {
               2} years of experience`}
             extra={"Check my great reviews!!!!"}
           />
-            <div>
-          <Comment.Group>
-            <ReviewForm
-              addNewReview={this.props.addNewReview}
-              contractor={this.props.contractor}
-            />
-            {this.props.contractor.reviews
-              .reverse()
-              .map(review => this.CommentExampleComment(review))}
-          </Comment.Group>
+          
+          {this.acceptedBid() ?
+              <div>
+             `You accpted a bid from this contractor to complete these tasks: `
+                {this.doneTaskNames().map(task => {
+
+                 return ( 
+                  
+                 <div> 
+                 {this.CardExampleLinkCard(task)}
+                 </div>
+
+                    
+                 
+                   
+                
+                )})}
               </div>
+              
+                       : null
+                      }
+          <Comment.Group>
+                      <ReviewForm
+                        addNewReview={this.props.addNewReview}
+                        contractor={this.props.contractor}
+                        disabled={this.acceptedBid()}
+                        />
+                      {this.props.contractor.reviews.slice(0)
+                        .reverse()
+                        .map(review => this.CommentExampleComment(review))}
+                      </Comment.Group>
+          <div>
+           
+         
+                      </div>
         </div>
       </div>
     );
   }
 }
+
+
+//  this.props.user.tasks.map(task=> {
+//        task.bid.filter(bid => {
+//              bids.status === true})})
+// this.props.user.tasks.map(task => task.bids.map(bid => bid.status))

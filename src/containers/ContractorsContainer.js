@@ -93,6 +93,7 @@ export default class ContractorsContainer extends React.Component {
               <ContractorShowPage
                 contractor={contractorObj}
                 addNewReview={this.addNewReview}
+                user={this.props.user}
               />
             ) : null;
           }}
