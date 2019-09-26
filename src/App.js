@@ -241,7 +241,7 @@ export default class App extends React.Component {
                   return   !isEmpty(taskObj) ?
                   <TaskShowPage
                       task={taskObj}
-                      toggleTask={this.toggleTask}
+                     
                       acceptBid={this.acceptBid}
                       deleteBid={this.deleteBid}
                       deleteTask={this.deleteTask}

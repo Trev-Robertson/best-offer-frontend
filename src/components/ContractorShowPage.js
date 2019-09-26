@@ -77,16 +77,17 @@ export default class ContractorShowPage extends React.Component {
               2} years of experience`}
             extra={"Check my great reviews!!!!"}
           />
+            <div>
           <Comment.Group>
             <ReviewForm
               addNewReview={this.props.addNewReview}
               contractor={this.props.contractor}
             />
-
             {this.props.contractor.reviews
               .reverse()
               .map(review => this.CommentExampleComment(review))}
           </Comment.Group>
+              </div>
         </div>
       </div>
     );

@@ -63,7 +63,7 @@ export default class extends React.Component {
         />
         <br />
         <h1>Current Tasks:</h1>
-        <div className='bids'>
+        <div className='current-task'>
           <br />
           <br />
           {!isEmpty(this.state.currentUser)
