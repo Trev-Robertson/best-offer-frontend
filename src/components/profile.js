@@ -51,7 +51,8 @@ export default class extends React.Component {
 
   render() {
     return (
-      <div>
+      <div >
+        <React.Fragment className='profile-flow'>
         <div>
           <h1> Hi, {this.props.user ? this.props.user.name : null}</h1>
           <br />
@@ -77,6 +78,10 @@ export default class extends React.Component {
               )}</Card.Group>
             : null}
         </div>
+        <div>
+        on thie side?
+        </div>
+        </React.Fragment>
       </div>
     );
   }

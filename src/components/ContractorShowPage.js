@@ -76,8 +76,6 @@ export default class ContractorShowPage extends React.Component {
       let acceptBid = []
      
       this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true && this.props.contractor.id == bid.contractor_id ? acceptBid.push(task) : bid))
-      
-   
 
     return acceptBid
     }
