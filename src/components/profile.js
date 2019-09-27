@@ -28,15 +28,20 @@ export default class extends React.Component {
 
   sortBids = task => {
     let sorted = task.bids.sort((a, b) => (a.price > b.price ? 1 : -1));
-
-    console.log();
-    return sorted[0]
+    
+    if(!task.task_done){
+      return sorted[0]
       ? `Lowest Bid: $${sorted[0].price}, by ${sorted[0].contractor.name}`
-      : "  No Bids Yet";
+      : "  No Bids Yet";}
+      else{
+        let bid = task.bids.find(bid => bid.status === true)
+      
+        return `Winning Bid: ${bid.price}, by $${bid.contractor.name}`
+      }
   };
 
   CardExampleLinkCard = task => {
-    // debugger;
+    
     return (
       <Card
         key={Math.floor(Math.random() * 100000000000 + 1)}
@@ -46,7 +51,7 @@ export default class extends React.Component {
         meta={
           task.specialty.name[0].toUpperCase() + task.specialty.name.slice(1)
         }
-        description={`Description: ${task.description} ${this.sortBids(task)}`}
+        description={`Description: ${task.description},  ${this.sortBids(task)}`}
       />
     );
   };

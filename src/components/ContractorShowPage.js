@@ -120,7 +120,7 @@ export default class ContractorShowPage extends React.Component {
           
           {this.acceptedBid() ?
               <div>
-             `You accpted a bid from this contractor to complete these tasks: `
+             You accpted a bid from this contractor to complete these tasks: 
                 {this.doneTaskNames().map(task => {
 
                  return ( 
@@ -139,11 +139,13 @@ export default class ContractorShowPage extends React.Component {
                        : null
                       }
           <Comment.Group>
+                      {!this.props.contractor.reviews.length > 0 ? <h1> No Reviews Yet </h1>:<h1>Reviews:</h1>}
+            {!this.disableForm() ?
                       <ReviewForm
                         addNewReview={this.props.addNewReview}
                         contractor={this.props.contractor}
                         disableForm={this.disableForm()}
-                        />
+                        /> : null}
                       {this.props.contractor.reviews.slice(0)
                         .reverse()
                         .map(review => this.CommentExampleComment(review))}
