@@ -16,30 +16,6 @@ export default class ReviewForm extends React.Component {
     });
   };
 
-  CommentExampleComment = review => {
-    return (
-      <Comment key={review.id}>
-        <Comment.Avatar
-          src={`https://randomuser.me/api/portraits/${
-            ["women", "men"][Math.floor(Math.random() * 2)]
-          }/${Math.floor(Math.random() * 99)}.jpg`}
-        />
-        <Comment.Content>
-          <Comment.Author as="a">{review.user.name}</Comment.Author>
-          <Comment.Metadata>
-            <div>
-              {review.created_at.split("T")[0]}{" "}
-              <Rating icon="star" rating={review.stars} />
-            </div>
-          </Comment.Metadata>
-          <Comment.Text>{review.content}</Comment.Text>
-          {/* <Comment.Actions>
-            <Comment.Action>Reply</Comment.Action>
-          </Comment.Actions> */}
-        </Comment.Content>
-      </Comment>
-    );
-  };
 
   averageStars = () => {
     let sum = this.props.contractor.reviews.reduce((a, b) => ({
@@ -73,9 +49,10 @@ export default class ReviewForm extends React.Component {
               }
             >
               <Rating
+                disabled={this.props.disableForm}
                 icon="star"
                 name="rating"
-                defaultRating={1}
+                defaultRating={0}
                 maxRating={5}
                 onRate={this.handleRate}
                 size="massive"

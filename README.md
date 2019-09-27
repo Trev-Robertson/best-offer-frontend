@@ -66,3 +66,8 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+User Story
+    - As a User I can create a task and it will appear in Active Task
+    - Accepted: When bid is accepted
+    - Completed Task:  When bid is completed

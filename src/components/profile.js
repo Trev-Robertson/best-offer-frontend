@@ -26,8 +26,6 @@ export default class extends React.Component {
     });
   }
 
-
-
   sortBids = task => {
     let sorted = task.bids.sort((a, b) => (a.price > b.price ? 1 : -1));
 
@@ -38,92 +36,92 @@ export default class extends React.Component {
   };
 
   CardExampleLinkCard = task => {
-    debugger
-   return <Card
-      key={Math.floor(Math.random() * 100000000000 + 1)}
-      
-      color="blue"
-      href={`/task/${task.id}`}
-      header={task.name}
-      meta={task.specialty.name[0].toUpperCase() + task.specialty.name.slice(1)}
-      description={`Description: ${task.description} ${this.sortBids(task)}`}
-    />
-  }
+    // debugger;
+    return (
+      <Card
+        key={Math.floor(Math.random() * 100000000000 + 1)}
+        color="blue"
+        href={`/task/${task.id}`}
+        header={task.name}
+        meta={
+          task.specialty.name[0].toUpperCase() + task.specialty.name.slice(1)
+        }
+        description={`Description: ${task.description} ${this.sortBids(task)}`}
+      />
+    );
+  };
 
+  doneTaskNames = () => {
 
-  doneTaskNames = () =>{
-      
-    let acceptBid = []
-   
-    this.state.currentUser.tasks.map(task => task.bids.map(bid => bid.status === true ? acceptBid.push(task) : bid))
+    let acceptBid = [];
 
-  return acceptBid
-  }
+    this.state.currentUser.tasks.map(task =>
+      task.bids.map(bid => (bid.status === true ? acceptBid.push(task) : bid))
+    );
+     
+    return acceptBid;
+  };
 
-    doneTaskNames = () =>{
-      
-    let acceptBid = []
-   
-    this.state.currentUser.tasks.map(task => task.bids.map(bid => bid.status === true ? acceptBid.push(task) : bid))
+  // notDoneTaskNames = () => {
+  //   let notDone = []
 
-  return acceptBid
-  }
+  //     this.doneTaskNames()
+    
+
+  //   this.state.currentUser.tasks.map(task =>{
+       
+  //       task.bids.map(bid =>{ 
+          
+  //         bid.status === true ? NotDone.push(task) : bid
+        
+  //       })
+  //   })
+  // }
 
   render() {
-    debugger
+      
     return (
-      <div >
-<div >
-
-
-        <br />
-<div >  
+      <div>
         <div>
-          <h1> Hi, {this.props.user ? this.props.user.name : null}</h1>
           <br />
-          <br />
-         </div>
-        <NewTaskForm
-          specialties={this.state.specialties}
-          addTask={this.props.addTask}
-        />
-</div>
-<div >
-        <h1>Active Tasks:</h1>
-        <div className='current-task'>
-          <br />
-          <br />
-          {!isEmpty(this.state.currentUser)
-            ? 
-            <Card.Group >
-            {this.state.currentUser.tasks.map(task => {
-                
-                 return this.CardExampleLinkCard(task)}
-                
-                
-              )}</Card.Group>
-            : null}
+          <div>
+            <div>
+              <h1> Hi, {this.props.user ? this.props.user.name : null}</h1>
+              <br />
+              <br />
+            </div>
+            <NewTaskForm
+              specialties={this.state.specialties}
+              addTask={this.props.addTask}
+            />
+          </div>
+          <div>
+            <h1>Active Tasks:</h1>
+            <div className="current-task">
+              <br />
+              <br />
+              {!isEmpty(this.state.currentUser) ? (
+                <Card.Group>
+                  {this.state.currentUser.tasks.map(task => {
+                    return this.CardExampleLinkCard(task);
+                  })}
+                </Card.Group>
+              ) : null}
+            </div>
+            <h1>Accepted Bids:</h1>
+            <div className="current-task">
+              {!isEmpty(this.state.currentUser) ? (
+                <Card.Group>
+                  {this.doneTaskNames().map(task => {
+                    return this.CardExampleLinkCard(task);
+                  })}
+                </Card.Group>
+              ) : null}
+            </div>
+          </div>
+          <div></div>
         </div>
-        <h1>Completed Tasks:</h1>
-        <div className='current-task'>
-        {!isEmpty(this.state.currentUser)
-            ? 
-            <Card.Group >
-            {this.doneTaskNames().map(task => {
-                
-                 return this.CardExampleLinkCard(task)}
-                
-                
-              )}</Card.Group>
-            : null}
-        </div>
-</div>
-<div  >
-    
-        
-</div>
       </div>
-</div>
     );
   }
 }

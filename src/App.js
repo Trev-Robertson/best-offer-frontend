@@ -109,7 +109,8 @@ export default class App extends React.Component {
     let data = {
       id: bid.id, 
       status: true,
-      user_id: this.state.currentUser.id
+      user_id: this.state.currentUser.id,
+      task_done: true
     }
     fetch(`http://localhost:3000/bids/${bid.id}`, {
       method: 'PATCH', 
