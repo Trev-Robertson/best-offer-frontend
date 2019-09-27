@@ -20,7 +20,7 @@ export default class TaskShowPage extends React.Component {
       {
         anyBidsSelected: true
       },
-      () => this.props.acceptBid(bid)
+      () => this.props.acceptBid(bid, this.props.task)
     );
   };
 

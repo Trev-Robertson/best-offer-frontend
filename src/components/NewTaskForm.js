@@ -20,7 +20,7 @@ export default class NeWTask extends React.Component {
         const { value } = this.state
        return (<Form onSubmit={(event) => this.props.addTask(event, this.state)} >
         <Form.Group widths='equal'>
-          <Form.Input fluid name='headline' label='Headline' placeholder='Headline' />
+          <Form.Input fluid name='headline' label='Post a Service You Need' placeholder='Enter Task' />
  
         </Form.Group>
         <Form.Group inline>

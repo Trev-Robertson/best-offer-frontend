@@ -62,21 +62,6 @@ export default class extends React.Component {
     return acceptBid;
   };
 
-  // notDoneTaskNames = () => {
-  //   let notDone = []
-
-  //     this.doneTaskNames()
-    
-
-  //   this.state.currentUser.tasks.map(task =>{
-       
-  //       task.bids.map(bid =>{ 
-          
-  //         bid.status === true ? NotDone.push(task) : bid
-        
-  //       })
-  //   })
-  // }
 
   render() {
       
@@ -90,6 +75,7 @@ export default class extends React.Component {
               <br />
               <br />
             </div>
+            <h1>What Do You Need Done?</h1>
             <NewTaskForm
               specialties={this.state.specialties}
               addTask={this.props.addTask}
@@ -103,8 +89,9 @@ export default class extends React.Component {
               {!isEmpty(this.state.currentUser) ? (
                 <Card.Group>
                   {this.state.currentUser.tasks.map(task => {
+                    if(!task.task_done){
                     return this.CardExampleLinkCard(task);
-                  })}
+                  }})}
                 </Card.Group>
               ) : null}
             </div>

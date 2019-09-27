@@ -103,16 +103,26 @@ export default class App extends React.Component {
       });
   };
 
-  acceptBid = (bid) => {
+  acceptBid = (bid, task) => {
     
     if(!bid.status){
-    let data = {
-      id: bid.id, 
-      status: true,
-      user_id: this.state.currentUser.id,
-      task_done: true
-    }
-    fetch(`http://localhost:3000/bids/${bid.id}`, {
+      let data = {
+        task:{
+        id: task.id,
+        task_done: true,
+        user_id: this.state.currentUser.id,
+        bids_attributes:
+            {
+            id: bid.id, 
+            status: true
+            }
+        }
+      }
+      
+    
+
+      
+    fetch(`http://localhost:3000/tasks/${task.id}`, {
       method: 'PATCH', 
       headers: { 
         'Content-Type': 'application/json'
@@ -121,7 +131,7 @@ export default class App extends React.Component {
     })
     .then(res => res.json())
     .then(currentUser => this.setState({currentUser}))
-  }
+    }
   
   }
 
