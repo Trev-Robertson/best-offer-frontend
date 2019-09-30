@@ -67,13 +67,13 @@ export default class App extends React.Component {
 
   componentDidMount = () => {
     if (localStorage.getItem("token")) {
-      fetch(localStorage.getItem("contractor") ? CONTRACTOR_URL : PROFILE_URL, {
+      fetch(localStorage.getItem("contractor") === 'true' ? CONTRACTOR_URL : PROFILE_URL, {
         headers: { Authentication: `Bearer ${localStorage.getItem("token")}` }
       })
         .then(res => res.json())
         .then(res => {
-          
-          localStorage.getItem("contractor")
+        
+          localStorage.getItem("contractor") ==='true'
             ? this.refreshContractor(res)
             : this.updateUser(res);
         });
@@ -298,65 +298,22 @@ export default class App extends React.Component {
               }}
             />
 
-            <Route
-              path="/signup/contractor"
-              render={props =>
-                !isEmpty(this.state.currentContractor) ? (
-                  <Redirect to="/contractor" />
-                ) : (
-                  <Login
-                    handleUser={this.handleUser}
-                    newUser={false}
-                    contractor={true}
-                    routerProps={props}
-                    newUser={true}
-                    contractor={true}
-                  />
-                )
-              }
-            />
-
-            <Route
-              exact
-              path="/signup"
-              render={props =>
-                !isEmpty(this.state.currentUser) ? (
-                  <Redirect to="/profile" />
-                ) : (
-                  <Login
-                    handleUser={this.handleUser}
-                    newUser={true}
-                    routerProps={props}
-                    contractor={false}
-                  />
-                )
-              }
-            />
-
-            {!isEmpty(this.state.currentUser) ? (
-              <Route
-                exact
-                path="/task/:id"
-                render={props => {
-                  let taskObj = this.state.currentUser.tasks.find(
-                    task => task.id == props.match.params.id
-                  );
-                
-                  return !isEmpty(taskObj) ? (
-                    <TaskShowPage
-                      task={taskObj}
-                      acceptBid={this.acceptBid}
-                      deleteBid={this.deleteBid}
-                      deleteTask={this.deleteTask}
-                    />
-                  ) : (
-                    <Redirect to="/profile" />
-                  );
-                }}
-              />
-            ) : (
-              <Redirect to="/login" />
-            )}
+                <Route
+                  exact
+                  path="/signup"
+                  render={props =>
+                    !isEmpty(this.state.currentUser) ? (
+                      <Redirect to="/profile" />
+                    ) : (
+                      <Login
+                        handleUser={this.handleUser}
+                        newUser={true}
+                        routerProps={props}
+                        contractor={false}
+                      />
+                    )
+                  }
+                />
 
             <Route
               exact
@@ -389,6 +346,52 @@ export default class App extends React.Component {
                 );
               }}
             />
+
+            <Route
+              path="/signup/contractor"
+              render={props =>
+                !isEmpty(this.state.currentContractor) ? (
+                  <Redirect to="/contractor" />
+                ) : (
+                  <Login
+                    handleUser={this.handleUser}
+                    newUser={false}
+                    contractor={true}
+                    routerProps={props}
+                    newUser={true}
+                    contractor={true}
+                  />
+                )
+              }
+            />
+
+
+            {!isEmpty(this.state.currentUser) ? (
+              <Route
+                exact
+                path="/task/:id"
+                render={props => {
+                  let taskObj = this.state.currentUser.tasks.find(
+                    task => task.id == props.match.params.id
+                  );
+                
+                  return !isEmpty(taskObj) ? (
+                    <TaskShowPage
+                      task={taskObj}
+                      acceptBid={this.acceptBid}
+                      deleteBid={this.deleteBid}
+                      deleteTask={this.deleteTask}
+                    />
+                  ) : (
+                    <Redirect to="/profile" />
+                  );
+                }}
+              />
+            ) : (
+              <Redirect to="/login" />
+            )}
+
+ 
 
             {/* <Route exact path="/" render={() => <Redirect to="/login" />} /> */}
           </Switch>

@@ -55,13 +55,9 @@ export default class TaskShowPage extends React.Component {
   CardExampleGroups = (bid, index) => {
     return (
       <Card.Group>
-        <Card >
-          <Card.Content  href={`/contractors/${bid.contractor.id}`}>
-            <Image
-              floated="right"
-              size="mini"
-              src={bid.contractor.img_url}
-            />
+        <Card>
+          <Card.Content href={`/contractors/${bid.contractor.id}`}>
+            <Image floated="right" size="mini" src={bid.contractor.img_url} />
             <h1>
               {index === 0 && !this.state.anyBidsSelected
                 ? "Best Value!"
@@ -69,7 +65,7 @@ export default class TaskShowPage extends React.Component {
             </h1>
             {bid.status ? <h1>Congrats!!!!! You selected this bid!</h1> : null}
             <Card.Header>{bid.contractor.name}</Card.Header>
-            <Card.Meta >
+            <Card.Meta>
               {bid.status ? `Winning Bid: $${bid.price}` : "Top Contractor!"}
             </Card.Meta>
             <Card.Description>{bid.contractor.name} Pick Me!</Card.Description>
@@ -103,7 +99,7 @@ export default class TaskShowPage extends React.Component {
 
   render() {
     return (
-      <div >
+      <div>
         <Link to="/profile">
           {" "}
           <button onClick={() => this.props.deleteTask(this.props.task)}>
