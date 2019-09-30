@@ -56,7 +56,8 @@ export default class App extends React.Component {
   logout = () => {
     localStorage.clear()
     this.setState({
-      currentUser: {}
+      currentUser: {},
+      currentContractor: {}
     })
   };
 
@@ -95,7 +96,7 @@ export default class App extends React.Component {
     }
 
        
-    fetch(URL + (contractors ? contractor : null), {
+    fetch(URL + (contractors ? contractor : ""), {
       method: 'POST', 
       headers: { 
         'Content-Type': 'application/json'
@@ -105,17 +106,19 @@ export default class App extends React.Component {
       .then(res => res.json())
       .then(data => {
           console.log(data)
-      if(data.authenticated && contractors == ""){
-        localStorage.setItem("token", data.token)
-        this.setState({
-          currentUser: JSON.parse(data.user)
-        })}
+          
+         if (data.authenticated && contractor == "contractor"){
+            localStorage.setItem("token", data.token)
+            localStorage.setItem("contractor", data.token)
 
-       else if (data.authenticated && contractor == "contractor"){
-          localStorage.setItem("token", data.token)
-          this.setState({
-            currentContractor: JSON.parse(data.user)
-         })}
+            this.setState({
+              currentContractor: JSON.parse(data.user)
+            })}
+            else if (data.authenticated && contractor == ""){
+                      localStorage.setItem("token", data.token)
+                      this.setState({
+                        currentUser: JSON.parse(data.user)
+                      })}
           })  ;
   };
 
@@ -237,11 +240,11 @@ export default class App extends React.Component {
           <Route
             exact
             path="/login"
-            render={() =>
+            render={(props) =>
               !isEmpty(this.state.currentUser) ? (
                 <Redirect to="/profile" />
               ) : (
-                <Login handleUser={this.handleUser} newUser={false} contractor={false}/>
+                <Login handleUser={this.handleUser} newUser={false} contractor={false} routerProps={props} contractor={false}/>
               )
             }
           />
@@ -249,11 +252,23 @@ export default class App extends React.Component {
           <Route
             
             path="/login/contractor"
-            render={() =>
+            render={(props) =>
               !isEmpty(this.state.currentUser) ? (
                 <Redirect to="/contractor" />
               ) : (
-                <Login handleUser={this.handleUser} newUser={false} contractor={true}/>
+                <Login handleUser={this.handleUser} newUser={false} contractor={true} routerProps={props} contractor={true}/>
+              )
+            }
+          />
+
+            <Route
+            
+            path="/signup/contractor"
+            render={(props) =>
+              !isEmpty(this.state.currentUser) ? (
+                <Redirect to="/contractor" />
+              ) : (
+                <Login handleUser={this.handleUser} newUser={false} contractor={true} routerProps={props} newUser={true} contractor={true}/>
               )
             }
           />
@@ -261,14 +276,17 @@ export default class App extends React.Component {
           <Route
             exact
             path="/signup"
-            render={() =>
+            render={(props) =>
               !isEmpty(this.state.currentUser) ? (
                 <Redirect to="/profile" />
               ) : (
-                <Login handleUser={this.handleUser} newUser={true}/>
+                <Login handleUser={this.handleUser} newUser={true} routerProps={props} contractor={false}/>
               )
             }
           />
+
+          
+          
 
             {!isEmpty(this.state.currentUser) ?
               <Route exact 
