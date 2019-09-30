@@ -20,9 +20,7 @@ export default class ContractorShowPage extends React.Component {
   CommentExampleComment = review => {
     return (
       <Comment key={review.id}>
-        <Comment.Avatar
-          src={review.user.img_url}
-        />
+        <Comment.Avatar src={review.user.img_url} />
         <Comment.Content>
           <Comment.Author as="a">{review.user.name}</Comment.Author>
           <Comment.Metadata>
@@ -54,57 +52,68 @@ export default class ContractorShowPage extends React.Component {
     return avg.toFixed(2);
   };
 
+  acceptedBid = () => {
+    let acceptBid = [];
+    let r = false;
+    this.props.user.tasks.map(task =>
+      task.bids.map(bid =>
+        bid.status === true && this.props.contractor.id == bid.contractor_id
+          ? acceptBid.push(bid)
+          : bid
+      )
+    );
 
-    acceptedBid = () =>{
-      let acceptBid = []
-      let r = false
-      this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true && this.props.contractor.id == bid.contractor_id ? acceptBid.push(bid) : bid))
-      
-       if(acceptBid.length > 0){
-      this.props.contractor.id === acceptBid[0].contractor_id ? r = true : r = false
+    if (acceptBid.length > 0) {
+      this.props.contractor.id === acceptBid[0].contractor_id
+        ? (r = true)
+        : (r = false);
     }
+
+    return r;
+  };
+
+  doneTaskNames = () => {
+    let acceptBid = [];
+
+    this.props.user.tasks.map(task =>
+      task.bids.map(bid =>
+        bid.status === true && this.props.contractor.id == bid.contractor_id
+          ? acceptBid.push(task)
+          : bid
+      )
+    );
+
+    return acceptBid;
+  };
+
+  disableForm = () => {
+    let reviews = this.props.contractor.reviews.filter(
+      review => review.user_id === this.props.user.id
+    );
+    return reviews.length >= this.doneTaskNames().length ? true : false;
+  };
+
+  CardExampleLinkCard = task => {
     
-
-       return r
-    }
-
-
-    doneTaskNames = () =>{
-      
-      let acceptBid = []
-     
-      this.props.user.tasks.map(task => task.bids.map(bid => bid.status === true && this.props.contractor.id == bid.contractor_id ? acceptBid.push(task) : bid))
-
-    return acceptBid
-    }
-
-    disableForm = () => {
-     let reviews =  this.props.contractor.reviews.filter(review => review.user_id === this.props.user.id)
-        return reviews.length >= this.doneTaskNames().length ? true : false 
-    }
-
-    CardExampleLinkCard = task => {
-      // debugger
-      return <Card
-       
-        
+    return (
+      <Card
         color="green"
         href={`/task/${task.id}`}
         header={task.name}
-        meta={task.specialty.name[0].toUpperCase() + task.specialty.name.slice(1)}
+        meta={
+          task.specialty.name[0].toUpperCase() + task.specialty.name.slice(1)
+        }
         description={`Description: ${task.description} `}
       />
-    };
+    );
+  };
 
   render() {
-    
-
     return (
       <div>
-       
         <br />
         <br />
-        
+
         <div className="bids">
           <Card
             image={this.props.contractor.img_url}
@@ -117,49 +126,35 @@ export default class ContractorShowPage extends React.Component {
               2} years of experience`}
             extra={"Check my great reviews!!!!"}
           />
-          
-          {this.acceptedBid() ?
-              <div>
-             `You accpted a bid from this contractor to complete these tasks: `
-                {this.doneTaskNames().map(task => {
 
-                 return ( 
-                  
-                 <div  key={Math.floor(Math.random() * 100000000000 + 1)} > 
-                 {this.CardExampleLinkCard(task)}
-                 </div>
-
-                    
-                 
-                   
-                
-                )})}
-              </div>
-              
-                       : null
-                      }
+          {this.acceptedBid() ? (
+            <div>
+              <h4>You accpted a bid from this contractor to complete these tasks: </h4>
+              {this.doneTaskNames().map(task => {
+                return (
+                  <div key={Math.floor(Math.random() * 100000000000 + 1)}>
+                    {this.CardExampleLinkCard(task)}
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
           <Comment.Group>
-                      <ReviewForm
-                        addNewReview={this.props.addNewReview}
-                        contractor={this.props.contractor}
-                        disableForm={this.disableForm()}
-                        />
-                      {this.props.contractor.reviews.slice(0)
-                        .reverse()
-                        .map(review => this.CommentExampleComment(review))}
-                      </Comment.Group>
-          <div>
-           
-         
-                      </div>
+            <ReviewForm
+              addNewReview={this.props.addNewReview}
+              contractor={this.props.contractor}
+              disableForm={this.disableForm()}
+            />
+            {this.props.contractor.reviews.length > 0 ? <h3> Reviews:</h3> : <h3> No Reviews Yet</h3>}
+            {this.props.contractor.reviews.length > 0 ?  this.props.contractor.reviews
+              .slice(0)
+              .reverse()
+              .map(review => this.CommentExampleComment(review)) : null}
+          </Comment.Group>
+          <div></div>
         </div>
       </div>
     );
   }
 }
 
-
-//  this.props.user.tasks.map(task=> {
-//        task.bid.filter(bid => {
-//              bids.status === true})})
-// this.props.user.tasks.map(task => task.bids.map(bid => bid.status))

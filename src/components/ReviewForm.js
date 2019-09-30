@@ -36,6 +36,8 @@ export default class ReviewForm extends React.Component {
         <br />
         <br />
         <div className="bids">
+          
+            {!this.props.disableForm ? <React.Fragment>
           <Comment.Group>
             <Header as="h3" dividing>
               Please Leave a Review!
@@ -70,6 +72,7 @@ export default class ReviewForm extends React.Component {
               />
             </Form>
           </Comment.Group>
+          </React.Fragment>: null}
         </div>
       </div>
     );
