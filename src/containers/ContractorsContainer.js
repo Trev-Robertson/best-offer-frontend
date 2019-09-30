@@ -26,7 +26,7 @@ export default class ContractorsContainer extends React.Component {
       .then(allContractors => {
         this.setState({ allContractors });
       });
-      console.log('mount')
+    console.log("mount");
   }
 
   extra = contractor => {
@@ -65,17 +65,18 @@ export default class ContractorsContainer extends React.Component {
   };
 
   CardExampleLinkCard = contractor => {
-
-   return  <Card
-      key={contractor.id}
-      image={contractor.img_url}
-      color="blue"
-      href={`/contractors/${contractor.id}`}
-      header={contractor.name}
-      meta={""}
-      description={`Pick me if you want the job done right!`}
-      extra={this.extra(contractor)}
-    />
+    return (
+      <Card
+        key={contractor.id}
+        image={contractor.img_url}
+        color="blue"
+        href={`/contractors/${contractor.id}`}
+        header={contractor.name}
+        meta={""}
+        description={`Pick me if you want the job done right!`}
+        extra={this.extra(contractor)}
+      />
+    );
   };
 
   render() {

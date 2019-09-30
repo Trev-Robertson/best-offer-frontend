@@ -1,31 +1,16 @@
 import React from "react";
 // import store from '../redux/store'
-
-
+import ContractorProfile from '../components/ContractorProfile'
 
 export default class ContractorProfileContainer extends React.Component {
-
-    state = {
-    
-    }
-
-
+  state = {};
 
   render() {
-
+    
     return (
-      <div >
-        <div >
-        
-                Contractor Profile Page
-         
-        </div>
+      <div>
+        <ContractorProfile contractor={this.props.contractor}/>
       </div>
     );
   }
 }
-
-
-
-
-            

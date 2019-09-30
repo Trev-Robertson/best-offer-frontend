@@ -8,7 +8,7 @@ import { Card } from "semantic-ui-react";
 
 const TASKS = "http://localhost:3000/tasks/";
 
-export default class extends React.Component {
+export default class Profile extends React.Component {
   state = {
     specialties: [
       { id: 1, name: "gardening" },
@@ -52,19 +52,16 @@ export default class extends React.Component {
   };
 
   doneTaskNames = () => {
-
     let acceptBid = [];
 
     this.state.currentUser.tasks.map(task =>
       task.bids.map(bid => (bid.status === true ? acceptBid.push(task) : bid))
     );
-     
+
     return acceptBid;
   };
 
-
   render() {
-      
     return (
       <div>
         <div>
@@ -89,9 +86,10 @@ export default class extends React.Component {
               {!isEmpty(this.state.currentUser) ? (
                 <Card.Group>
                   {this.state.currentUser.tasks.map(task => {
-                    if(!task.task_done){
-                    return this.CardExampleLinkCard(task);
-                  }})}
+                    if (!task.task_done) {
+                      return this.CardExampleLinkCard(task);
+                    }
+                  })}
                 </Card.Group>
               ) : null}
             </div>
