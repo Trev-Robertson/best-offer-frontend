@@ -13,7 +13,7 @@ export default class Login extends React.Component {
         <p>
          
         {this.props.newUser ? 'Sign Up Here!' : 'Please Log In'}</p>
-        <form onSubmit={(event) => this.props.handleUser(event, this.props.newUser)}>
+        <form onSubmit={(event) => this.props.handleUser(event, this.props.newUser, this.props.contractor)}>
           <label name="name">Name</label>
           <input name="name" />
           <br />
