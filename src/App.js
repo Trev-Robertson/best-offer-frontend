@@ -4,6 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import "./App.sass";
 import Login from "./components/Login";
 import ProfileContainer from "./containers/ProfileContainer";
+import ContractorProfileContainer from "./containers/ContractorProfileContainer";
 import ContractorsContainer from "./containers/ContractorsContainer";
 import TaskShowPage from "./components/TaskShowPage";
 // import ContractorShowPage from "./components/ContractorShowPage"
@@ -26,6 +27,7 @@ const specialties = [
   "carpentry"
 ];
 const URL = "http://localhost:3000/api/v1/login/";
+const CONTRACTOR_URL = "http://localhost:3000/api/v1/login/contractors"
 const PROFILE_URL = 'http://localhost:3000/api/v1/profile/'
 const TASKS = "http://localhost:3000/tasks/";
 
@@ -34,7 +36,8 @@ export default class App extends React.Component {
     currentUser: {}, 
     loading: true,
     removeTask: true,
-    tasks: {}
+    tasks: {},
+    currentContractor: {}
    
   };
 
@@ -77,15 +80,22 @@ export default class App extends React.Component {
   }
 
 
-  handleUser = (event, newUser) => {
+  handleUser = (event, newUser, contractors) => {
     event.preventDefault();
+    let contractor
+      if(contractors){
+           contractor = 'contractor' 
+          }
+     
   
     let data = {
       name: event.target.name.value, 
       password: event.target.password.value,
       new_user: newUser
     }
-    fetch(URL, {
+
+       
+    fetch(URL + (contractors ? contractor : null), {
       method: 'POST', 
       headers: { 
         'Content-Type': 'application/json'
@@ -94,24 +104,39 @@ export default class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-   
-      if(data.authenticated){
+          console.log(data)
+      if(data.authenticated && contractors == ""){
         localStorage.setItem("token", data.token)
         this.setState({
           currentUser: JSON.parse(data.user)
         })}
-      });
+
+       else if (data.authenticated && contractor == "contractor"){
+          localStorage.setItem("token", data.token)
+          this.setState({
+            currentContractor: JSON.parse(data.user)
+         })}
+          })  ;
   };
 
   acceptBid = (bid) => {
     
     if(!bid.status){
-    let data = {
-      id: bid.id, 
-      status: true,
-      user_id: this.state.currentUser.id
-    }
-    fetch(`http://localhost:3000/bids/${bid.id}`, {
+      let data = {
+        task:{
+        id: task.id,
+        task_done: true,
+        user_id: this.state.currentUser.id,
+        bids_attributes:
+            {
+            id: bid.id, 
+            status: true
+            }
+        }
+      }
+      
+      
+    fetch(`http://localhost:3000/tasks/${task.id}`, {
       method: 'PATCH', 
       headers: { 
         'Content-Type': 'application/json'
@@ -216,7 +241,19 @@ export default class App extends React.Component {
               !isEmpty(this.state.currentUser) ? (
                 <Redirect to="/profile" />
               ) : (
-                <Login handleUser={this.handleUser} newUser={false}/>
+                <Login handleUser={this.handleUser} newUser={false} contractor={false}/>
+              )
+            }
+          />
+
+          <Route
+            
+            path="/login/contractor"
+            render={() =>
+              !isEmpty(this.state.currentUser) ? (
+                <Redirect to="/contractor" />
+              ) : (
+                <Login handleUser={this.handleUser} newUser={false} contractor={true}/>
               )
             }
           />
@@ -273,6 +310,17 @@ export default class App extends React.Component {
                 />
               ) : 
                 <Redirect to="/login" />
+              }/>
+
+          <Route
+            
+            path="/contractor"
+            render={() =>
+              !isEmpty(this.state.currentUser) ? (
+                <ContractorProfileContainer
+                />
+              ) : 
+                <Redirect to="/login/contractor" />
               }/>
             
             
