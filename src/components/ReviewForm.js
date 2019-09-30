@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Comment, Form, Header, Rating } from "semantic-ui-react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Switch,
+//   Redirect
+// } from "react-router-dom";
 
 export default class ReviewForm extends React.Component {
   state = { rating: 3 };

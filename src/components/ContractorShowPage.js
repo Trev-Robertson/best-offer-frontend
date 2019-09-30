@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, Comment, Form, Header, Rating, Card } from "semantic-ui-react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import { Comment, Rating, Card } from "semantic-ui-react";
+// import {
+//   BrowserRouter as Router,
+//   Route,
+//   Switch,
+//   Redirect
+// } from "react-router-dom";
 import ReviewForm from "./ReviewForm";
 
 export default class ContractorShowPage extends React.Component {
@@ -57,7 +57,7 @@ export default class ContractorShowPage extends React.Component {
     let r = false;
     this.props.user.tasks.map(task =>
       task.bids.map(bid =>
-        bid.status === true && this.props.contractor.id == bid.contractor_id
+        bid.status === true && this.props.contractor.id === bid.contractor_id
           ? acceptBid.push(bid)
           : bid
       )
@@ -77,7 +77,7 @@ export default class ContractorShowPage extends React.Component {
 
     this.props.user.tasks.map(task =>
       task.bids.map(bid =>
-        bid.status === true && this.props.contractor.id == bid.contractor_id
+        bid.status === true && this.props.contractor.id === bid.contractor_id
           ? acceptBid.push(task)
           : bid
       )

@@ -5,9 +5,7 @@ import { isEmpty } from "lodash";
 import {
   // eslint-disable-next-line
   BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
+  Route
 } from "react-router-dom";
 
 const URL = "http://localhost:3000/contractors";

@@ -106,7 +106,7 @@ export default class App extends React.Component {
       .then(data => {
         console.log(data);
 
-        if (data.authenticated && contractor == "contractor") {
+        if (data.authenticated && contractor === "contractor") {
           localStorage.setItem("token", data.token);
           localStorage.setItem("contractor", true);
 
@@ -247,18 +247,38 @@ export default class App extends React.Component {
         {!this.state.loading ? (
           <Switch>
 
+
+
+
+
             <Route
               exact
               path="/contractor"
-              render={() => {
-       
+              render={(routerProps) => {
+                debugger
+                // let taskObj = this.state.currentContractor.bids.find(
+                //   task => task.id == props.match.params.id
+                // );
                  return !isEmpty(this.state.currentContractor) ? (
-                <ContractorProfileContainer contractor={this.state.currentContractor}/>
+                <ContractorProfileContainer 
+                {...routerProps} 
+                contractor={this.state.currentContractor}
+                // task={taskObj}
+                // currentTask={this.currentTask}
+                    acceptBid={this.acceptBid}
+                    deleteBid={this.deleteBid}
+                    deleteTask={this.deleteTask}
+                
+                />
                 ) : (
                   <Redirect to="/login/contractor" />
                 )
               }}
             />
+
+
+
+
 
             <Route
               exact
@@ -273,7 +293,7 @@ export default class App extends React.Component {
                     newUser={false}
                     contractor={true}
                     routerProps={props}
-                    contractor={true}
+                 
                   />
                 );
               }}
@@ -292,7 +312,7 @@ export default class App extends React.Component {
                     newUser={false}
                     contractor={false}
                     routerProps={props}
-                    contractor={false}
+                   
                   />
                 );
               }}
@@ -336,14 +356,14 @@ export default class App extends React.Component {
             <Route
               path="/contractors"
               render={routerProps => {
-                return (
-                  <ContractorsContainer
+                 return !isEmpty(this.state.currentUser) ?
+                   <ContractorsContainer
                     user={this.state.currentUser}
                     specialties={specialties}
                     currentTask={this.currentTask}
                     {...routerProps}
-                  />
-                );
+                  /> : <Redirect to="/login" />
+                ;
               }}
             />
 
@@ -355,18 +375,18 @@ export default class App extends React.Component {
                 ) : (
                   <Login
                     handleUser={this.handleUser}
-                    newUser={false}
+                    
                     contractor={true}
                     routerProps={props}
                     newUser={true}
-                    contractor={true}
+                   
                   />
                 )
               }
             />
 
 
-            {!isEmpty(this.state.currentUser) ? (
+            {!isEmpty(this.state.currentUser)  ? (
               <Route
                 exact
                 path="/task/:id"

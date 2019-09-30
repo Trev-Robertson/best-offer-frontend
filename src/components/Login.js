@@ -60,7 +60,3 @@ export default class Login extends React.Component {
     );
   }
 }
-
-{/* <p> Want to Join? <Link to='/signup'> Click Here To Sign Up!</Link></p></div> */}
-{/* <p> Contractors <Link to='/login/contractor'> Click Here To Login or Sign up</Link></p> */}
-{/* <p> Contractors <Link to='/login/contractor'> Click Here To Login or Sign up</Link></p> */}
