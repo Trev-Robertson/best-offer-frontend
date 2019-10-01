@@ -51,7 +51,7 @@ export default class ContractorTaskShowPage extends React.Component {
     let myBid 
     this.state.currentTask.task_done ? bid = this.state.currentTask.bids.find(bid => bid.status === true) : bid = this.state.sortedBids[0]
     this.state.currentTask.bids ? myBid = this.props.contractor.bids.find(bid => bid.task.id === this.state.currentTask.id) : myBid = null
-  //  debugger
+   debugger
    return this.state.sortedBids[0] ?
      <Card.Group>
         <Card>
@@ -94,7 +94,49 @@ export default class ContractorTaskShowPage extends React.Component {
           </Card.Content>
         </Card>
       </Card.Group>
-     : null
+
+
+
+
+     : <Card.Group>
+     <Card>
+       <Card.Content >
+
+       
+       <h3>{myBid ?  `Your current bid is $${myBid.price}` : 'No Bids Yet, Bid now!'}</h3>
+       
+       
+       
+         <Card.Header></Card.Header>
+         <Card.Meta>
+           {/* {bid.status ? `Winning Bid Was $${bid.price}` : null} */}
+         </Card.Meta>
+         
+       </Card.Content>
+       <Card.Content extra>
+         
+
+           <div className="ui two buttons">
+   
+              <BidModal 
+              makeABid={this.props.makeABid}
+              contractor={this.props.contractor}
+              task={this.state.currentTask}
+              />
+           {myBid ?
+           <Button
+           basic
+           color="red"
+           onClick={(event) => this.props.contractorDeleteBid(event, myBid.id, this.props.contractor)}
+           >Delete Bid</Button>
+             : null}
+           </div>
+
+
+         
+       </Card.Content>
+     </Card>
+   </Card.Group>
   };
 
   showBid = () => {

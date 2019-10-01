@@ -31,7 +31,7 @@ export default class ContractorProfileContainer extends React.Component {
         <Route
           exact
           path={`${this.props.match.url}/task/:id`}
-          render={props => { 
+          render={routerProps => { 
             // debugger
             // let taskObj = this.props.contractor.bids.find(
             //   bid => bid.task.id == props.match.params.id
@@ -39,10 +39,11 @@ export default class ContractorProfileContainer extends React.Component {
       
             
             return <ContractorTaskShowPage 
-            id={props.match.params.id}
+            id={routerProps.match.params.id}
             contractor={this.props.contractor}
             makeABid={this.props.makeABid}
             contractorDeleteBid={this.props.contractorDeleteBid}
+            routerProps={routerProps}
             />
           }}
         />
@@ -50,8 +51,8 @@ export default class ContractorProfileContainer extends React.Component {
         <Route
           exact
           path={`${this.props.match.url}`}
-          render={() => {
-           return <ContractorProfile contractor={this.props.contractor}/>
+          render={(routerProps) => {
+           return <ContractorProfile contractor={this.props.contractor} routerProps={routerProps}/>
             }}
         />
       </div>

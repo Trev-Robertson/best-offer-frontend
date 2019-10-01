@@ -36,11 +36,25 @@ export default class AllOpenTasks extends React.Component {
     ) : null;
   };
 
-
+  sortBids = (bids) => {
+   
+      
+    let sorted = bids.sort((a, b) =>
+      a.price > b.price ? 1 : -1
+    );
+    
+    return sorted;
+  };
 
 
 
   CardExampleLinkCard = task => {
+      let lowestBid
+     
+        if(task.bids){
+                lowestBid = this.sortBids(task.bids)[0] 
+        }
+    if(!task.task_done){
     return (
       <Card
         key={task.id}
@@ -49,9 +63,9 @@ export default class AllOpenTasks extends React.Component {
         header={task.name}
         meta={""}
         description={task.description}
-        extra={''}
+        extra={lowestBid ? `The Lowest Bid Is Currently $${lowestBid.price}` : null}
       />
-    );
+    );}
   };
 
   render() {
