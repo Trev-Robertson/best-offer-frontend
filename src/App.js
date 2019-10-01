@@ -223,16 +223,20 @@ export default class App extends React.Component {
 
   makeABid = (event, { value }, contractor, task) => {
     event.preventDefault()
-      if (value >= 0 ){
-          value = Math.round(value)
-        let data ={
-          price: value, 
-          contractor_id: contractor.id, 
-          task_id: task.id
+
+     let currentBid = contractor.bids.find(bid => bid.task.id === task.id)
+
+     if (value >= 0 ){
+       value = Math.round(value)
+       let data ={
+         price: value, 
+         contractor_id: contractor.id, 
+         task_id: task.id
         }
         
-        fetch(BIDS_URL, {
-          method: "POST",
+     
+        fetch(BIDS_URL + (currentBid ? currentBid.id : ''), {
+          method: (currentBid ? 'PATCH' : 'POST'),
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         })
