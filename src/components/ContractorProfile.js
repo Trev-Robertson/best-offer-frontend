@@ -19,7 +19,7 @@ export default class ContractorProfile extends React.Component {
   
 
   CardExampleLinkCard = bid => {
- 
+        
     return (
       <Card
         key={Math.floor(Math.random() * 100000000000 + 1)}
