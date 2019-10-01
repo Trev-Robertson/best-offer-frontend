@@ -1,4 +1,5 @@
 import React from "react";
+import { Button, Header, Icon, Modal } from 'semantic-ui-react'
 // import store from '../redux/store'
 import ContractorProfile from '../components/ContractorProfile'
 import ContractorTaskShowPage from "../components/ContractorTaskShowPage";
@@ -10,8 +11,16 @@ import {
   Redirect
 } from "react-router-dom";
 
+const BIDS_URL = 'http://localhost:3000/bids/'
+
 export default class ContractorProfileContainer extends React.Component {
-  state = {};
+  state = {
+    
+  };
+
+
+
+
 
   render() {
     

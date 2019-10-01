@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Card, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import BidModal from './BidModal'
 
 const TASKS = "http://localhost:3000/tasks/"
 
@@ -76,10 +77,10 @@ export default class ContractorTaskShowPage extends React.Component {
          
            
           
-            {bid.status ? <h1>Winning Bid</h1> : null}
+            {bid.status ? <h1>Bidding Is Now Over</h1> : null}
             <Card.Header></Card.Header>
             <Card.Meta>
-              {bid.status ? `Winning Bid: $${bid.price}` : null}
+              {/* {bid.status ? `Winning Bid Was $${bid.price}` : null} */}
             </Card.Meta>
             
           </Card.Content>
@@ -91,10 +92,11 @@ export default class ContractorTaskShowPage extends React.Component {
                   disabled={bid.status}
                   onClick={() => console.log('click')}
                   basic
-                  color="blue"
+                   color="blue"
                 >
                   Make a Bid
                 </Button>
+              
               </div>
 
               // <div className="ui two buttons">
@@ -145,13 +147,14 @@ export default class ContractorTaskShowPage extends React.Component {
           Description: <h3>{this.state.currentTask.description}</h3>{" "}
         </h1>
         <div>
-        {this.state.currentTask.task_done ? <h1> Winning Bid: {this.showBid()}</h1> : <h1>Lowest Current Bid: ${this.showBid()}</h1>}
+        {this.state.currentTask.task_done ? <h1> Winning Bid: ${this.showBid()}</h1> : <h1>Lowest Current Bid: ${this.showBid()}</h1>}
         {/* <h1>Lowest Current Bid: ${this.state.sortedBids[0]? this.state.sortedBids[0].price: null}</h1> */}
         </div>
        
         <div className="bids">
               {this.CardExampleGroups()}
         </div>
+        <BidModal />
       </div>
     );
   }
