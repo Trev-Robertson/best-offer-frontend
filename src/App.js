@@ -104,7 +104,6 @@ export default class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
 
         if (data.authenticated && contractor === "contractor") {
           localStorage.setItem("token", data.token);
@@ -252,13 +251,10 @@ export default class App extends React.Component {
 
 
             <Route
-              exact
+              
               path="/contractor"
               render={(routerProps) => {
-                debugger
-                // let taskObj = this.state.currentContractor.bids.find(
-                //   task => task.id == props.match.params.id
-                // );
+                
                  return !isEmpty(this.state.currentContractor) ? (
                 <ContractorProfileContainer 
                 {...routerProps} 

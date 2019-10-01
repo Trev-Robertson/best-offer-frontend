@@ -1,7 +1,7 @@
 import React from "react";
 // import store from '../redux/store'
 import ContractorProfile from '../components/ContractorProfile'
-import TaskShowPage from "../components/TaskShowPage";
+import ContractorTaskShowPage from "../components/ContractorTaskShowPage";
 import {
   // eslint-disable-next-line
   BrowserRouter as Router,
@@ -22,16 +22,25 @@ export default class ContractorProfileContainer extends React.Component {
         <Route
           exact
           path={`${this.props.match.url}/task/:id`}
-          render={props => { return <TaskShowPage />
+          render={props => { 
+            // debugger
+            // let taskObj = this.props.contractor.bids.find(
+            //   bid => bid.task.id == props.match.params.id
+            // )
+      
+            
+            return <ContractorTaskShowPage 
+            id={props.match.params.id}
+            />
           }}
         />
 
         <Route
           exact
           path={`${this.props.match.url}`}
-          render={() => (
-            <ContractorProfile contractor={this.props.contractor}/>
-          )}
+          render={() => {
+           return <ContractorProfile contractor={this.props.contractor}/>
+            }}
         />
       </div>
     );
