@@ -241,10 +241,14 @@ export default class App extends React.Component {
           body: JSON.stringify(data)
         })
           .then(res => res.json())
-          .then(res => {
+          .then(currentContractor => {
             alert("Bid Successful!")
-            this.refreshContractor(res)
-            
+            console.log(currentContractor.bids)
+            this.setState({
+              ...this.state,
+              currentContractor
+              
+            })         
           })
     }
     else{

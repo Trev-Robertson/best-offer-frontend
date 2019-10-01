@@ -9,7 +9,8 @@ export default class ContractorTaskShowPage extends React.Component {
   state = {
     anyBidsSelected: false,
     sortedBids: [],
-    currentTask: []
+    currentTask: [], 
+    currentContractor: []
   };
 
   sortBids = (bids) => {
@@ -25,7 +26,8 @@ export default class ContractorTaskShowPage extends React.Component {
 
 
   componentDidMount = () => {
-
+      console.log("task show page mounted")
+      this.setState({currentContractor: this.props.contractor})
     fetch(TASKS + this.props.id)
     .then(res => res.json())
     .then(task => {
@@ -33,7 +35,8 @@ export default class ContractorTaskShowPage extends React.Component {
       let sortedBids = this.sortBids(task.bids)
       this.setState({
         currentTask: task, 
-        sortedBids: sortedBids
+        sortedBids: sortedBids,
+        
       })
       task.bids.forEach(bid => {
       if (bid.status) {
@@ -42,15 +45,16 @@ export default class ContractorTaskShowPage extends React.Component {
         });
       }
     });
-  });
+  })
+  ;
   };
 
   CardExampleGroups = () => {
     let bid
     let myBid 
     this.state.currentTask.task_done ? bid = this.state.currentTask.bids.find(bid => bid.status === true) : bid = this.state.sortedBids[0]
-    this.state.currentTask.bids ? myBid = this.state.currentTask.bids.find(bid => bid.contractor_id === this.props.contractor.id) : myBid = null
-   
+    this.state.currentTask.bids ? myBid = this.props.contractor.bids.find(bid => bid.task.id === this.state.currentTask.id) : myBid = null
+  //  debugger
    return this.state.sortedBids[0] ?
      <Card.Group>
         <Card>
@@ -60,7 +64,7 @@ export default class ContractorTaskShowPage extends React.Component {
           <h1>{bid.contractor_id === this.props.contractor.id? 'Congrats You Won!' : 'Bidding Is Now Over '} </h1> 
 
           : 
-          <h3>{myBid?  `Your current bid is $${myBid.price}` : 'No Bids Yet, Bid now!'}</h3>
+          <h3>{myBid ?  `Your current bid is $${myBid.price}` : 'No Bids Yet, Bid now!'}</h3>
           
           }
             <Card.Header></Card.Header>
@@ -92,17 +96,30 @@ export default class ContractorTaskShowPage extends React.Component {
   };
 
   showBid = () => {
-    
+    let contBid
     let bid 
     if (this.state.currentTask.task_done){
       bid = this.state.currentTask.bids.find(bid => bid.status === true) 
     }
    else {  
-     bid = this.state.sortedBids[0]
+     bid = this.state.sortedBids[0] 
+     contBid = this.props.contractor.bids.find(bid => bid.task.id === this.state.currentTask.id)
+     if (bid && contBid){
+       bid = bid.price < contBid.price ? bid : contBid
+     }
+      
     }
+   
      return bid ? bid.price : 0
    
   
+  }
+
+
+  yourBid = (contractor) => {
+    if(this.state.sortedBids[0]){
+   return this.state.sortedBids[0].contractor_id === this.props.contractor.id ? `Congrats You Have The Current Lowest Bid Of $${this.showBid()}` : `Lowest Current Bid: $${this.showBid()}`
+    }
   }
 
   render() {
@@ -122,7 +139,7 @@ export default class ContractorTaskShowPage extends React.Component {
           Description: <h3>{this.state.currentTask.description}</h3>{" "}
         </h1>
         <div>
-        {this.state.currentTask.task_done ? <h1> Winning Bid: ${this.showBid()}</h1> : <h1>Lowest Current Bid: ${this.showBid()}</h1>}
+        {this.state.currentTask.task_done ? <h1> Winning Bid: ${this.showBid()}</h1> : <h3>{this.yourBid()}</h3>}
         {/* <h1>Lowest Current Bid: ${this.state.sortedBids[0]? this.state.sortedBids[0].price: null}</h1> */}
         </div>
        

@@ -28,7 +28,7 @@ export default class ModalExampleControlled extends Component {
         <Header icon='money' content='Please Place A bid' />
         <Modal.Content>
         <div className="ui label label">$</div>
-          <Input type='number' min='0' max='1000000' name='bid-amount' step="1" placeholder='In Full Dollars $' onChange={this.handleChange}/>
+          <Input type='number' style={{width: '300px'}} min='0' max='1000000' name='bid-amount' step="1" placeholder='In Full Dollars $' onChange={this.handleChange}/>
           <div >Rounded To Nearest Dollar</div>
         </Modal.Content>
         <Modal.Actions>
