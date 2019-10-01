@@ -257,7 +257,7 @@ export default class App extends React.Component {
 
      let currentBid = contractor.bids.find(bid => bid.task.id === task.id)
 
-     if (value >= 0 ){
+     if (value >= 0 && value < 999999){
        value = Math.round(value)
        let data ={
          price: value, 
