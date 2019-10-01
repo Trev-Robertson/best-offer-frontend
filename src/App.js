@@ -30,6 +30,7 @@ const URL = "http://localhost:3000/api/v1/login/";
 const CONTRACTOR_URL = "http://localhost:3000/api/v1/contractor";
 const PROFILE_URL = "http://localhost:3000/api/v1/profile/";
 const TASKS = "http://localhost:3000/tasks/";
+const BIDS_URL = 'http://localhost:3000/bids/'
 
 export default class App extends React.Component {
   state = {
@@ -219,6 +220,36 @@ export default class App extends React.Component {
       });
   };
 
+
+  makeABid = (event, { value }, contractor, task) => {
+    event.preventDefault()
+      if (value >= 0 ){
+          value = Math.round(value)
+        let data ={
+          price: value, 
+          contractor_id: contractor.id, 
+          task_id: task.id
+        }
+        
+        fetch(BIDS_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        })
+          .then(res => res.json())
+          .then(res => {
+            alert("Bid Successful!")
+            this.refreshContractor(res)
+            
+          })
+    }
+    else{
+      alert("Bid must be greater than zero, and a whole number")
+    }
+
+
+  }
+
   render() {
     return (
       <div className="App" style={{ height: "50vh" }}>
@@ -264,6 +295,7 @@ export default class App extends React.Component {
                     acceptBid={this.acceptBid}
                     deleteBid={this.deleteBid}
                     deleteTask={this.deleteTask}
+                    makeABid={this.makeABid}
                 
                 />
                 ) : (

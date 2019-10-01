@@ -22,34 +22,14 @@ export default class ContractorTaskShowPage extends React.Component {
     return sorted;
   };
 
-  bidAccepted = bid => {
-    this.setState(
-      {
-        anyBidsSelected: true
-      },
-      () => this.props.acceptBid(bid, this.props.task)
-    );
-  };
 
-  bidDeclined = bid => {
-    if (bid.status) {
-      this.setState(
-        {
-          anyBidsSelected: false
-        },
-        () => this.props.deleteBid(bid)
-      );
-    } else {
-      this.props.deleteBid(bid);
-    }
-  };
 
   componentDidMount = () => {
 
     fetch(TASKS + this.props.id)
     .then(res => res.json())
     .then(task => {
-      console.log(task)
+   
       let sortedBids = this.sortBids(task.bids)
       this.setState({
         currentTask: task, 
@@ -70,7 +50,7 @@ export default class ContractorTaskShowPage extends React.Component {
     let myBid 
     this.state.currentTask.task_done ? bid = this.state.currentTask.bids.find(bid => bid.status === true) : bid = this.state.sortedBids[0]
     this.state.currentTask.bids ? myBid = this.state.currentTask.bids.find(bid => bid.contractor_id === this.props.contractor.id) : myBid = null
-      // debugger
+   
    return this.state.sortedBids[0] ?
      <Card.Group>
         <Card>
@@ -80,7 +60,7 @@ export default class ContractorTaskShowPage extends React.Component {
           <h1>{bid.contractor_id === this.props.contractor.id? 'Congrats You Won!' : 'Bidding Is Now Over '} </h1> 
 
           : 
-          <h3>{myBid? `Your current bid is ${myBid.price}` : 'No Bids Yet, Bid now!'}</h3>
+          <h3>{myBid?  `Your current bid is $${myBid.price}` : 'No Bids Yet, Bid now!'}</h3>
           
           }
             <Card.Header></Card.Header>
@@ -94,21 +74,16 @@ export default class ContractorTaskShowPage extends React.Component {
 
               <div className="ui two buttons">
       
-                 <BidModal />
+                 <BidModal 
+                 makeABid={this.props.makeABid}
+                 contractor={this.props.contractor}
+                 task={this.state.currentTask}
+                 />
          
               
               </div>
 
-              // <div className="ui two buttons">
-              // <Button
-              //   disabled={bid.status}
-              //   onClick={() => console.log('click')}
-              //   basic
-              //   color="blue"
-              // >
-              //   Make a Bid
-              // </Button>
-              // </div>
+
              : null}
           </Card.Content>
         </Card>
@@ -154,7 +129,7 @@ export default class ContractorTaskShowPage extends React.Component {
         <div className="bids">
               {this.CardExampleGroups()}
         </div>
-        {/* <BidModal /> */}
+      
       </div>
     );
   }

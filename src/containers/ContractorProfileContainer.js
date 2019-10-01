@@ -11,7 +11,7 @@ import {
   Redirect
 } from "react-router-dom";
 
-const BIDS_URL = 'http://localhost:3000/bids/'
+
 
 export default class ContractorProfileContainer extends React.Component {
   state = {
@@ -41,6 +41,7 @@ export default class ContractorProfileContainer extends React.Component {
             return <ContractorTaskShowPage 
             id={props.match.params.id}
             contractor={this.props.contractor}
+            makeABid={this.props.makeABid}
             />
           }}
         />

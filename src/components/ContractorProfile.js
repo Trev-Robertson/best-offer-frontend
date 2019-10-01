@@ -34,7 +34,7 @@ export default class ContractorProfile extends React.Component {
         href={`contractor/task/${bid.task.id}`}
         header={bid.task.name}
         meta={!bid.task.task_done ? `Current lowest Bid: $${this.sortBids(bid.task.bids).price}`: null}
-        description={!bid.status ? `Your Bid: ${bid.price}` : `You Won With A Bid Of: ${bid.price}!`}
+        description={!bid.status ? `Your Bid: $${bid.price}` : `You Won With A Bid Of: $${bid.price}!`}
       />
     );
   };
