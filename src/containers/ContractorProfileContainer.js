@@ -40,6 +40,7 @@ export default class ContractorProfileContainer extends React.Component {
             
             return <ContractorTaskShowPage 
             id={props.match.params.id}
+            contractor={this.props.contractor}
             />
           }}
         />

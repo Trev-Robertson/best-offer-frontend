@@ -66,19 +66,23 @@ export default class ContractorTaskShowPage extends React.Component {
   };
 
   CardExampleGroups = () => {
-  
     let bid
+    let myBid 
     this.state.currentTask.task_done ? bid = this.state.currentTask.bids.find(bid => bid.status === true) : bid = this.state.sortedBids[0]
-    
+    this.state.currentTask.bids ? myBid = this.state.currentTask.bids.find(bid => bid.contractor_id === this.props.contractor.id) : myBid = null
+      // debugger
    return this.state.sortedBids[0] ?
      <Card.Group>
         <Card>
           <Card.Content >
-           
-         
-           
+
+          {bid.status ? 
+          <h1>{bid.contractor_id === this.props.contractor.id? 'Congrats You Won!' : 'Bidding Is Now Over '} </h1> 
+
+          : 
+          <h3>{myBid? `Your current bid is ${myBid.price}` : 'No Bids Yet, Bid now!'}</h3>
           
-            {bid.status ? <h1>Bidding Is Now Over</h1> : null}
+          }
             <Card.Header></Card.Header>
             <Card.Meta>
               {/* {bid.status ? `Winning Bid Was $${bid.price}` : null} */}
@@ -89,14 +93,9 @@ export default class ContractorTaskShowPage extends React.Component {
             {!bid.status ? 
 
               <div className="ui two buttons">
-                <Button
-                  disabled={bid.status}
-                  onClick={() => console.log('click')}
-                  basic
-                   color="blue"
-                >
-                  Make a Bid
-                </Button>
+      
+                 <BidModal />
+         
               
               </div>
 
@@ -155,7 +154,7 @@ export default class ContractorTaskShowPage extends React.Component {
         <div className="bids">
               {this.CardExampleGroups()}
         </div>
-        <BidModal />
+        {/* <BidModal /> */}
       </div>
     );
   }

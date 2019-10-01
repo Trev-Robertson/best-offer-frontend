@@ -26,14 +26,14 @@ export default class ContractorProfile extends React.Component {
   };
 
   CardExampleLinkCard = bid => {
-      debugger
+  
     return (
       <Card
         key={Math.floor(Math.random() * 100000000000 + 1)}
         color="blue"
         href={`contractor/task/${bid.task.id}`}
         header={bid.task.name}
-        meta={`Current lowest Bid: $${this.sortBids(bid.task.bids).price}`}
+        meta={!bid.task.task_done ? `Current lowest Bid: $${this.sortBids(bid.task.bids).price}`: null}
         description={!bid.status ? `Your Bid: ${bid.price}` : `You Won With A Bid Of: ${bid.price}!`}
       />
     );
