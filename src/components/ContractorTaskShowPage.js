@@ -13,6 +13,7 @@ export default class ContractorTaskShowPage extends React.Component {
   };
 
   sortBids = (bids) => {
+   
 
     let sorted = bids.sort((a, b) =>
       a.price > b.price ? 1 : -1

@@ -16,18 +16,25 @@ export default class ContractorProfile extends React.Component {
   
   }
 
-  
+  sortBids = (bids) => {
+
+    let sorted = bids.sort((a, b) =>
+      a.price > b.price ? 1 : -1
+    );
+    
+    return sorted[0];
+  };
 
   CardExampleLinkCard = bid => {
-        
+      debugger
     return (
       <Card
         key={Math.floor(Math.random() * 100000000000 + 1)}
         color="blue"
         href={`contractor/task/${bid.task.id}`}
         header={bid.task.name}
-        meta={""}
-        description={`Bid Amount: ${bid.price}`}
+        meta={`Current lowest Bid: $${this.sortBids(bid.task.bids).price}`}
+        description={!bid.status ? `Your Bid: ${bid.price}` : `You Won With A Bid Of: ${bid.price}!`}
       />
     );
   };
@@ -46,10 +53,24 @@ export default class ContractorProfile extends React.Component {
               {(this.props.contractor) ? (
                 <Card.Group>
                   {this.props.contractor.bids.map(bid => {
-                    return this.CardExampleLinkCard(bid);
+                    return  !bid.task.task_done ? this.CardExampleLinkCard(bid) : null
                   })}
+                
                 </Card.Group>
               ) : null}
+              </div>
+              <div className="current-task">
+                  <div>
+              <h1>Winning Bids:</h1>
+              {(this.props.contractor) ? (
+                <Card.Group>
+                  {this.props.contractor.bids.map(bid => {
+                    return  bid.status ? this.CardExampleLinkCard(bid) : null
+                  })}
+                
+                </Card.Group>
+              ) : null}
+              </div>
             </div>
    
       </div>
