@@ -42,6 +42,7 @@ export default class ContractorProfileContainer extends React.Component {
             id={props.match.params.id}
             contractor={this.props.contractor}
             makeABid={this.props.makeABid}
+            contractorDeleteBid={this.props.contractorDeleteBid}
             />
           }}
         />

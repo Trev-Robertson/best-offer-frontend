@@ -84,7 +84,7 @@ export default class ContractorsContainer extends React.Component {
           exact
           path={`${this.props.match.url}/:id`}
           render={props => {
-            debugger
+            debugger;
             let contractorObj = this.state.allContractors.find(
               task => task.id == props.match.params.id
             );

@@ -7,6 +7,7 @@ import ProfileContainer from "./containers/ProfileContainer";
 import ContractorProfileContainer from "./containers/ContractorProfileContainer";
 import ContractorsContainer from "./containers/ContractorsContainer";
 import TaskShowPage from "./components/TaskShowPage";
+import AllOpenTasks from "./components/AllOpenTasks";
 // import ContractorShowPage from "./components/ContractorShowPage"
 import { isEmpty } from "lodash";
 import { Link } from "react-router-dom";
@@ -197,6 +198,36 @@ export default class App extends React.Component {
       });
   };
 
+
+  contractorDeleteBid = (event, bid, contractor) => {
+     
+    let data = {
+      id: bid,
+      contractor_id: contractor.id
+    };
+      
+    fetch(`http://localhost:3000/contractor/bids/${bid.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(currentContractor => {
+        alert("Bid Successful!")
+        console.log(currentContractor)
+        this.setState({
+          ...this.state,
+          currentContractor
+          
+        })         
+      })
+  }
+
+
+
+
   deleteTask = task => {
     let data = {
       id: task.id,
@@ -278,12 +309,50 @@ export default class App extends React.Component {
           ) : null}
           {!isEmpty(this.state.currentContractor) ? (
             <React.Fragment>
+              <Link to="/contractor">
+                {" "}
+                <button>To Profile Page</button>
+              </Link>
+              <Link to="/opentasks">
+                {" "}
+                <button>View All Available Tasks</button>
+              </Link>
+              
+            </React.Fragment>
+          ) : null}
+          {!isEmpty(this.state.currentContractor) ? (
+            <React.Fragment>
               <button onClick={this.logout}>Logout</button>
             </React.Fragment>
           ) : null}
         </p>
         {!this.state.loading ? (
           <Switch>
+
+
+              
+                  <Route
+              
+              path="/opentasks"
+              render={(routerProps) => {
+                
+                 return !isEmpty(this.state.currentContractor) ? (
+                <AllOpenTasks
+                {...routerProps} 
+                contractor={this.state.currentContractor}
+                // task={taskObj}
+                // currentTask={this.currentTask}
+                    acceptBid={this.acceptBid}
+                    contractorDeleteBid={this.contractorDeleteBid}
+                    deleteTask={this.deleteTask}
+                    makeABid={this.makeABid}
+                
+                />
+                ) : (
+                  <Redirect to="/login/contractor" />
+                )
+              }}
+            />
 
 
 
@@ -301,7 +370,7 @@ export default class App extends React.Component {
                 // task={taskObj}
                 // currentTask={this.currentTask}
                     acceptBid={this.acceptBid}
-                    deleteBid={this.deleteBid}
+                    contractorDeleteBid={this.contractorDeleteBid}
                     deleteTask={this.deleteTask}
                     makeABid={this.makeABid}
                 

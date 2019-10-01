@@ -9,8 +9,7 @@ export default class ContractorTaskShowPage extends React.Component {
   state = {
     anyBidsSelected: false,
     sortedBids: [],
-    currentTask: [], 
-    currentContractor: []
+    currentTask: []
   };
 
   sortBids = (bids) => {
@@ -26,8 +25,6 @@ export default class ContractorTaskShowPage extends React.Component {
 
 
   componentDidMount = () => {
-      console.log("task show page mounted")
-      this.setState({currentContractor: this.props.contractor})
     fetch(TASKS + this.props.id)
     .then(res => res.json())
     .then(task => {
@@ -83,8 +80,13 @@ export default class ContractorTaskShowPage extends React.Component {
                  contractor={this.props.contractor}
                  task={this.state.currentTask}
                  />
-         
-              
+              {myBid ?
+              <Button
+              basic
+              color="red"
+              onClick={(event) => this.props.contractorDeleteBid(event, myBid.id, this.props.contractor)}
+              >Delete Bid</Button>
+                : null}
               </div>
 
 
