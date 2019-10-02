@@ -181,9 +181,7 @@ export default class ContractorTaskShowPage extends React.Component {
 
           return this.props.sortedBid.price > myBid.price ? `Congrats You Have The Current Lowest Bid Of $${this.showBid()}` : `Lowest Current Bid: $${this.showBid()}`
         }
-        else{
-         return `Lowest Current Bid: $${this.showBid()}`
-        }
+     
     }
   }
 
