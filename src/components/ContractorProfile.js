@@ -40,12 +40,31 @@ export default class ContractorProfile extends React.Component {
   };
 
  
+  textMe = () =>{
+      console.log("HI")
+      let data = {
+          From: '+13012567282',
+          Body: 134
+      }
+    fetch('http://localhost:3000/messages/reply', {
+        method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(data => { console.log(data)
+    })
+  }
+
+
 
   render() {
       
     return (
       <div>
-       
+            <button onClick={this.textMe}>Text Me!</button>
               <h1> Hi, {this.props.contractor ? this.props.contractor.name : null}</h1>
 
               <h1>Active Bids:</h1>
