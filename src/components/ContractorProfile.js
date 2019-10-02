@@ -43,7 +43,6 @@ export default class ContractorProfile extends React.Component {
   textMe = () =>{
       console.log("HI")
       let data = {
-          From: '+13012567282',
           Body: 134
       }
     fetch('http://localhost:3000/messages/reply', {

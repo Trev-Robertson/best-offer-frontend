@@ -15,33 +15,7 @@ export default class ContractorTaskShowPage extends React.Component {
 // 3
 
 
-  componentDidMount = () => {
-      console.log("show page mount")
-  //   fetch(TASKS + this.props.id)
-  //   .then(res => res.json())
-  //   .then(task => {
-      
-  //       if(!task.error){
-  //     let sortedBids = this.sortBids(task.bids)
-  //     this.setState({
-  //       currentTask: task, 
-  //       sortedBids: sortedBids,
-        
-  //     })
-  //     task.bids.forEach(bid => {
-  //     if (bid.status) {
-  //       this.setState({
-  //         anyBidsSelected: true
-  //       })
-  //     }
-  //   }) }
-  //   else{
-  //     return <Redirect to="/opentasks" />
-  //   }
-
-  // })
-  // ;
-  };
+ 
 
     sortBids = (bids) => {
 
@@ -56,7 +30,7 @@ export default class ContractorTaskShowPage extends React.Component {
   CardExampleGroups = () => {
     let bid
     let myBid 
-    // debugger
+    
     this.props.currentTask.task_done ? bid = this.props.currentTask.bids.find(bid => bid.status === true) : bid = this.props.sortedBid
     this.props.currentTask.bids ? myBid = this.props.contractor.bids.find(bid => bid.task.id === this.props.currentTask.id) : myBid = null
   
