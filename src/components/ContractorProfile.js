@@ -63,7 +63,7 @@ export default class ContractorProfile extends React.Component {
       
     return (
       <div>
-            <button onClick={this.textMe}>Text Me!</button>
+            {/* <button onClick={this.textMe}>Text Me!</button> */}
               <h1> Hi, {this.props.contractor ? this.props.contractor.name : null}</h1>
 
               <h1>Active Bids:</h1>
