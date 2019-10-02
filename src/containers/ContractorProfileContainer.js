@@ -24,22 +24,27 @@ export default class ContractorProfileContainer extends React.Component {
     loading: true
   };
 
-3
+
+  updateCurrentTask = (event, contractor, task) => {
+    debugger
+    console.log('click')
+  }
 
 
   componentDidMount = () => {
   
  
+    if(this.props.location.pathname !== '/contractor'){
     fetch(TASKS + this.props.location.pathname.split('/').pop())
     .then(res => res.json())
     .then(task => {
-              debugger
-        if(!task.error){
-      let sortedBids = this.sortBids(task.bids)
-      this.setState({
-        currentTask: task, 
-        sortedBid: sortedBids,
-        
+      
+      if(!task.error){
+        let sortedBids = this.sortBids(task.bids)
+        this.setState({
+          currentTask: task, 
+          sortedBid: sortedBids,
+          
       })
       task.bids.forEach(bid => {
       if (bid.status) {
@@ -49,17 +54,17 @@ export default class ContractorProfileContainer extends React.Component {
       }
     }) }
     else{
+      
       this.setState({
         showTaskPage: false,
       loading: false})
     }
 
-  })
-  ;
+  })}
   };
 
   sortBids = (bids) => {
-
+     
     let sorted = bids.sort((a, b) =>
       a.price > b.price ? 1 : -1
     );
@@ -84,7 +89,7 @@ export default class ContractorProfileContainer extends React.Component {
             // let taskObj = this.props.contractor.bids.find(
             //   bid => bid.task.id == props.match.params.id
             // )
-             
+            
             
             return <ContractorTaskShowPage 
             id={routerProps.match.params.id}
@@ -95,13 +100,14 @@ export default class ContractorProfileContainer extends React.Component {
             anyBidsSelected={this.state.anyBidsSelected}
             sortedBid={this.state.sortedBid}
             currentTask={this.state.currentTask}
+            updateCurrentTask={this.updateCurrentTask}
             />
           }}
         /> : 
           <Redirect to="/opentasks" /> }
 
         <Route
-          exact
+          
           path={`${this.props.match.url}`}
           render={(routerProps) => {
             

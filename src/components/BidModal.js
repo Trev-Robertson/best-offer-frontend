@@ -32,7 +32,7 @@ export default class ModalExampleControlled extends Component {
           <div >Rounded To Nearest Dollar</div>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='green' onClick={(event) => {this.handleClose(event); this.props.makeABid(event, this.state, this.props.contractor, this.props.task)}} inverted>
+          <Button color='green' onClick={(event) => {this.handleClose(event); this.props.updateCurrentTask(event, this.props.contractor, this.props.task); this.props.makeABid(event, this.state, this.props.contractor, this.props.task)}} inverted>
             <Icon name='checkmark' /> Submit Bid
           </Button>
         </Modal.Actions>

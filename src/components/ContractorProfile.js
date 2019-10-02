@@ -42,7 +42,7 @@ export default class ContractorProfile extends React.Component {
  
 
   render() {
-      console.log(this.props.contractor)
+      
     return (
       <div>
        

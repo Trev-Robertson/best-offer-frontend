@@ -87,6 +87,7 @@ export default class ContractorTaskShowPage extends React.Component {
                  makeABid={this.props.makeABid}
                  contractor={this.props.contractor}
                  task={this.props.currentTask}
+                 updateCurrentTask={this.props.updateCurrentTask}
                  />
               {myBid ?
               <Button
@@ -111,7 +112,7 @@ export default class ContractorTaskShowPage extends React.Component {
        <Card.Content >
 
        
-       <h3>{myBid ?  `Your current bid is $${myBid.price}` : 'No Bids Yet, Bid now!'}</h3>
+       <h3>{myBid ?  `Your current bid is $${myBid.price}` : 'You Havent Bid, Bid now!'}</h3>
        
        
        
@@ -130,6 +131,7 @@ export default class ContractorTaskShowPage extends React.Component {
               makeABid={this.props.makeABid}
               contractor={this.props.contractor}
               task={this.props.currentTask}
+              updateCurrentTask={this.props.updateCurrentTask}
               />
            {myBid ?
            <Button

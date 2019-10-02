@@ -71,6 +71,7 @@ export default class AllOpenTasks extends React.Component {
   render() {
     return (
       <div>
+        <h1>All Availble Tasks</h1>
             <div className="contractor-display">
               <Card.Group itemsPerRow={4}>
                 {this.state.allTasks.map(task => {
