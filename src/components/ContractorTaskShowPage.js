@@ -1,58 +1,66 @@
 import React from "react";
 import { Button, Card, Image } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link , Redirect} from "react-router-dom";
 import BidModal from './BidModal'
 
 const TASKS = "http://localhost:3000/tasks/"
 
 export default class ContractorTaskShowPage extends React.Component {
-  state = {
-    anyBidsSelected: false,
-    sortedBids: [],
-    currentTask: []
+//   state = {
+//     anyBidsSelected: false,
+//     sortedBids: [],
+//     currentTask: []
+//   };
+
+// 3
+
+
+  componentDidMount = () => {
+      console.log("show page mount")
+  //   fetch(TASKS + this.props.id)
+  //   .then(res => res.json())
+  //   .then(task => {
+      
+  //       if(!task.error){
+  //     let sortedBids = this.sortBids(task.bids)
+  //     this.setState({
+  //       currentTask: task, 
+  //       sortedBids: sortedBids,
+        
+  //     })
+  //     task.bids.forEach(bid => {
+  //     if (bid.status) {
+  //       this.setState({
+  //         anyBidsSelected: true
+  //       })
+  //     }
+  //   }) }
+  //   else{
+  //     return <Redirect to="/opentasks" />
+  //   }
+
+  // })
+  // ;
   };
 
-  sortBids = (bids) => {
-   
-      
+    sortBids = (bids) => {
+
     let sorted = bids.sort((a, b) =>
       a.price > b.price ? 1 : -1
     );
     
-    return sorted;
+    return sorted[0];
   };
 
-
-
-  componentDidMount = () => {
-    fetch(TASKS + this.props.id)
-    .then(res => res.json())
-    .then(task => {
-   
-      let sortedBids = this.sortBids(task.bids)
-      this.setState({
-        currentTask: task, 
-        sortedBids: sortedBids,
-        
-      })
-      task.bids.forEach(bid => {
-      if (bid.status) {
-        this.setState({
-          anyBidsSelected: true
-        });
-      }
-    });
-  })
-  ;
-  };
 
   CardExampleGroups = () => {
     let bid
     let myBid 
-    this.state.currentTask.task_done ? bid = this.state.currentTask.bids.find(bid => bid.status === true) : bid = this.state.sortedBids[0]
-    this.state.currentTask.bids ? myBid = this.props.contractor.bids.find(bid => bid.task.id === this.state.currentTask.id) : myBid = null
-   debugger
-   return this.state.sortedBids[0] ?
+    // debugger
+    this.props.currentTask.task_done ? bid = this.props.currentTask.bids.find(bid => bid.status === true) : bid = this.props.sortedBid
+    this.props.currentTask.bids ? myBid = this.props.contractor.bids.find(bid => bid.task.id === this.props.currentTask.id) : myBid = null
+  
+   return this.props.sortedBid?
      <Card.Group>
         <Card>
           <Card.Content >
@@ -78,7 +86,7 @@ export default class ContractorTaskShowPage extends React.Component {
                  <BidModal 
                  makeABid={this.props.makeABid}
                  contractor={this.props.contractor}
-                 task={this.state.currentTask}
+                 task={this.props.currentTask}
                  />
               {myBid ?
               <Button
@@ -121,7 +129,7 @@ export default class ContractorTaskShowPage extends React.Component {
               <BidModal 
               makeABid={this.props.makeABid}
               contractor={this.props.contractor}
-              task={this.state.currentTask}
+              task={this.props.currentTask}
               />
            {myBid ?
            <Button
@@ -142,14 +150,16 @@ export default class ContractorTaskShowPage extends React.Component {
   showBid = () => {
     let contBid
     let bid 
-    if (this.state.currentTask.task_done){
-      bid = this.state.currentTask.bids.find(bid => bid.status === true) 
+    if (this.props.currentTask.task_done){
+      bid = this.props.currentTask.bids.find(bid => bid.status === true) 
     }
    else {  
-     bid = this.state.sortedBids[0] 
-     contBid = this.props.contractor.bids.find(bid => bid.task.id === this.state.currentTask.id)
+     bid = this.props.sortedBid 
+     contBid = this.props.contractor.bids.find(bid => bid.task.id === this.props.currentTask.id)
+     debugger
      if (bid && contBid){
        bid = bid.price < contBid.price ? bid : contBid
+       debugger
      }
       
     }
@@ -160,14 +170,24 @@ export default class ContractorTaskShowPage extends React.Component {
   }
 
 
-  yourBid = (contractor) => {
-    if(this.state.sortedBids[0]){
-   return this.state.sortedBids[0].contractor_id === this.props.contractor.id ? `Congrats You Have The Current Lowest Bid Of $${this.showBid()}` : `Lowest Current Bid: $${this.showBid()}`
+  yourBid = () => {
+   let myBid
+    if(this.props.sortedBid){
+        
+      this.props.currentTask.bids ? myBid = this.props.contractor.bids.find(bid => bid.task.id === this.props.currentTask.id) : myBid = null        
+        if (myBid){
+
+          return this.props.sortedBid.price > myBid.price ? `Congrats You Have The Current Lowest Bid Of $${this.showBid()}` : `Lowest Current Bid: $${this.showBid()}`
+        }
+        else{
+         return `Lowest Current Bid: $${this.showBid()}`
+        }
     }
   }
 
   render() {
-  
+   
+
     return (
       <div>
         <Link to="/profile">
@@ -176,15 +196,15 @@ export default class ContractorTaskShowPage extends React.Component {
            <h1>
           Title:{" "}
           <h3>
-            <strong>{this.state.currentTask.name}</strong>
+            <strong>{this.props.currentTask.name}</strong>
           </h3>{" "}
         </h1>
         <h1>
-          Description: <h3>{this.state.currentTask.description}</h3>{" "}
+          Description: <h3>{this.props.currentTask.description}</h3>{" "}
         </h1>
         <div>
-        {this.state.currentTask.task_done ? <h1> Winning Bid: ${this.showBid()}</h1> : <h3>{this.yourBid()}</h3>}
-        {/* <h1>Lowest Current Bid: ${this.state.sortedBids[0]? this.state.sortedBids[0].price: null}</h1> */}
+        {this.props.currentTask.task_done ? <h1> Winning Bid: ${this.showBid()}</h1> : <h3>{this.yourBid()}</h3>}
+        {/* <h1>Lowest Current Bid: ${this.props.sortedBid ? this.props.sortedBid.price: null}</h1> */}
         </div>
        
         <div className="bids">

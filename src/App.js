@@ -257,7 +257,7 @@ export default class App extends React.Component {
 
      let currentBid = contractor.bids.find(bid => bid.task.id === task.id)
 
-     if (value >= 0 && value < 999999){
+     if (value >= 0 && value <= 999999){
        value = Math.round(value)
        let data ={
          price: value, 
@@ -283,7 +283,7 @@ export default class App extends React.Component {
           })
     }
     else{
-      alert("Bid must be greater than zero, and a whole number")
+      alert("Bid must be greater than zero, and a whole number and less than 1 million")
     }
 
 
@@ -362,7 +362,7 @@ export default class App extends React.Component {
               
               path="/contractor"
               render={(routerProps) => {
-                
+               
                  return !isEmpty(this.state.currentContractor) ? (
                 <ContractorProfileContainer 
                 {...routerProps} 

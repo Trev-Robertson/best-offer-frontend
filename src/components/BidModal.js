@@ -7,7 +7,7 @@ export default class ModalExampleControlled extends Component {
   handleOpen = () => this.setState({ modalOpen: true })
 
   handleClose = (event) => {
-      console.log('close modal')
+     
       this.setState({ modalOpen: false })}
 
   handleChange = (e, { value }) => {
