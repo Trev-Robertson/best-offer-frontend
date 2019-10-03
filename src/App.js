@@ -8,18 +8,32 @@ import ContractorProfileContainer from "./containers/ContractorProfileContainer"
 import ContractorsContainer from "./containers/ContractorsContainer";
 import TaskShowPage from "./components/TaskShowPage";
 import AllOpenTasks from "./components/AllOpenTasks";
-// import ContractorShowPage from "./components/ContractorShowPage"
+
 import { isEmpty } from "lodash";
 import { Link } from "react-router-dom";
+import NavBar from './components/NavBar';
+
 
 import {
   // eslint-disable-next-line
   BrowserRouter as Router,
   Route,
+  NavLink,
   Switch,
-  Redirect
+  Redirect, 
+  
 } from "react-router-dom";
-// import ContractorShowPage from "./components/ContractorShowPage";
+
+
+const link = {
+  width: "100px",
+  padding: "12px",
+  margin: "0 6px 6px",
+  background: "blue",
+  textDecoration: "none",
+  color: "white"
+};
+
 const specialties = [
   "gardening",
   "plumbing",
@@ -296,33 +310,12 @@ export default class App extends React.Component {
         <p>
           {!isEmpty(this.state.currentUser) ? (
             <React.Fragment>
-              <Link to="/profile">
-                {" "}
-                <button>To Profile Page</button>
-              </Link>
-              <Link to="/contractors">
-                {" "}
-                <button>View Contractors</button>
-              </Link>
-              <button onClick={this.logout}>Logout</button>
+            <NavBar logout={this.logout}/>
             </React.Fragment>
           ) : null}
           {!isEmpty(this.state.currentContractor) ? (
             <React.Fragment>
-              <Link to="/contractor">
-                {" "}
-                <button>To Profile Page</button>
-              </Link>
-              <Link to="/opentasks">
-                {" "}
-                <button>View All Available Tasks</button>
-              </Link>
-              
-            </React.Fragment>
-          ) : null}
-          {!isEmpty(this.state.currentContractor) ? (
-            <React.Fragment>
-              <button onClick={this.logout}>Logout</button>
+            <NavBar logout={this.logout} contractor={true}/>            
             </React.Fragment>
           ) : null}
         </p>
@@ -525,3 +518,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+

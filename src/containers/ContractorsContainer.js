@@ -104,7 +104,7 @@ export default class ContractorsContainer extends React.Component {
           path={`${this.props.match.url}`}
           render={() => (
             <div className="contractor-display">
-              <Card.Group itemsPerRow={4}>
+              <Card.Group itemsPerRow={6}>
                 {this.state.allContractors.map(contractor => {
                   return this.CardExampleLinkCard(contractor);
                 })}

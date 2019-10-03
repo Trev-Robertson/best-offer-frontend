@@ -43,7 +43,7 @@ export default class ContractorTaskShowPage extends React.Component {
           <h1>{bid.contractor_id === this.props.contractor.id? 'Congrats You Won!' : 'Bidding Is Now Over '} </h1> 
 
           : 
-          <h3>{myBid ?  `Your current bid is $${myBid.price}` : 'No Bids Yet, Bid now!'}</h3>
+          <h3>{myBid ?  `Your current bid is $${myBid.price}` : 'You Havent Bid Yet, Bid now!'}</h3>
           
           }
             <Card.Header></Card.Header>
