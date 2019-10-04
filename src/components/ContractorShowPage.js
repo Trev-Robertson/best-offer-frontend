@@ -94,7 +94,6 @@ export default class ContractorShowPage extends React.Component {
   };
 
   CardExampleLinkCard = task => {
-    
     return (
       <Card
         color="green"
@@ -129,7 +128,9 @@ export default class ContractorShowPage extends React.Component {
 
           {this.acceptedBid() ? (
             <div>
-              <h4>You accpted a bid from this contractor to complete these tasks: </h4>
+              <h4>
+                You accpted a bid from this contractor to complete these tasks:{" "}
+              </h4>
               {this.doneTaskNames().map(task => {
                 return (
                   <div key={Math.floor(Math.random() * 100000000000 + 1)}>
@@ -145,11 +146,17 @@ export default class ContractorShowPage extends React.Component {
               contractor={this.props.contractor}
               disableForm={this.disableForm()}
             />
-            {this.props.contractor.reviews.length > 0 ? <h3> Reviews:</h3> : <h3> No Reviews Yet</h3>}
-            {this.props.contractor.reviews.length > 0 ?  this.props.contractor.reviews
-              .slice(0)
-              .reverse()
-              .map(review => this.CommentExampleComment(review)) : null}
+            {this.props.contractor.reviews.length > 0 ? (
+              <h3> Reviews:</h3>
+            ) : (
+              <h3> No Reviews Yet</h3>
+            )}
+            {this.props.contractor.reviews.length > 0
+              ? this.props.contractor.reviews
+                  .slice(0)
+                  .reverse()
+                  .map(review => this.CommentExampleComment(review))
+              : null}
           </Comment.Group>
           <div></div>
         </div>
@@ -157,4 +164,3 @@ export default class ContractorShowPage extends React.Component {
     );
   }
 }
-
