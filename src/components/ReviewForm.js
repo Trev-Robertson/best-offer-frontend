@@ -23,10 +23,8 @@ export default class ReviewForm extends React.Component {
       })).stars;
 
       let avg = sum / this.props.contractor.reviews.length;
-      return avg.toFixed(2);
-    } else {
-      return 0;
-    }
+      return `Average Rating: ${avg.toFixed(2)}`
+    } 
   };
 
   render() {
@@ -39,7 +37,7 @@ export default class ReviewForm extends React.Component {
           
           <Comment.Group>
             <Header as="h3" dividing>
-              <p> Average Rating: {this.averageStars()} </p>
+             {this.averageStars()} 
             </Header>
               {!this.props.disableForm ? <React.Fragment>
               Please Leave a Review!
