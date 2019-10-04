@@ -37,12 +37,12 @@ export default class ReviewForm extends React.Component {
         <br />
         <div className="bids">
           
-            {!this.props.disableForm ? <React.Fragment>
           <Comment.Group>
             <Header as="h3" dividing>
-              Please Leave a Review!
-              <p> (Average Rating: {this.averageStars()}) </p>
+              <p> Average Rating: {this.averageStars()} </p>
             </Header>
+              {!this.props.disableForm ? <React.Fragment>
+              Please Leave a Review!
             <Form
               reply
               onSubmit={event =>
@@ -71,8 +71,8 @@ export default class ReviewForm extends React.Component {
                 primary
               />
             </Form>
-          </Comment.Group>
           </React.Fragment>: null}
+          </Comment.Group>
         </div>
       </div>
     );

@@ -24,7 +24,7 @@ export default class ContractorsContainer extends React.Component {
       .then(allContractors => {
         this.setState({ allContractors });
       });
-    console.log("mount");
+   
   }
 
   extra = contractor => {
@@ -60,6 +60,10 @@ export default class ContractorsContainer extends React.Component {
           allContractors: updateContractor
         });
       });
+
+      event.target.reset()
+
+
   };
 
   CardExampleLinkCard = contractor => {
