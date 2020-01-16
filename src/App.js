@@ -11,8 +11,7 @@ import AllOpenTasks from "./components/AllOpenTasks";
 
 import { isEmpty } from "lodash";
 import { Link } from "react-router-dom";
-import NavBar from './components/NavBar';
-
+import NavBar from "./components/NavBar";
 
 import {
   // eslint-disable-next-line
@@ -20,10 +19,8 @@ import {
   Route,
   NavLink,
   Switch,
-  Redirect, 
-  
+  Redirect
 } from "react-router-dom";
-
 
 const link = {
   width: "100px",
@@ -45,7 +42,7 @@ const URL = "http://localhost:3000/api/v1/login/";
 const CONTRACTOR_URL = "http://localhost:3000/api/v1/contractor";
 const PROFILE_URL = "http://localhost:3000/api/v1/profile/";
 const TASKS = "http://localhost:3000/tasks/";
-const BIDS_URL = 'http://localhost:3000/bids/'
+const BIDS_URL = "http://localhost:3000/bids/";
 
 export default class App extends React.Component {
   state = {
@@ -83,13 +80,17 @@ export default class App extends React.Component {
 
   componentDidMount = () => {
     if (localStorage.getItem("token")) {
-      fetch(localStorage.getItem("contractor") === 'true' ? CONTRACTOR_URL : PROFILE_URL, {
-        headers: { Authentication: `Bearer ${localStorage.getItem("token")}` }
-      })
+      fetch(
+        localStorage.getItem("contractor") === "true"
+          ? CONTRACTOR_URL
+          : PROFILE_URL,
+        {
+          headers: { Authentication: `Bearer ${localStorage.getItem("token")}` }
+        }
+      )
         .then(res => res.json())
         .then(res => {
-        
-          localStorage.getItem("contractor") ==='true'
+          localStorage.getItem("contractor") === "true"
             ? this.refreshContractor(res)
             : this.updateUser(res);
         });
@@ -120,7 +121,6 @@ export default class App extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-
         if (data.authenticated && contractor === "contractor") {
           localStorage.setItem("token", data.token);
           localStorage.setItem("contractor", true);
@@ -212,14 +212,12 @@ export default class App extends React.Component {
       });
   };
 
-
   contractorDeleteBid = (event, bid, contractor) => {
-     
     let data = {
       id: bid,
       contractor_id: contractor.id
     };
-      
+
     fetch(`http://localhost:3000/contractor/bids/${bid.id}`, {
       method: "DELETE",
       headers: {
@@ -229,18 +227,14 @@ export default class App extends React.Component {
     })
       .then(res => res.json())
       .then(currentContractor => {
-        alert("Bid Successful!")
-        console.log(currentContractor)
+        alert("Bid Successful!");
+        console.log(currentContractor);
         this.setState({
           ...this.state,
           currentContractor
-          
-        })         
-      })
-  }
-
-
-
+        });
+      });
+  };
 
   deleteTask = task => {
     let data = {
@@ -265,43 +259,39 @@ export default class App extends React.Component {
       });
   };
 
-
   makeABid = (event, { value }, contractor, task) => {
-    event.preventDefault()
+    event.preventDefault();
 
-     let currentBid = contractor.bids.find(bid => bid.task.id === task.id)
+    let currentBid = contractor.bids.find(bid => bid.task.id === task.id);
 
-     if (value >= 0 && value <= 999999){
-       value = Math.round(value)
-       let data ={
-         price: value, 
-         contractor_id: contractor.id, 
-         task_id: task.id
-        }
-        
-     
-        fetch(BIDS_URL + (currentBid ? currentBid.id : ''), {
-          method: (currentBid ? 'PATCH' : 'POST'),
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        })
-          .then(res => res.json())
-          .then(currentContractor => {
-            alert("Bid Successful!")
-            console.log(currentContractor.bids)
-            this.setState({
-              ...this.state,
-              currentContractor
-              
-            })         
-          })
+    if (value >= 0 && value <= 999999) {
+      value = Math.round(value);
+      let data = {
+        price: value,
+        contractor_id: contractor.id,
+        task_id: task.id
+      };
+
+      fetch(BIDS_URL + (currentBid ? currentBid.id : ""), {
+        method: currentBid ? "PATCH" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+        .then(res => res.json())
+        .then(currentContractor => {
+          alert("Bid Successful!");
+          console.log(currentContractor.bids);
+          this.setState({
+            ...this.state,
+            currentContractor
+          });
+        });
+    } else {
+      alert(
+        "Bid must be greater than zero, and a whole number and less than 1 million"
+      );
     }
-    else{
-      alert("Bid must be greater than zero, and a whole number and less than 1 million")
-    }
-
-
-  }
+  };
 
   render() {
     return (
@@ -310,79 +300,61 @@ export default class App extends React.Component {
         <p>
           {!isEmpty(this.state.currentUser) ? (
             <React.Fragment>
-            <NavBar logout={this.logout}/>
+              <NavBar logout={this.logout} />
             </React.Fragment>
           ) : null}
           {!isEmpty(this.state.currentContractor) ? (
             <React.Fragment>
-            <NavBar logout={this.logout} contractor={true}/>            
+              <NavBar logout={this.logout} contractor={true} />
             </React.Fragment>
           ) : null}
         </p>
         {!this.state.loading ? (
           <Switch>
-
-
-              
-                  <Route
-              
+            <Route
               path="/opentasks"
-              render={(routerProps) => {
-                
-                 return !isEmpty(this.state.currentContractor) ? (
-                <AllOpenTasks
-                {...routerProps} 
-                contractor={this.state.currentContractor}
-                // task={taskObj}
-                // currentTask={this.currentTask}
+              render={routerProps => {
+                return !isEmpty(this.state.currentContractor) ? (
+                  <AllOpenTasks
+                    {...routerProps}
+                    contractor={this.state.currentContractor}
+                    // task={taskObj}
+                    // currentTask={this.currentTask}
                     acceptBid={this.acceptBid}
                     contractorDeleteBid={this.contractorDeleteBid}
                     deleteTask={this.deleteTask}
                     makeABid={this.makeABid}
-                
-                />
+                  />
                 ) : (
                   <Redirect to="/login/contractor" />
-                )
+                );
               }}
             />
-
-
-
-
 
             <Route
-              
               path="/contractor"
-              render={(routerProps) => {
-               
-                 return !isEmpty(this.state.currentContractor) ? (
-                <ContractorProfileContainer 
-                {...routerProps} 
-                contractor={this.state.currentContractor}
-                // task={taskObj}
-                // currentTask={this.currentTask}
+              render={routerProps => {
+                return !isEmpty(this.state.currentContractor) ? (
+                  <ContractorProfileContainer
+                    {...routerProps}
+                    contractor={this.state.currentContractor}
+                    // task={taskObj}
+                    // currentTask={this.currentTask}
                     acceptBid={this.acceptBid}
                     contractorDeleteBid={this.contractorDeleteBid}
                     deleteTask={this.deleteTask}
                     makeABid={this.makeABid}
-                
-                />
+                  />
                 ) : (
                   <Redirect to="/login/contractor" />
-                )
+                );
               }}
             />
-
-
-
-
 
             <Route
               exact
               path="/login/contractor"
               render={props => {
-             
                 return !isEmpty(this.state.currentContractor) ? (
                   <Redirect to="/contractor" />
                 ) : (
@@ -391,7 +363,6 @@ export default class App extends React.Component {
                     newUser={false}
                     contractor={true}
                     routerProps={props}
-                 
                   />
                 );
               }}
@@ -401,7 +372,6 @@ export default class App extends React.Component {
               exact
               path="/login"
               render={props => {
-           
                 return !isEmpty(this.state.currentUser) ? (
                   <Redirect to="/profile" />
                 ) : (
@@ -410,34 +380,32 @@ export default class App extends React.Component {
                     newUser={false}
                     contractor={false}
                     routerProps={props}
-                   
                   />
                 );
               }}
             />
 
-                <Route
-                  exact
-                  path="/signup"
-                  render={props =>
-                    !isEmpty(this.state.currentUser) ? (
-                      <Redirect to="/profile" />
-                    ) : (
-                      <Login
-                        handleUser={this.handleUser}
-                        newUser={true}
-                        routerProps={props}
-                        contractor={false}
-                      />
-                    )
-                  }
-                />
+            <Route
+              exact
+              path="/signup"
+              render={props =>
+                !isEmpty(this.state.currentUser) ? (
+                  <Redirect to="/profile" />
+                ) : (
+                  <Login
+                    handleUser={this.handleUser}
+                    newUser={true}
+                    routerProps={props}
+                    contractor={false}
+                  />
+                )
+              }
+            />
 
             <Route
               exact
               path="/profile"
               render={() => {
-          
                 return !isEmpty(this.state.currentUser) ? (
                   <ProfileContainer
                     user={this.state.currentUser}
@@ -454,14 +422,16 @@ export default class App extends React.Component {
             <Route
               path="/contractors"
               render={routerProps => {
-                 return !isEmpty(this.state.currentUser) ?
-                   <ContractorsContainer
+                return !isEmpty(this.state.currentUser) ? (
+                  <ContractorsContainer
                     user={this.state.currentUser}
                     specialties={specialties}
                     currentTask={this.currentTask}
                     {...routerProps}
-                  /> : <Redirect to="/login" />
-                ;
+                  />
+                ) : (
+                  <Redirect to="/login" />
+                );
               }}
             />
 
@@ -473,18 +443,15 @@ export default class App extends React.Component {
                 ) : (
                   <Login
                     handleUser={this.handleUser}
-                    
                     contractor={true}
                     routerProps={props}
                     newUser={true}
-                   
                   />
                 )
               }
             />
 
-
-            {!isEmpty(this.state.currentUser)  ? (
+            {!isEmpty(this.state.currentUser) ? (
               <Route
                 exact
                 path="/task/:id"
@@ -492,7 +459,7 @@ export default class App extends React.Component {
                   let taskObj = this.state.currentUser.tasks.find(
                     task => task.id == props.match.params.id
                   );
-                
+
                   return !isEmpty(taskObj) ? (
                     <TaskShowPage
                       task={taskObj}
@@ -509,8 +476,6 @@ export default class App extends React.Component {
               <Redirect to="/login" />
             )}
 
- 
-
             {/* <Route exact path="/" render={() => <Redirect to="/login" />} /> */}
           </Switch>
         ) : null}
@@ -518,5 +483,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-
