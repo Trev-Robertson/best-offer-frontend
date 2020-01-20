@@ -21,10 +21,9 @@ export default class AllOpenTasks extends React.Component {
   componentDidMount() {
     fetch(URL)
       .then(res => res.json())
-      .then(allTasks=> {
+      .then(allTasks => {
         this.setState({ allTasks });
       });
-   
   }
 
   extra = contractor => {
@@ -36,51 +35,46 @@ export default class AllOpenTasks extends React.Component {
     ) : null;
   };
 
-  sortBids = (bids) => {
-   
-      
-    let sorted = bids.sort((a, b) =>
-      a.price > b.price ? 1 : -1
-    );
-    
+  sortBids = bids => {
+    let sorted = bids.sort((a, b) => (a.price > b.price ? 1 : -1));
+
     return sorted;
   };
 
-
-
   CardExampleLinkCard = task => {
-      let lowestBid
-     
-        if(task.bids){
-                lowestBid = this.sortBids(task.bids)[0] 
-        }
-    if(!task.task_done){
-    return (
-      <Card
-        key={task.id}
-        color="blue"
-        href={`/contractor/task/${task.id}`}
-        header={task.name}
-        meta={""}
-        description={task.description}
-        extra={lowestBid ? `The Lowest Bid Is Currently $${lowestBid.price}` : null}
-      />
-    );}
+    let lowestBid;
+
+    if (task.bids) {
+      lowestBid = this.sortBids(task.bids)[0];
+    }
+    if (!task.task_done) {
+      return (
+        <Card
+          key={task.id}
+          color="blue"
+          href={`/contractor/task/${task.id}`}
+          header={task.name}
+          meta={""}
+          description={task.description}
+          extra={
+            lowestBid ? `The Lowest Bid Is Currently $${lowestBid.price}` : null
+          }
+        />
+      );
+    }
   };
 
   render() {
     return (
       <div>
         <h1>All Availble Tasks</h1>
-            <div className="contractor-display">
-              <Card.Group itemsPerRow={4}>
-                {this.state.allTasks.map(task => {
-                  return this.CardExampleLinkCard(task);
-                })}
-              </Card.Group>
-            </div>
-  
-        
+        <div className="contractor-display">
+          <Card.Group itemsPerRow={4}>
+            {this.state.allTasks.map(task => {
+              return this.CardExampleLinkCard(task);
+            })}
+          </Card.Group>
+        </div>
       </div>
     );
   }

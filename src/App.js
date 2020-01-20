@@ -8,6 +8,7 @@ import ContractorProfileContainer from "./containers/ContractorProfileContainer"
 import ContractorsContainer from "./containers/ContractorsContainer";
 import TaskShowPage from "./components/TaskShowPage";
 import AllOpenTasks from "./components/AllOpenTasks";
+import EditProfile from "./components/EditProfile.js"
 
 import { isEmpty } from "lodash";
 import { Link } from "react-router-dom";
@@ -100,16 +101,23 @@ export default class App extends React.Component {
   };
 
   handleUser = (event, newUser, contractors) => {
+    // debugger
     event.preventDefault();
     let contractor;
+    let phoneNumber;
     if (contractors) {
       contractor = "contractor";
     }
+    if(event.target.phone){
+     phoneNumber = "+1" + event.target.phone.value
+    }
+
 
     let data = {
       name: event.target.name.value,
       password: event.target.password.value,
-      new_user: newUser
+      new_user: newUser,
+      phone_number: phoneNumber
     };
 
     fetch(URL + (contractors ? contractor : ""), {
@@ -347,6 +355,19 @@ export default class App extends React.Component {
                   />
                 ) : (
                   <Redirect to="/login/contractor" />
+                );
+              }}
+            />
+            <Route
+              path="/edit"
+              render={routerProps => {
+                return !isEmpty(this.state.currentUser) ? (
+                  <EditProfile
+                    {...routerProps}
+                    user={this.state.currentUser}
+                  />
+                ) : (
+                  <Redirect to="/login" />
                 );
               }}
             />

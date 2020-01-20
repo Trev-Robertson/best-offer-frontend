@@ -6,8 +6,6 @@ import { Card } from "semantic-ui-react";
 // import store from '../redux/store'
 // import {Link} from 'react-router-dom'
 
-
-
 export default class Profile extends React.Component {
   state = {
     specialties: [

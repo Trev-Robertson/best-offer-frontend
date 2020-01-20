@@ -28,6 +28,21 @@ const NavBar = (props) => {
       >
         To Profile Page
       </NavLink>
+      
+      <NavLink
+        to="/edit"
+        /* set exact so it knows to only set activeStyle when route is deeply equal to link */
+        exact
+        /* add styling to Navlink */
+        style={link}
+        /* add prop for activeStyle */
+        activeStyle={{
+          background: "lightblue"
+        }}
+      >
+        Account Settings
+      </NavLink>
+
       <NavLink
         to="/contractors"
         /* set exact so it knows to only set activeStyle when route is deeply equal to link */

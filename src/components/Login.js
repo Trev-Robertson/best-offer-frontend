@@ -28,8 +28,8 @@ export default class Login extends React.Component {
           <label name="name">Password</label>
           <Form.Input name="password" type="password" />
           <br />
-          {this.props.newUser  ? <React.Fragment> <label name="phone">Phone Number</label>
-           <Form.Input name="phone" type="tel" pattern="[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}"/>
+          {this.props.newUser  ? <React.Fragment> <label name="phone">Phone Number (Format: ##########)</label>
+           <Form.Input name="phone" type="tel" pattern="\d{10}"/>
            <br/>
            </React.Fragment>
            : null}

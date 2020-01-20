@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Header, Icon, Modal } from 'semantic-ui-react'
+import { Button, Header, Icon, Modal } from "semantic-ui-react";
 // import store from '../redux/store'
-import ContractorProfile from '../components/ContractorProfile'
+import ContractorProfile from "../components/ContractorProfile";
 import ContractorTaskShowPage from "../components/ContractorTaskShowPage";
 import {
   // eslint-disable-next-line
@@ -11,11 +11,9 @@ import {
   Redirect
 } from "react-router-dom";
 
-const TASKS = "http://localhost:3000/tasks/"
-
+const TASKS = "http://localhost:3000/tasks/";
 
 export default class ContractorProfileContainer extends React.Component {
-
   state = {
     anyBidsSelected: false,
     sortedBid: [],
@@ -24,98 +22,89 @@ export default class ContractorProfileContainer extends React.Component {
     loading: true
   };
 
-
   updateCurrentTask = (event, contractor, task) => {
-    debugger
-    console.log('click')
-  }
-
-
-  componentDidMount = () => {
-  
- 
-    if(this.props.location.pathname !== '/contractor'){
-    fetch(TASKS + this.props.location.pathname.split('/').pop())
-    .then(res => res.json())
-    .then(task => {
-      
-      if(!task.error){
-        let sortedBids = this.sortBids(task.bids)
-        this.setState({
-          currentTask: task, 
-          sortedBid: sortedBids,
-          
-      })
-      task.bids.forEach(bid => {
-      if (bid.status) {
-        this.setState({
-          anyBidsSelected: true
-        })
-      }
-    }) }
-    else{
-      
-      this.setState({
-        showTaskPage: false,
-      loading: false})
-    }
-
-  })}
+    debugger;
+    console.log("click");
   };
 
-  sortBids = (bids) => {
-     
-    let sorted = bids.sort((a, b) =>
-      a.price > b.price ? 1 : -1
-    );
-    
+  componentDidMount = () => {
+    if (this.props.location.pathname !== "/contractor") {
+      fetch(TASKS + this.props.location.pathname.split("/").pop())
+        .then(res => res.json())
+        .then(task => {
+          if (!task.error) {
+            let sortedBids = this.sortBids(task.bids);
+            this.setState({
+              currentTask: task,
+              sortedBid: sortedBids
+            });
+            task.bids.forEach(bid => {
+              if (bid.status) {
+                this.setState({
+                  anyBidsSelected: true
+                });
+              }
+            });
+          } else {
+            this.setState({
+              showTaskPage: false,
+              loading: false
+            });
+          }
+        });
+    }
+  };
+
+  sortBids = bids => {
+    let sorted = bids.sort((a, b) => (a.price > b.price ? 1 : -1));
+
     return sorted[0];
   };
 
-
-
   render() {
-    
     return (
       <div>
-         
-          <Switch>
-          {this.state.showTaskPage ?
-        <Route
-          exact
-          path={`${this.props.match.url}/task/:id`}
-          render={routerProps => { 
-                
-            // let taskObj = this.props.contractor.bids.find(
-            //   bid => bid.task.id == props.match.params.id
-            // )
-            
-            
-            return <ContractorTaskShowPage 
-            id={routerProps.match.params.id}
-            contractor={this.props.contractor}
-            makeABid={this.props.makeABid}
-            contractorDeleteBid={this.props.contractorDeleteBid}
-            routerProps={routerProps}
-            anyBidsSelected={this.state.anyBidsSelected}
-            sortedBid={this.state.sortedBid}
-            currentTask={this.state.currentTask}
-            updateCurrentTask={this.updateCurrentTask}
-            />
-          }}
-        /> : 
-          <Redirect to="/opentasks" /> }
+        <Switch>
+          {this.state.showTaskPage ? (
+            <Route
+              exact
+              path={`${this.props.match.url}/task/:id`}
+              render={routerProps => {
+                // let taskObj = this.props.contractor.bids.find(
+                //   bid => bid.task.id == props.match.params.id
+                // )
 
-        <Route
-          
-          path={`${this.props.match.url}`}
-          render={(routerProps) => {
-            
-           return <ContractorProfile contractor={this.props.contractor} routerProps={routerProps}/>
+                return (
+                  <ContractorTaskShowPage
+                    id={routerProps.match.params.id}
+                    contractor={this.props.contractor}
+                    makeABid={this.props.makeABid}
+                    contractorDeleteBid={this.props.contractorDeleteBid}
+                    routerProps={routerProps}
+                    anyBidsSelected={this.state.anyBidsSelected}
+                    sortedBid={this.state.sortedBid}
+                    currentTask={this.state.currentTask}
+                    updateCurrentTask={this.updateCurrentTask}
+                  />
+                );
+              }}
+            />
+          ) : (
+            <Redirect to="/opentasks" />
+          )}
+
+          <Route
+            path={`${this.props.match.url}`}
+            render={routerProps => {
+              return (
+                <ContractorProfile
+                  contractor={this.props.contractor}
+                  routerProps={routerProps}
+                />
+              );
             }}
           />
-          </Switch>
-     
+        </Switch>
       </div>
     );
   }
