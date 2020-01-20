@@ -1,11 +1,52 @@
 import React from "react";
-import { Form } from "semantic-ui-react";
+import { Form, Checkbox } from "semantic-ui-react";
 // import store from "../redux/store";
 import {Link} from 'react-router-dom'
 
 
 export default class Login extends React.Component {
- 
+
+  state = {
+    specialties: [
+      { id: 1, name: "gardening" },
+      { id: 2, name: "carpentry" },
+      { id: 3, name: "plumbing" },
+      { id: 4, name: "technology" },
+      { id: 5, name: "electrician" }
+    ],
+
+    selectedSpecialties: [], 
+    letCheck: true
+  }
+  handleChange = (e, { value }) => {
+    this.setState({ value });
+  }
+
+
+
+  includedSpecialties = (event, specialty) => {
+    // debugger
+     let array = [...this.state.selectedSpecialties]
+     array.push(specialty)
+     this.setState({selectedSpecialties: array}, this.specialtyCount)
+     
+  }
+
+  specialtyCount = () => {
+    if(this.state.selectedSpecialties.length > 2){
+     
+      console.log("This is more than 2")
+    }
+  }
+
+  checkOrNot = () => {
+      let luckyPerson = (this.state.selectedSpecialties.length <= 2)
+
+      console.log(luckyPerson)
+
+      return luckyPerson
+    
+  }
  
   render() {
   
@@ -17,7 +58,7 @@ export default class Login extends React.Component {
         <h4>
         {this.props.newUser  ? 'Sign Up Here!' : 'Please Log In'}</h4>
         <div className='contractor-display'>
-        <Form onSubmit={(event) => this.props.handleUser(event, this.props.newUser, this.props.contractor)}>
+        <Form onSubmit={(event) => this.props.handleUser(event, this.props.newUser, this.props.contractor, this.state.selectedSpecialties)}>
           
         <Form.Field>
           <label name="name">Name</label>
@@ -30,6 +71,22 @@ export default class Login extends React.Component {
           <br />
           {this.props.newUser  ? <React.Fragment> <label name="phone">Phone Number (Format: ##########)</label>
            <Form.Input name="phone" type="tel" pattern="\d{10}"/>
+           <Form.Group inline>
+          <label>Select Specialty</label>
+
+          {this.state.specialties.map(specialty => {
+            return (
+              <Checkbox 
+              label={specialty.name[0].toUpperCase() + specialty.name.slice(1)}
+              value={specialty.id}
+              onChange={(event) => this.includedSpecialties(event, specialty)}
+              
+              />
+         
+              );
+          })}
+        </Form.Group>
+   
            <br/>
            </React.Fragment>
            : null}

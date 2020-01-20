@@ -100,8 +100,8 @@ export default class App extends React.Component {
     }
   };
 
-  handleUser = (event, newUser, contractors) => {
-    // debugger
+  handleUser = (event, newUser, contractors, specialties) => {
+    debugger
     event.preventDefault();
     let contractor;
     let phoneNumber;
