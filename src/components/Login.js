@@ -27,7 +27,12 @@ export default class Login extends React.Component {
   includedSpecialties = (event, specialty) => {
     // debugger
      let array = [...this.state.selectedSpecialties]
-     array.push(specialty)
+     if(array.includes(specialty)){
+
+     }
+     else{
+       array.push(specialty)
+      }
      this.setState({selectedSpecialties: array}, this.specialtyCount)
      
   }
@@ -72,7 +77,7 @@ export default class Login extends React.Component {
           {this.props.newUser  ? <React.Fragment> <label name="phone">Phone Number (Format: ##########)</label>
            <Form.Input name="phone" type="tel" pattern="\d{10}"/>
            <Form.Group inline>
-          <label>Select Specialty</label>
+          <label>Select Specialty (Max Two)</label>
 
           {this.state.specialties.map(specialty => {
             return (
