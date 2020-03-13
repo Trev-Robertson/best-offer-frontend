@@ -34,7 +34,7 @@ export default class Profile extends React.Component {
   };
 
   CardExampleLinkCard = task => {
-    // debugger;
+    
     return (
       <Card
         key={Math.floor(Math.random() * 100000000000 + 1)}

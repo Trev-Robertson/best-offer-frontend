@@ -23,7 +23,7 @@ export default class ContractorProfileContainer extends React.Component {
   };
 
   updateCurrentTask = (event, contractor, task) => {
-    debugger;
+    
     console.log("click");
   };
 

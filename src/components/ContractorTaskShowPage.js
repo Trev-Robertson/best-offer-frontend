@@ -132,10 +132,10 @@ export default class ContractorTaskShowPage extends React.Component {
    else {  
      bid = this.props.sortedBid 
      contBid = this.props.contractor.bids.find(bid => bid.task.id === this.props.currentTask.id)
-     debugger
+     
      if (bid && contBid){
        bid = bid.price < contBid.price ? bid : contBid
-       debugger
+       
      }
       
     }

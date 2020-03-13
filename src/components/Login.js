@@ -25,7 +25,7 @@ export default class Login extends React.Component {
 
 
   includedSpecialties = (event, specialty) => {
-    // debugger
+    
      let array = [...this.state.selectedSpecialties]
      if(array.includes(specialty)){
 
