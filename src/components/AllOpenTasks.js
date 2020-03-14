@@ -8,8 +8,8 @@ import {
   Route
 } from "react-router-dom";
 
-const URL = "http://localhost:3000/tasks";
-const REVIEWSURL = "http://localhost:3000/reviews";
+const URL = "https://best-offer-backend.herokuapp.com/tasks";
+const REVIEWSURL = "https://best-offer-backend.herokuapp.com/reviews";
 
 export default class AllOpenTasks extends React.Component {
   state = {

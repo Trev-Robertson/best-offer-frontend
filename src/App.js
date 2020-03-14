@@ -8,7 +8,7 @@ import ContractorProfileContainer from "./containers/ContractorProfileContainer"
 import ContractorsContainer from "./containers/ContractorsContainer";
 import TaskShowPage from "./components/TaskShowPage";
 import AllOpenTasks from "./components/AllOpenTasks";
-import EditProfile from "./components/EditProfile.js"
+import EditProfile from "./components/EditProfile.js";
 
 import { isEmpty } from "lodash";
 import { Link } from "react-router-dom";
@@ -39,11 +39,12 @@ const specialties = [
   "electrician",
   "carpentry"
 ];
-const URL = "http://localhost:3000/api/v1/login/";
-const CONTRACTOR_URL = "http://localhost:3000/api/v1/contractor";
-const PROFILE_URL = "http://localhost:3000/api/v1/profile/";
-const TASKS = "http://localhost:3000/tasks/";
-const BIDS_URL = "http://localhost:3000/bids/";
+const URL = "https://best-offer-backend.herokuapp.com/api/v1/login/";
+const CONTRACTOR_URL =
+  "https://best-offer-backend.herokuapp.com/api/v1/contractor";
+const PROFILE_URL = "https://best-offer-backend.herokuapp.com/api/v1/profile/";
+const TASKS = "https://best-offer-backend.herokuapp.com/tasks/";
+const BIDS_URL = "https://best-offer-backend.herokuapp.com/bids/";
 
 export default class App extends React.Component {
   state = {
@@ -101,17 +102,15 @@ export default class App extends React.Component {
   };
 
   handleUser = (event, newUser, contractors, specialties) => {
-    
     event.preventDefault();
     let contractor;
     let phoneNumber;
     if (contractors) {
       contractor = "contractor";
     }
-    if(event.target.phone){
-     phoneNumber = "+1" + event.target.phone.value
+    if (event.target.phone) {
+      phoneNumber = "+1" + event.target.phone.value;
     }
-
 
     let data = {
       name: event.target.name.value,
@@ -164,7 +163,7 @@ export default class App extends React.Component {
         }
       };
 
-      fetch(`http://localhost:3000/tasks/${task.id}`, {
+      fetch(`https://best-offer-backend.herokuapp.com/tasks/${task.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json"
@@ -207,7 +206,7 @@ export default class App extends React.Component {
       id: bid.id,
       user_id: this.state.currentUser.id
     };
-    fetch(`http://localhost:3000/bids/${bid.id}`, {
+    fetch(`https://best-offer-backend.herokuapp.com/bids/${bid.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
@@ -226,13 +225,16 @@ export default class App extends React.Component {
       contractor_id: contractor.id
     };
 
-    fetch(`http://localhost:3000/contractor/bids/${bid.id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
+    fetch(
+      `https://best-offer-backend.herokuapp.com/contractor/bids/${bid.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      }
+    )
       .then(res => res.json())
       .then(currentContractor => {
         alert("Bid Successful!");
@@ -249,7 +251,7 @@ export default class App extends React.Component {
       id: task.id,
       user_id: this.state.currentUser.id
     };
-    fetch(`http://localhost:3000/tasks/${task.id}`, {
+    fetch(`https://best-offer-backend.herokuapp.com/tasks/${task.id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
@@ -362,10 +364,7 @@ export default class App extends React.Component {
               path="/edit"
               render={routerProps => {
                 return !isEmpty(this.state.currentUser) ? (
-                  <EditProfile
-                    {...routerProps}
-                    user={this.state.currentUser}
-                  />
+                  <EditProfile {...routerProps} user={this.state.currentUser} />
                 ) : (
                   <Redirect to="/login" />
                 );

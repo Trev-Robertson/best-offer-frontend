@@ -8,8 +8,8 @@ import {
   Route
 } from "react-router-dom";
 
-const URL = "http://localhost:3000/contractors";
-const REVIEWSURL = "http://localhost:3000/reviews";
+const URL = "https://best-offer-backend.herokuapp.com/contractors";
+const REVIEWSURL = "https://best-offer-backend.herokuapp.com/reviews";
 
 export default class ContractorsContainer extends React.Component {
   state = {
@@ -24,7 +24,6 @@ export default class ContractorsContainer extends React.Component {
       .then(allContractors => {
         this.setState({ allContractors });
       });
-   
   }
 
   extra = contractor => {
@@ -61,9 +60,7 @@ export default class ContractorsContainer extends React.Component {
         });
       });
 
-      event.target.reset()
-
-
+    event.target.reset();
   };
 
   CardExampleLinkCard = contractor => {
@@ -88,7 +85,6 @@ export default class ContractorsContainer extends React.Component {
           exact
           path={`${this.props.match.url}/:id`}
           render={props => {
-           
             let contractorObj = this.state.allContractors.find(
               task => task.id == props.match.params.id
             );

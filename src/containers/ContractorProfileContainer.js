@@ -11,7 +11,7 @@ import {
   Redirect
 } from "react-router-dom";
 
-const TASKS = "http://localhost:3000/tasks/";
+const TASKS = "https://best-offer-backend.herokuapp.com/tasks/";
 
 export default class ContractorProfileContainer extends React.Component {
   state = {
@@ -23,7 +23,6 @@ export default class ContractorProfileContainer extends React.Component {
   };
 
   updateCurrentTask = (event, contractor, task) => {
-    
     console.log("click");
   };
 
